@@ -25,25 +25,49 @@
 
 ;;; Code:
 
-(defun jea-make-pwrd()
-	"Senerate a random string with chaaracters, numbers and punctuation."
+(defun jea-make-pwrd--shuffle(in-str)
+	"Shuffle whole sequence to make sure chars are not always first etc.
+Assumes random has been seeded.
+
+\IN-STR is the whole sequence."
+	(let ((result (copy-sequence in-str))
+				(len (length in-str)))
+		(dotimes (i len)
+			(setf (seq-elt result i) (elt in-str (random len))))
+		result))
+
+(defun jea-make-pwrd-generate()
+	"Produce a random string that is appropriate for a password.
+
+TODO: in the future maybe take into account a passed in arg for size"
+		(let ((mycharset "abcdefghijklmnopqrstyvwxyzABCDEFGHIJKLMNOPQRSTYVWXYZ")
+					(mynumset "1234567890")
+					(mypunctset "!@#$")
+					(charlength 10)
+					(numlength 4)
+					(punctlength 3)
+					(result '()))
+			(dotimes (i charlength)
+				(setq result (cons (elt mycharset (random (length mycharset))) result)))
+			(dotimes (i numlength)
+				(setq result (cons (elt mynumset (random (length mynumset))) result)))
+			(dotimes (i punctlength)
+				(setq result (cons (elt mypunctset (random (length mypunctset))) result)))
+			(concat (jea-make-pwrd--shuffle result))))
+
+(defun jea-make-pwrd-clip-board()
+	"Generate a password and store it on the clip board (aka `kill-ring`)
+so the user can paste it wherever."
+	(interactive)
+	(random t) ;; seed random
+	(kill-new (jea-make-pwrd-generate)))
+
+(defun jea-make-pwrd-insert-buffer()
+	"Generate a password and insert it into the current buffer."
   (interactive)
   (random t) ;; seed random
-  (let ((mycharset "abcdefghijklmnopqrstyvwxyzABCDEFGHIJKLMNOPQRSTYVWXYZ")
-		(mynumset "1234567890")
-		(mypunctset "!@#$")
-		(charlength 10)
-		(numlength 4)
-		(punctlength 3))
-	(insert "\n")
-	(dotimes (i charlength)
-	  (insert (elt mycharset (random (length mycharset)))))
-	(dotimes (i numlength)
-	  (insert (elt mynumset (random (length mynumset)))))
-	(dotimes (i punctlength)
-	  (insert (elt mypunctset (random (length mypunctset)))))
-	))
+	(insert (jea-make-pwrd-generate)))
 
-(provide 'jea-make-pwrd)
+(provide 'jea-password-generate)
 
 ;;; jea-password-generate.el ends here
