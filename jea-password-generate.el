@@ -1,4 +1,4 @@
-;;; jea_password_generate.el --- code to generate passwords
+;;; jea-password-generate.el --- code to generate passwords
 
 ;; Copyright © 2025 James Anderson
 ;;
@@ -46,4 +46,4 @@
 
 (provide 'jea-make-pwrd)
 
-;;; jea_password_generate.el ends here
+;;; jea-password-generate.el ends here
