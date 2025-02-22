@@ -75,26 +75,16 @@ B the second argument to process"
 		
 	
 (defun jea-tweet--test2-in-data()
-	"Lorem ipsum odor amet, consectetuer adipiscing elit.
+	"a1aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa. bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.
+ccccccccccccccccccccccccccccccc.  ddddddddddddddddd. eeeeee. ffffff. gggggggggggggggggggggggggggggggggggggggg. hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh.   iiiiiiiiiiiiiiiiiiiii. jjjjjjjjjjjjjjjjjjjjjjj. kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk. llllllllllllllllllllllllllllllllll. mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm. nnnnnnnnnnnnnnnnnnnnnnn. ooooooooooooooooooooooo. ppppppppppppppppppppp.
 
-Metus malesuada duis ipsum litora ac ultricies ut mollis.
-Malesuada nulla massa rutrum congue porta libero volutpat.
-Ultrices accumsan suspendisse senectus penatibus vehicula nulla
-adipiscing vitae.  Etiam interdum a morbi mollis id metus fames.
-Aptent at quam fames, dis quis inceptos integer.  Imperdiet
-turpis montes massa aliquam amet auctor.  Primis consectetur ac
-feugiat himenaeos morbi libero           aliquam quisque a.
+q2qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq. xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx. yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy. zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz.
 
-Lacinia consectetur ante faucibus, quam nascetur metus pulvinar
-interdum pharetra.  Consequat vel facilisi dui eleifend quis
-torquent aliquam elementum!
- At risus feugiat amet nam aliquet duis gravida duis.  Maximus
-enim fringilla sed sodales et   	  	aliquet
+a3aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa. bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.
+ccccccccccccccccccccccccccccccc.  ddddddddddddddddd. eeeeee. ffffff. gggggggggggggggggggggggggggggggggggggggg. hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh.   iiiiiiiiiiiiiiiiiiiii. jjjjjjjjjjjjjjjjjjjjjjj. kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk. llllllllllllllllllllllllllllllllll. mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm.
 
-Lacinia consectetur ante faucibus, quam nascetur metus pulvinar
-interdum pharetra.  Consequat vel facilisi dui eleifend quis
-torquent aliquam elementum! At risus feugiat amet nam aliquet
-duis gravida duis.  Maximus enim fringilla sed sodales et aliquet")
+q4qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq. xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx. yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy. zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz.
+")
 
 (defun jea-tweet--test2-out-data()
 	"Test basic text split into three tweets."

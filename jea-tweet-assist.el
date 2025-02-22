@@ -74,6 +74,10 @@ back.  Then we finally trim the leading and trailing spaces."
 														 (replace-regexp-in-string "[\n]+" "" in-str))))
 
 ;; (setq t2 (mapcar #'jea-tweet--remove-extra-whitespace t1))
+;; (with-current-buffer (get-buffer-create "*social-media-post*")
+;; 	(erase-buffer)
+;; 	(setq t2 (mapcar #'jea-tweet--remove-extra-whitespace t1))
+;; 	(insert (mapconcat (lambda (x) (format x)) t2)))
 
 ;;; ----------------------------------------------------------------------
 ;;; 3) go through the sentences and merge into paragraphs
@@ -84,15 +88,21 @@ back.  Then we finally trim the leading and trailing spaces."
 				 (para "")
 				 (result '()))
 		(dolist (sentence sentences)
-			(if (< (+ (length para) (length sentence)) max-size)
+			(if (<= (+ (length para) (length sentence)) max-size)
 					(setq para (concat para sentence " "))
 				(progn
 					(setq result (cons para result))
-					(setq para  ""))))
-		(setq result (cons para result))
+					(setq para (concat sentence " ")))))
+		(if (> (length para) 0)
+				(setq result (cons para result)))
 		(reverse result)))
 
 ;; (setq t3 (jea-tweet--merge-sentences-into-paragraphs t2))
+
+;; (with-current-buffer (get-buffer-create "*social-media-post*")
+;; 	(erase-buffer)
+;; 	(setq t3 (jea-tweet--merge-sentences-into-paragraphs t2))
+;; 	(insert (mapconcat (lambda (x) (format x)) t3)))
 
 ;;; ----------------------------------------------------------------------
 ;;; 4) decorate with the 1/x for total count
@@ -132,7 +142,7 @@ IN-STR is the raw full string that we might need to break up into sub tweets.
   (interactive)
 	(jea-tweet--main in-str))
 
-;; (jea-tweet-split-long (jea-tweet--test2-in-data))q
+;; (jea-tweet-split-long (jea-tweet--test2-in-data))
 
 (defun jea-tweet-split-long-buffer(in-str)
 	"Dump the processed IN-STR into a buffer to cut and paste."
@@ -140,6 +150,7 @@ IN-STR is the raw full string that we might need to break up into sub tweets.
 	(save-excursion
 		(with-current-buffer (get-buffer-create "*social-media-post*")
  			(progn
+				(erase-buffer)
  				(goto-char (point-max))
 				(insert (jea-tweet-split-long in-str))))))
 
