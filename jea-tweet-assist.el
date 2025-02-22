@@ -36,11 +36,12 @@ TODO converrt to defvar"
 (defun jea-tweet--remove-extra-whitespace(in-str)
 	"Remove newlines and extra (two or more) spaces.
 \IN-STR is the arg to be cleaned up.  We remove newlines first.
-then the places where there are more than one space back to
+then the inner places where there are more than one space back to
 back.  Then we finally trim the leading and trailing spaces."
 
-	(replace-regexp-in-string "[ \t]\\{2,\\}" " "
-														(replace-regexp-in-string "[\n]+" "" in-str)))
+	(jea-string-trim
+	 (replace-regexp-in-string "[ \t]\\{2,\\}" " "
+														 (replace-regexp-in-string "[\n]+" "" in-str))))
 
 (defun jea-tweet--split-into-sentences(in-str)
 	"IN-STR is the arg."
@@ -53,8 +54,11 @@ back.  Then we finally trim the leading and trailing spaces."
 
 (defun jea-tweet--process(in-str)
 	"IN-STR is the raw full string that we might need to break up into sub tweets."
-	(let* ((rem-extra-spaces (jea-tweet--remove-extra-whitespace in-str))
-				 (split-into-sentences
+	(let* ((step1 (jea-tweet--split-into-sentences in-str))
+				 (step2 (mapcar #'jea-tweet--remove-extra-whitespace step1)))
+		step2))
+
+;; (jea-tweet--process (jea-tweet--test2-in-data))
 
 (defun jea-tweet-split-long(in-str)
 	"Split long string into 280 character chunks.
