@@ -28,10 +28,16 @@
 ;; ------------------------------ string helpers ---------------------
 
 (defun jea-string-ltrim(in-str)
-	"Take in IN-STR and return the string with the leading and trailing spaces removed."
+	"Take in IN-STR and return the string with the leading spaces removed."
 	(replace-regexp-in-string "^[ \t]*" "" in-str))
 
-;; rstrim, trim etc
+(defun jea-string-rtrim(in-str)
+	"Take in IN-STR and return the string with the trailing spaces removed."
+	(replace-regexp-in-string "[ \t]*$" "" in-str))
+
+(defun jea-string-trim(in-str)
+	"Take in IN-STR and return the string with the leading and trailing spaces removed."
+	(jea-string-ltrim (jea-string-rtrim in-str)))
 
 ;; ------------------------------ regex helpers ----------------------
 

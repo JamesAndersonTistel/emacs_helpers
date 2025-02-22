@@ -49,3 +49,24 @@ examples:
 (jea-find-string-all "The quick fox jumped quickly." "fox")
 nil
 ```
+
+`jea-string-ltrim`
+example:
+```
+"  	   	The quick fox jumped quickly."
+"The quick fox jumped quickly."
+```
+
+`jea-string-rtrim`
+example:
+```
+"The quick fox jumped quickly.  	  	"
+"The quick fox jumped quickly."
+```
+
+`jea-string-trim`
+example: 
+```
+"	  	  	The quick fox jumped quickly.  	  	"
+"The quick fox jumped quickly."
+```
