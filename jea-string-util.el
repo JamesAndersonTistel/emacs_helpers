@@ -22,11 +22,20 @@
 ;;; Commentary:
 
 ;;; code to make working with string easier
-;;; TODO break out unit tests into another file
 
 ;;; Code:
 
-(defun jea-find-all-indexes(in-str regex)
+;; ------------------------------ string helpers ---------------------
+
+(defun jea-string-ltrim(in-str)
+	"Take in IN-STR and return the string with the leading and trailing spaces removed."
+	(replace-regexp-in-string "^[ \t]*" "" in-str))
+
+;; rstrim, trim etc
+
+;; ------------------------------ regex helpers ----------------------
+
+(defun jea-find-string-all-indexes(in-str regex)
 	"Return all the indexes of the matching groups.
 \IN-STR input string
 \REGEX the regular expressing with groups."
@@ -48,22 +57,11 @@
 						(setq current-start (length in-str)))))
 		(reverse results)))
 
-;; (jea-find-all-indexes "The quick fox jumped quickly." "\\(qu\\)\\(ick\\)")
-;;                        0123456789           21
-;; ((4 6) (6 9) (21 23) (23 26))
-
-;; (jea-find-all-indexes "The quick fox jumped quickly." "\\(qu\\)")
-;;                        0123456789           21
-;; ((4 6) (21 23))
-
-;; (jea-find-all-indexes "The quick fox jumped quickly." "fox")
-;; nil
-
-(defun jea-find-all(in-str regex)
+(defun jea-find-string-all(in-str regex)
 	"Return all the text of the matching groups.
 \IN-STR input string
 \REGEX the regular expressing with groups."
-	(let ((indexes (jea-find-all-indexes in-str regex))
+	(let ((indexes (jea-find-string-all-indexes in-str regex))
 				(start nil)
 				(end nil)
 				(results '()))
@@ -73,18 +71,6 @@
 			(setq indexes (cdr indexes))
 			(setq results (cons (substring in-str start end) results)))
 		(reverse results)))
-
-;; (jea-find-all "The quick fox jumped quickly." "\\(qu\\)\\(ick\\)")
-;; ("qu" "ick" "qu" "ick")
-
-;; (jea-find-all "The quick fox jumped quickly." "\\(qu\\)")
-;; ("qu" "qu")
-
-;; (jea-find-all "The quick fox jumped quickly.  The fat fox waddled a bit." "\\(f[a-zA-Z]+x\\)")
-;; ("fox" "fox")
-
-;; (jea-find-all "The quick fox jumped quickly." "fox")
-;; nil
 
 (provide 'jea-string-util)
 
