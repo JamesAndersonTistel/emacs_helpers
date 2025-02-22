@@ -58,8 +58,6 @@ It just breaks sentences by period.  It messes up on urls though.
 more thought need to go in for this problem."
 	(jea-find-string-all in-str "\\([^.]+\\.\\)"))
 
-;; (setq t1 (jea-tweet--split-into-sentences (jea-tweet--test2-in-data)))
-
 ;;; ----------------------------------------------------------------------
 ;;; 2) remove exta spaces to save room
 
@@ -72,12 +70,6 @@ back.  Then we finally trim the leading and trailing spaces."
 	(jea-string-trim
 	 (replace-regexp-in-string "[ \t]\\{2,\\}" " "
 														 (replace-regexp-in-string "[\n]+" "" in-str))))
-
-;; (setq t2 (mapcar #'jea-tweet--remove-extra-whitespace t1))
-;; (with-current-buffer (get-buffer-create "*social-media-post*")
-;; 	(erase-buffer)
-;; 	(setq t2 (mapcar #'jea-tweet--remove-extra-whitespace t1))
-;; 	(insert (mapconcat (lambda (x) (format x)) t2)))
 
 ;;; ----------------------------------------------------------------------
 ;;; 3) go through the sentences and merge into paragraphs
@@ -97,13 +89,6 @@ back.  Then we finally trim the leading and trailing spaces."
 				(setq result (cons para result)))
 		(reverse result)))
 
-;; (setq t3 (jea-tweet--merge-sentences-into-paragraphs t2))
-
-;; (with-current-buffer (get-buffer-create "*social-media-post*")
-;; 	(erase-buffer)
-;; 	(setq t3 (jea-tweet--merge-sentences-into-paragraphs t2))
-;; 	(insert (mapconcat (lambda (x) (format x)) t3)))
-
 ;;; ----------------------------------------------------------------------
 ;;; 4) decorate with the 1/x for total count
 
@@ -117,8 +102,6 @@ back.  Then we finally trim the leading and trailing spaces."
 			(setq numerator (1+ numerator)))
 		(reverse results)))
 
-;; (setq t4 (jea-tweet--decorate-paragraphs t3))
-
 ;;; ----------------------------------------------------------------------
 ;;; main
 
@@ -130,12 +113,10 @@ back.  Then we finally trim the leading and trailing spaces."
 				 (step4 (jea-tweet--decorate-paragraphs step3)))
 		(mapconcat (lambda (x) (format "%s\n\n" x)) step4)))
 
-;; (setq t5 (jea-tweet--main (jea-tweet--test2-in-data)))
-
 ;;; ----------------------------------------------------------------------
 ;;; public
 
-(defun jea-tweet-split-long(in-str)
+(defun jea-tweet--split-long(in-str)
 	"Split long string into 280 character chunks.
 IN-STR is the raw full string that we might need to break up into sub tweets.
  Try to keep sentences intact.  Things like URLs should not be split up."
@@ -144,17 +125,16 @@ IN-STR is the raw full string that we might need to break up into sub tweets.
 
 ;; (jea-tweet-split-long (jea-tweet--test2-in-data))
 
-(defun jea-tweet-split-long-buffer(in-str)
-	"Dump the processed IN-STR into a buffer to cut and paste."
-	(interactive)
+(defun jea-tweet-split-long-buffer(beginning end)
+	"Dump the region from BEGINNING to END and put output into a buffer to cut and paste."
+	(interactive "r")
 	(save-excursion
-		(with-current-buffer (get-buffer-create "*social-media-post*")
- 			(progn
-				(erase-buffer)
- 				(goto-char (point-max))
-				(insert (jea-tweet-split-long in-str))))))
-
-;; (jea-tweet-split-long-buffer (jea-tweet--test2-in-data))
+		(let ((buffer-text (buffer-substring beginning end)))
+			(with-current-buffer (get-buffer-create "*social-media-post*")
+ 				(progn
+					(erase-buffer)
+ 					(goto-char (point-max))
+					(insert (jea-tweet-split-long buffer-text)))))))
 
 (provide 'jea-tweet-assist)
 
