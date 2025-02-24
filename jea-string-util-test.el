@@ -76,6 +76,8 @@
 ;; (jea-string-trim (jea-string-trim--test1-data-in))
 ;; (jea-string-trim--test1)
 
+;; TODO clean up and make automatic call all
+;; (jea-string-util-camel-case-to-snake "HelloWorld")
 
 (provide 'jea-string-util-test)
 

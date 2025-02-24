@@ -88,24 +88,29 @@
 	"If IN-STR is lower case return t."
 	(equal in-str (downcase in-str)))
 
-(defun jea-string-util-toggle-camel-snake-case(in-str)
-	"Convert IN-STR to cammel case from snake case and vis versa."
+(defun jea-string-util-camel-case-to-snake(in-str)
+	"Convert IN-STR from CamelCase to snake_case."
 	(let ((len (1- (length in-str)))
-				(case-fold-search nil) ;; case sensitive
 				(pos 0)
+				(case-fold-search nil) ;; case sensitive
 				(result ""))
-		(while (< pos len)
-			(cond ((jea-string-upcase-p (substring in-str pos (1+ pos)))
-						 (cond ((jea-string-downcase-p (substring in-str (1+ pos) (+ pos 2)))
-										(message "up down %d %s" pos (substring in-str pos (1+ pos))))))
-						((jea-string-downcase-p (substring in-str pos (1+ pos)))
-						 (cond ((equal "_" (substring in-str (1+ pos) (+ pos 2)))
-										(message "down up %d %s" pos (substring in-str pos (1+ pos)))))))
-			(setq pos (1+ pos)))))
+		(while (and (> len 0) (< pos len))
+			(let ((curr (substring in-str pos (+ pos 1)))
+ 						(next (substring in-str (1+ pos) (+ pos 2))))
+				(cond ((and (jea-string-downcase-p curr) (jea-string-upcase-p next))
+							 (setq result (concat result (downcase curr) "_")))
+							(t (setq result (concat result (downcase curr))))))
+			(setq pos (1+ pos)))
+		(setq result (concat result (downcase (substring in-str (1- (length in-str)) (length in-str))))) ;; don't forget last one
+		result))
 
-;; (jea-string-util-toggle-camel-snake-case "HelloWorld")
-;; (jea-string-util-toggle-camel-snake-case "hello_world")
+
+
+(setq t1 (mapcar 'string "james"))
+(setq t2 (mapconcat 'identity t1))
 
 (provide 'jea-string-util)
 
 ;;; jea-string-util.el ends here
+
+(list "hello")
