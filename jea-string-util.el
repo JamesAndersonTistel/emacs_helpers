@@ -78,6 +78,34 @@
 			(setq results (cons (substring in-str start end) results)))
 		(reverse results)))
 
+;; --------------------------- code formatting -------------------------
+
+(defun jea-string-upcase-p (in-str)
+	"If IN-STR is upper case return t."
+	(equal in-str (upcase in-str)))
+
+(defun jea-string-downcase-p (in-str)
+	"If IN-STR is lower case return t."
+	(equal in-str (downcase in-str)))
+
+(defun jea-string-util-toggle-camel-snake-case(in-str)
+	"Convert IN-STR to cammel case from snake case and vis versa."
+	(let ((len (1- (length in-str)))
+				(case-fold-search nil) ;; case sensitive
+				(pos 0)
+				(result ""))
+		(while (< pos len)
+			(cond ((jea-string-upcase-p (substring in-str pos (1+ pos)))
+						 (cond ((jea-string-downcase-p (substring in-str (1+ pos) (+ pos 2)))
+										(message "up down %d %s" pos (substring in-str pos (1+ pos))))))
+						((jea-string-downcase-p (substring in-str pos (1+ pos)))
+						 (cond ((equal "_" (substring in-str (1+ pos) (+ pos 2)))
+										(message "down up %d %s" pos (substring in-str pos (1+ pos)))))))
+			(setq pos (1+ pos)))))
+
+;; (jea-string-util-toggle-camel-snake-case "HelloWorld")
+;; (jea-string-util-toggle-camel-snake-case "hello_world")
+
 (provide 'jea-string-util)
 
 ;;; jea-string-util.el ends here
