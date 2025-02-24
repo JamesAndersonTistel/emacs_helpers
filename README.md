@@ -71,6 +71,22 @@ example:
 "The quick fox jumped quickly."
 ```
 
+`jea-string-util-camel-case-to-snake`
+
+"HelloBraveNewWorld"
+
+becomes:
+
+"hello_brave_new_world"
+
+`jea-string-upcase-snake-case-to-camel` 
+
+"james_anderson__was_here"
+
+becomes:
+
+"JamesAndersonWasHere"
+
 ## jea-tweet-assist
 
 This is code to grab from the emacs region and break it into social media size chucks. then the user can cut and paste into browser. In the future, may connect it to APIs.
