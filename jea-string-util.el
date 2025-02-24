@@ -104,10 +104,27 @@
 		(setq result (concat result (downcase (substring in-str (1- (length in-str)) (length in-str))))) ;; don't forget last one
 		result))
 
-
-
-(setq t1 (mapcar 'string "james"))
-(setq t2 (mapconcat 'identity t1))
+(defun jea-string-upcase-snake-case-to-camel(in-str)
+	"Convert IN-STR from snake_case to CamelCase."
+	(let ((result (upcase (substring in-str 0 1)))
+				(pos 1)
+				(underscore nil) ;; hit a underscore
+				(len (1- (length in-str))))
+		(while (and (> len 0) (< pos len))
+			(let ((curr (substring in-str pos (+ pos 1))))
+				(cond
+				 (underscore
+					(if (not (equal "_" curr)) ;; there can be more than one in a row
+							(progn
+								(setq result (concat result (upcase curr)))
+								(setq underscore nil))))
+				 (t
+					(if (equal "_" curr)
+							(setq underscore t)
+						(setq result (concat result (downcase curr)))))))
+			(setq pos (1+ pos)))
+		(setq result (concat result (downcase (substring in-str (1- (length in-str)) (length in-str))))) ;; don't forget last one
+		result))
 
 (provide 'jea-string-util)
 

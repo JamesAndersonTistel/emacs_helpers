@@ -79,6 +79,9 @@
 ;; TODO clean up and make automatic call all
 ;; (jea-string-util-camel-case-to-snake "HelloWorld")
 
+;; TODO do moret tests and add region grabber? or maybe string under cursor?
+;; (jea-string-upcase-snake-case-to-camel "james_anderson__was_here")
+
 (provide 'jea-string-util-test)
 
 ;;; jea-string-util-test.el ends here

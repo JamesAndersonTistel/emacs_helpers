@@ -1,5 +1,5 @@
 # emacs_helpers
-a disorganiszed set of elisp code that I find useful
+a disorganiszed set of elisp code that I find useful. I have not been putting much into github for the simple fact that I have been working professionally and not had the time.
 
 ## jea-password-generate
 
