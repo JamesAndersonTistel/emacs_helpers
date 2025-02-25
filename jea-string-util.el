@@ -129,5 +129,3 @@
 (provide 'jea-string-util)
 
 ;;; jea-string-util.el ends here
-
-(list "hello")
