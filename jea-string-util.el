@@ -36,7 +36,7 @@
 	(replace-regexp-in-string "[ \t]*$" "" in-str))
 
 (defun jea-string-trim(in-str)
-	"Take in IN-STR and return the string with the leading and trailing spaces removed."
+	"Take in IN-STR and return the string with whitespace removed."
 	(jea-string-ltrim (jea-string-rtrim in-str)))
 
 ;; ------------------------------ regex helpers ----------------------

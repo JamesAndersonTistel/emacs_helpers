@@ -21,7 +21,10 @@
 
 ;;; Commentary:
 
-;;; Generate boiler late code for various languages.
+;;; Generate boiler plate code (class, switch etc) for various
+;;; languages.  When each language is turned on, it will set the
+;;; defvars here.  This way we can have shortcuts pointed here that
+;;; don't need to change.
 
 ;;; Code:
 
