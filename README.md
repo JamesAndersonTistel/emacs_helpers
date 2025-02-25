@@ -18,9 +18,11 @@ a disorganiszed set of elisp code that I find useful. I have not been putting mu
 add this to your `.emacs` file:
 
 ```
-(load (expand-file-name "~/install_dir/emacs_helpers/jea-string-util.el"))
-(load (expand-file-name "~/install_dir/emacs_helpers/jea-password-generate.el"))
-(load (expand-file-name "~/install_dir/emacs_helpers/jea-code-gen.el"))
-(load (expand-file-name "~/install_dir/emacs_helpers/jea-code-gen-python.el"))
-(load (expand-file-name "~/install_dir/emacs_helpers/jea-tweet-assist.el"))
+(dolist (fpath '("~/public_github/emacs_helpers/jea-string-util.el"
+                 "~/public_github/emacs_helpers/jea-code-gen.el"
+                 "~/public_github/emacs_helpers/jea-code-gen-python.el"
+                 "~/public_github/emacs_helpers/jea-password-generate.el"
+                 "~/public_github/emacs_helpers/jea-tweet-assist.el"))
+  (if (file-exists-p fpath)
+    (load (expand-file-name fpath))))
 ```
