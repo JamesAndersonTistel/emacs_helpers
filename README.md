@@ -9,3 +9,6 @@ a disorganiszed set of elisp code that I find useful. I have not been putting mu
 
 ## jea-tweet-assist
 [tweet-assist](./README-tweet-assist.md)
+
+## jea-code-gen
+[jea-code-gen](./README-jea-code-gen.md)
