@@ -12,3 +12,15 @@ a disorganiszed set of elisp code that I find useful. I have not been putting mu
 
 ## jea-code-gen
 [jea-code-gen](./README-jea-code-gen.md)
+
+## install
+
+add this to your `.emacs` file:
+
+```
+(load (expand-file-name "~/install_dir/emacs_helpers/jea-string-util.el"))
+(load (expand-file-name "~/install_dir/emacs_helpers/jea-password-generate.el"))
+(load (expand-file-name "~/install_dir/emacs_helpers/jea-code-gen.el"))
+(load (expand-file-name "~/install_dir/emacs_helpers/jea-code-gen-python.el"))
+(load (expand-file-name "~/install_dir/emacs_helpers/jea-tweet-assist.el"))
+```

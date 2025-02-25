@@ -38,6 +38,21 @@
 FUNCTIONS will look like \"bark, jump, skip.\""
 	(funcall jea-code-gen-make-class-func name functions))
 
+(defun jea-code-gen-prompt (arg command)
+	"ARG is prefix argument.  COMMAND is the code gen command.
+For example: class,dog,sleep,bark,dig,swim.  Will insert a class
+called Dog with the functions: sleep, bark, dig, swim.
+"
+	(interactive "p\nsWhat code to gen: ")
+	(let* ((split (string-split command ","))
+				 (command (car split))
+				 (rest (cdr split)))
+		(cond
+		 ((equal "class" command)
+			(jea-code-gen-class (car rest) (cdr rest)))
+		 (t
+			(message "jea-code-gen-prompt unknown command: \"%s\"." command)))))
+
 (provide 'jea-code-gen)
 
 ;;; jea-code-gen.el ends here

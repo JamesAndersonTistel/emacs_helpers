@@ -4,11 +4,13 @@ This is a tool to generate boiler plate code for various languages.
 
 ## generate the basic outline of a class
 
+see below for normal interactive use.
+
 `jea-code-gen-class`
 
 If the arguments are: 
 
-`(jea-code-gen-class "dig" "sleep, bark, dig, swim")`
+`(jea-code-gen-class "dog" '("sleep", "bark", "dig", "swim"))`
 
 the output will be:
 
@@ -17,7 +19,7 @@ the output will be:
 
 """
 """
-class Dig:
+class Dog:
     ""
 
     def __init__(self):
@@ -43,6 +45,12 @@ class Dig:
         result = None
         return result
 ```
+
+## interactive use
+
+`jea-code-gen-prompt`
+
+and enter: `class,dog,sleep,bark,dig,swim` and the class will be generayed in the current buffer.
 
 ## verious languages
 

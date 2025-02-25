@@ -53,7 +53,7 @@
 "))
 
 (defun jea-code-gen--python-ctor(name)
-	"Constructor boilerplate."
+	"Constructor boilerplate.  NAME is the class name."
 	(with-suppressed-warnings ()
 		(format "class %s:
     \"\"
@@ -75,16 +75,15 @@
 
 (defun jea-code-gen--class-python (name functions)
 	"Generate a class named NAME with the functions in the string FUNCTIONS.
-FUNCTIONS will look like \"bark, jump, skip.\""
-	(let ((funcs (jea-find-string-all functions "[ ]*\\([a-zA-Z0-9]+\\)[ ]*,?")))
-		(insert (jea-code-gen--python-preamble))
-		(insert (jea-code-gen--python-ctor name))
-		(dolist (f funcs)
-			(insert (jea-code-gen--python-func f)))))
+FUNCTIONS will look like (\"bark\", \"jump\", \"skip.\")"
+	(insert (jea-code-gen--python-preamble))
+	(insert (jea-code-gen--python-ctor name))
+	(dolist (f functions)
+		(insert (jea-code-gen--python-func f))))
 
 ;; (with-current-buffer (get-buffer-create "*jea-code-gen*")
-;;  	(erase-buffer)
-;; 	(jea-code-gen-class "dig" "sleep, bark, dig, swim"))
+;;   	(erase-buffer)
+;;  	(jea-code-gen-class "dog" '("sleep", "bark", "dig", "swim")))
 
 (defun jea-code-gen-python()
 	"Turn on python code gen.  Set local funcs to the global vars."
