@@ -41,8 +41,7 @@ FUNCTIONS will look like \"bark, jump, skip.\""
 (defun jea-code-gen-prompt (arg command)
 	"ARG is prefix argument.  COMMAND is the code gen command.
 For example: class,dog,sleep,bark,dig,swim.  Will insert a class
-called Dog with the functions: sleep, bark, dig, swim.
-"
+called Dog with the functions: sleep, bark, dig, swim."
 	(interactive "p\nsWhat code to gen: ")
 	(let* ((split (string-split command ","))
 				 (command (car split))
