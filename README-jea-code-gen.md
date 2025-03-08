@@ -1,18 +1,22 @@
-# jea-code-gen
+# jea-code-gen generate the basic outline of common code structures
 
 This is a tool to generate boiler plate code for various languages.
 
-## generate the basic outline of a class
+## interactive use
 
-see below for normal interactive use.
+`jea-code-gen-prompt`
 
-`jea-code-gen-class`
+and enter: `class,dog,sleep,bark,dig,swim` and the class will be generayed in the current buffer.
 
-If the arguments are: 
+enter `func,cat,meow,lick` and get a function named `cat` with the paramaters `meow` and `lick`.
+
+## calling the functions directly (not normal use (use interactive version))
+
+This is the python version, other languages will be supported.
 
 `(jea-code-gen-class "dog" '("sleep", "bark", "dig", "swim"))`
 
-the output will be:
+the output in the current buffer will be:
 
 ```
 ...snip license...
@@ -46,14 +50,21 @@ class Dog:
         return result
 ```
 
-## interactive use
+`(jea-code-gen-func "cat" '("meaow lick))`
 
-`jea-code-gen-prompt`
+will insert into the current buffer:
 
-and enter: `class,dog,sleep,bark,dig,swim` and the class will be generayed in the current buffer.
+```
+    def cat(self, meow, lick):
+        ""
+        result = None
+        return result
+```
 
 ## verious languages
 
+Call to turn on code gen for python.
+
 `jea-code-gen-python`
 
-Call to turn on code gen for python.
+more to follow

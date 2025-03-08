@@ -28,6 +28,7 @@
 
 ;;; Code:
 
+;;; Classes
 (defvar jea-code-gen-make-class-func
 	'(lambda (name functions) (message "not implemented yet."))
 	"Function to generate a class.")
@@ -37,6 +38,18 @@
 
 FUNCTIONS will look like \"bark, jump, skip.\""
 	(funcall jea-code-gen-make-class-func name functions))
+
+;;; functions
+(defvar jea-code-gen-make-func-func
+	'(lambda (name functions) (message "not implemented yet."))
+	"Function to generate a function.")
+
+(defun jea-code-gen-func (name args)
+	"Generate a function named NAME with the ARGS.
+
+FUNCTIONS will look like \"bark, jump, skip.\""
+	(funcall jea-code-gen-make-func-func name args))
+
 
 (defun jea-code-gen-prompt (arg command)
 	"ARG is prefix argument.  COMMAND is the code gen command.
@@ -49,8 +62,12 @@ called Dog with the functions: sleep, bark, dig, swim."
 		(cond
 		 ((equal "class" command)
 			(jea-code-gen-class (car rest) (cdr rest)))
+		 ((equal "func" command)
+			(jea-code-gen-func (car rest) (cdr rest)))
 		 (t
 			(message "jea-code-gen-prompt unknown command: \"%s\"." command)))))
+
+;; (jea-code-gen-python)
 
 (provide 'jea-code-gen)
 
