@@ -1,4 +1,4 @@
-;;; jea-code-gen-react.el --- code to break long strings into 280 character chunks
+;;; jea-code-gen-elixir.el --- code to break long strings into 280 character chunks
 
 ;; Copyright © 2025 James Anderson
 ;;
@@ -21,14 +21,14 @@
 
 ;;; Commentary:
 
-;;; Generate boiler late code for react.
+;;; Generate boiler late code for elixir.
 
 ;;; Code:
 
 (require 'jea-code-gen)
 (require 'jea-string-util)
 
-(defun jea-code-gen--react-preamble()
+(defun jea-code-gen--elixir-preamble()
 	"Start of file preamble text."
 	(with-suppressed-warnings ()
 		"# Copyright © 2025 James Anderson
@@ -52,7 +52,7 @@
 \"\"\"
 "))
 
-(defun jea-code-gen--react-ctor(name)
+(defun jea-code-gen--elixir-ctor(name)
 	"Constructor boilerplate.  NAME is the class name."
 	(with-suppressed-warnings ()
 		(format "class %s:
@@ -63,7 +63,7 @@
 
 " (capitalize name))))
 
-(defun jea-code-gen--react-func(name &optional args)
+(defun jea-code-gen--elixir-func(name &optional args)
 	"Function boilerplate set to NAME with optional ARGS."
 	(with-suppressed-warnings ()
 		(let ((params (if args (concat "self, " (string-join args ", "))
@@ -75,30 +75,30 @@
 
 " name params))))
 
-(defun jea-code-gen--insert-class-react (name functions)
+(defun jea-code-gen--insert-class-elixir (name functions)
 	"Generate a class named NAME with the functions in the string FUNCTIONS.
 FUNCTIONS will look like (\"bark\", \"jump\", \"skip.\")"
-	(insert (jea-code-gen--react-preamble))
-	(insert (jea-code-gen--react-ctor name))
+	(insert (jea-code-gen--elixir-preamble))
+	(insert (jea-code-gen--elixir-ctor name))
 	(dolist (f functions)
-		(insert (jea-code-gen--react-func f nil))))
+		(insert (jea-code-gen--elixir-func f nil))))
 
-(defun jea-code-gen--insert-func-react (name args)
+(defun jea-code-gen--insert-func-elixir (name args)
 	"Generate a function named NAME with the args from ARGS.
 AGRS will look like (\"bark\", \"jump\", \"skip.\")"
-	(insert (jea-code-gen--react-func name args)))
+	(insert (jea-code-gen--elixir-func name args)))
 
 ;; (with-current-buffer (get-buffer-create "*jea-code-gen*")
 ;;   (erase-buffer)
 ;; ;;   (jea-code-gen-class "dog" '("sleep" "bark" "dig" "swim")))
-;; 	(jea-code-gen--func-react "dog" '("sleep" "bark" "dig" "swim")))
+;; 	(jea-code-gen--func-elixir "dog" '("sleep" "bark" "dig" "swim")))
 
-(defun jea-code-gen-react()
-	"Turn on react code gen.  Set local funcs to the global vars."
-	(setf jea-code-gen-make-class-func 'jea-code-gen--insert-class-react)
-	(setf jea-code-gen-make-func-func 'jea-code-gen--insert-func-react)
+(defun jea-code-gen-elixir()
+	"Turn on elixir code gen.  Set local funcs to the global vars."
+	(setf jea-code-gen-make-class-func 'jea-code-gen--insert-class-elixir)
+	(setf jea-code-gen-make-func-func 'jea-code-gen--insert-func-elixir)
 	t)
 
-(provide 'jea-code-gen-react)
+(provide 'jea-code-gen-elixir)
 
-;;; jea-code-gen-react.el ends here
+;;; jea-code-gen-elixir.el ends here

@@ -88,10 +88,10 @@ FUNCTIONS will look like (\"bark\", \"jump\", \"skip.\")"
 AGRS will look like (\"bark\", \"jump\", \"skip.\")"
 	(insert (jea-code-gen--python-func name args)))
 
-(with-current-buffer (get-buffer-create "*jea-code-gen*")
-  (erase-buffer)
-;;   (jea-code-gen-class "dog" '("sleep" "bark" "dig" "swim")))
-	(jea-code-gen--func-python "dog" '("sleep" "bark" "dig" "swim")))
+;; (with-current-buffer (get-buffer-create "*jea-code-gen*")
+;;   (erase-buffer)
+;; ;;   (jea-code-gen-class "dog" '("sleep" "bark" "dig" "swim")))
+;; 	(jea-code-gen--func-python "dog" '("sleep" "bark" "dig" "swim")))
 
 (defun jea-code-gen-python()
 	"Turn on python code gen.  Set local funcs to the global vars."
