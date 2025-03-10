@@ -50,6 +50,18 @@ FUNCTIONS will look like \"bark, jump, skip.\""
 FUNCTIONS will look like \"bark, jump, skip.\""
 	(funcall jea-code-gen-make-func-func name args))
 
+;;; switches
+(defvar jea-code-gen-make-switch-func
+	'(lambda (val cases) (message "not implemented yet."))
+	"Function to generate a function.")
+
+(defun jea-code-gen-switch (val cases)
+	"Generate a switch statement.
+VAL as value and CASES to compare against.
+
+VAL will look like \"x\" and CASES like \"1, 2, 3.\""
+	(funcall jea-code-gen-make-switch-func val cases))
+
 
 (defun jea-code-gen-prompt (arg command)
 	"ARG is prefix argument.  COMMAND is the code gen command.
