@@ -76,6 +76,8 @@ called Dog with the functions: sleep, bark, dig, swim."
 			(jea-code-gen-class (car rest) (cdr rest)))
 		 ((equal "func" command)
 			(jea-code-gen-func (car rest) (cdr rest)))
+		 ((equal "switch" command)
+			(jea-code-gen-switch (car rest) (cdr rest)))
 		 (t
 			(message "jea-code-gen-prompt unknown command: \"%s\"." command)))))
 

@@ -39,6 +39,20 @@
 	"Take in IN-STR and return the string with whitespace removed."
 	(jea-string-ltrim (jea-string-rtrim in-str)))
 
+(defun jea-string-get-print-format(in-str)
+	"If IN-STR is a string number convert to string.  Other wise just return."
+	(if (integerp in-str)
+			in-str
+		(let* ((start (string-match	"^[0-9]+$" in-str))
+					 (end (match-end 0))
+					 (result (if start (string-to-number (substring in-str start end))
+										 in-str)))
+			result)))
+
+;; (jea-string-get-print-format 13)
+;; (jea-string-get-print-format "14")
+;; (jea-string-get-print-format "hello")
+
 ;; ------------------------------ regex helpers ----------------------
 
 (defun jea-find-string-all-indexes(in-str regex)

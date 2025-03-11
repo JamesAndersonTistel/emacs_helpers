@@ -75,6 +75,34 @@
 
 " name params))))
 
+(defun add--compare(val other)
+	"Return the correct comparison text between VAL and OTHER.
+If NUM is non nil then its a number and alter the returned text."
+	(let ((o (jea-string-get-print-format other))
+				(result))
+		(if (numberp o)
+				(setq result (format "%s == %d" val o))
+			(setq result (format "%s == '%s'" val o)))))
+
+;; (add--compare "x" 43)
+;; (add--compare "x" "y")
+
+(defun jea-code-gen--python-switch(val cases)
+	"Python does not have swtiches so this will make if/else.
+VAL is the value that will be compared against.
+CASES are the values that will be compared to VAL."
+	(with-suppressed-warnings ()
+		(let* ((result (format "    if %s:\n        pass\n"
+													 (add--compare val (car cases)))))
+			(dolist (case (cdr cases))
+				(setq result (concat result (format "    elif %s:\n        pass\n"
+																						(add--compare val case)))))
+			(setq result (concat result "    else:\n        pass\n"))
+			result)))
+
+;; (jea-code-gen--python-switch "x" '("dog" "cat" "mouse"))
+;; (jea-code-gen--python-switch "x" '(22 33 44 55))
+
 (defun jea-code-gen--insert-class-python (name functions)
 	"Generate a class named NAME with the functions in the string FUNCTIONS.
 FUNCTIONS will look like (\"bark\", \"jump\", \"skip.\")"
@@ -88,15 +116,25 @@ FUNCTIONS will look like (\"bark\", \"jump\", \"skip.\")"
 AGRS will look like (\"bark\", \"jump\", \"skip.\")"
 	(insert (jea-code-gen--python-func name args)))
 
-;; (with-current-buffer (get-buffer-create "*jea-code-gen*")
-;;   (erase-buffer)
-;; ;;   (jea-code-gen-class "dog" '("sleep" "bark" "dig" "swim")))
-;; 	(jea-code-gen--func-python "dog" '("sleep" "bark" "dig" "swim")))
+(defun jea-code-gen--insert-swtich-python (val cases)
+	"Insert a swtich statment.
+VAL is the value that will be compared against.
+CASES are the values that will be compared to VAL."
+	(insert (jea-code-gen--python-switch val cases)))
+
+;;  (with-current-buffer (get-buffer-create "*jea-code-gen*")
+;;    (erase-buffer)
+;;  ;;   (jea-code-gen-class "dog" '("sleep" "bark" "dig" "swim")))
+;; 	 ;;	(jea-code-gen--func-python "dog" '("sleep" "bark" "dig" "swim")))
+;; 	(jea-code-gen--insert-swtich-python "x" '("1" "2" "3")))
+;; ;; (jea-code-gen--insert-swtich-python "x" '("dog" "cat" "mouse")))
+
 
 (defun jea-code-gen-python()
 	"Turn on python code gen.  Set local funcs to the global vars."
 	(setf jea-code-gen-make-class-func 'jea-code-gen--insert-class-python)
 	(setf jea-code-gen-make-func-func 'jea-code-gen--insert-func-python)
+	(setf jea-code-gen-make-switch-func 'jea-code-gen--insert-swtich-python)
 	t)
 
 (provide 'jea-code-gen-python)
