@@ -1,22 +1,13 @@
 # jea-code-gen generate the basic outline of common code structures
 
-This is a tool to generate boiler plate code for various languages.
+This is a tool to generate boiler plate code for various languages. examples here are python but will be doing other languages later.
 
 ## interactive use
 
 `jea-code-gen-prompt`
 
-and enter: `class,dog,sleep,bark,dig,swim` and the class will be generayed in the current buffer.
-
-enter `func,cat,meow,lick` and get a function named `cat` with the paramaters `meow` and `lick`.
-
-## calling the functions directly (not normal use (use interactive version))
-
-This is the python version, other languages will be supported.
-
-`(jea-code-gen-class "dog" '("sleep", "bark", "dig", "swim"))`
-
-the output in the current buffer will be:
+### classes
+enter: `class,dog,sleep,bark,dig,swim` will generate:
 
 ```
 ...snip license...
@@ -50,21 +41,39 @@ class Dog:
         return result
 ```
 
-`(jea-code-gen-func "cat" '("meaow lick))`
-
-will insert into the current buffer:
+### functions
+enter `func,cat,meow,sleep` will generate:
 
 ```
-    def cat(self, meow, lick):
+    def cat(self, meow, sleep):
         ""
         result = None
         return result
 ```
 
-## verious languages
+### switches
+enter `switch,x,1,2,3` will generate:
 
-Call to turn on code gen for python.
+```
+    if x == 1:
+        pass
+    elif x == 2:
+        pass
+    elif x == 3:
+        pass
+    else:
+        pass
+```
 
-`jea-code-gen-python`
+enter `switch,pet,dog,cat,hamster` will generate:
 
-more to follow
+```
+    if pet == 'dog':
+        pass
+    elif pet == 'cat':
+        pass
+    elif pet == 'hamster':
+        pass
+    else:
+        pass
+```

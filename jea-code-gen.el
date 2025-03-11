@@ -33,38 +33,15 @@
 	'(lambda (name functions) (message "not implemented yet."))
 	"Function to generate a class.")
 
-(defun jea-code-gen-class (name functions)
-	"Generate a class named NAME with the functions in the string FUNCTIONS.
-
-FUNCTIONS will look like \"bark, jump, skip.\""
-	(funcall jea-code-gen-make-class-func name functions))
-
-;;; functions
+;;; Functions
 (defvar jea-code-gen-make-func-func
 	'(lambda (name functions) (message "not implemented yet."))
 	"Function to generate a function.")
 
-(defun jea-code-gen-func (name args)
-	"Generate a function named NAME with the ARGS.
-
-FUNCTIONS will look like \"bark, jump, skip.\""
-	(funcall jea-code-gen-make-func-func name args))
-
-;;; switches
+;;; Switches
 (defvar jea-code-gen-make-switch-func
 	'(lambda (val cases) (message "not implemented yet."))
 	"Function to generate a function.")
-
-(defun jea-code-gen-switch (val cases)
-	"Generate a switch statement.
-VAL as value and CASES to compare against.
-
-VAL will look like \"x\" and CASES like \"1, 2, 3.\""
-	(funcall jea-code-gen-make-switch-func val cases))
-
-
-;; TODO the funcall should just be below two for each is dumb
-
 
 (defun jea-code-gen-prompt (arg command)
 	"ARG is prefix argument.  COMMAND is the code gen command.
@@ -76,11 +53,11 @@ called Dog with the functions: sleep, bark, dig, swim."
 				 (rest (cdr split)))
 		(cond
 		 ((equal "class" command)
-			(jea-code-gen-class (car rest) (cdr rest)))
+			(funcall jea-code-gen-make-class-func (car rest) (cdr rest))) ;; name functions
 		 ((equal "func" command)
-			(jea-code-gen-func (car rest) (cdr rest)))
+			(funcall jea-code-gen-make-func-func (car rest) (cdr rest))) ;; name args
 		 ((equal "switch" command)
-			(jea-code-gen-switch (car rest) (cdr rest)))
+			(funcall jea-code-gen-make-switch-func (car rest) (cdr rest))) ;; val cases
 		 (t
 			(message "jea-code-gen-prompt unknown command: \"%s\"." command)))))
 
