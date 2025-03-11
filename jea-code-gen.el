@@ -63,6 +63,9 @@ VAL will look like \"x\" and CASES like \"1, 2, 3.\""
 	(funcall jea-code-gen-make-switch-func val cases))
 
 
+;; TODO the funcall should just be below two for each is dumb
+
+
 (defun jea-code-gen-prompt (arg command)
 	"ARG is prefix argument.  COMMAND is the code gen command.
 For example: class,dog,sleep,bark,dig,swim.  Will insert a class
