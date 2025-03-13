@@ -88,9 +88,9 @@ Use EXPANDED-VARS to get the values."
 
 ;; (jea-expand-declaration-variables '("sleep: string" "bark: number" "dig: boolean"))
 
-(defun jea-expand-ctor-variables(expanded-vars)
+(defun jea-expand-ctor-args-variables(expanded-vars)
 	"Produce code that is suitable for a class constructor.
-Use EXPANDED-VARS to get the vlaues. We need to behave differently on the last one."
+Use EXPANDED-VARS to get the vlaues.  We need to behave differently on the last one."
 	(let ((count 0)
 				(max (- (length expanded-vars) 1))
 				(result ""))
@@ -102,7 +102,17 @@ Use EXPANDED-VARS to get the vlaues. We need to behave differently on the last o
 				(setq result (concat result (format "%s" v)))))
 		result))
 
-(jea-expand-ctor-variables '("sleep: string" "bark: number" "dig: boolean"))
+;; (jea-expand-ctor-args-variables '("sleep: string" "bark: number" "dig: boolean"))
+;; "sleep: string, bark: number, dig: boolean"
+
+(defun jea-expand-ctor-contents-variables(expanded-vars)
+	"Produce code that is suitable for a class constructor contents.
+Use EXPANDED-VARS to get the vlaues."
+	(mapconcat (lambda (v)
+							 (format "    this.%s = %s;\n" v v))
+						 expanded-vars))
+
+;; (jea-expand-ctor-contents-variables '("sleep: string" "bark: number" "dig: boolean"))
 
 (defun jea-code-gen--typescript-class(name variables)
 	"Constructor boilerplate.  NAME is the class name.
