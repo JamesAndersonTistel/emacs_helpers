@@ -75,7 +75,7 @@
 
 " name params))))
 
-(defun add--compare(val other)
+(defun jea-add--compare(val other)
 	"Return the correct comparison text between VAL and OTHER.
 If NUM is non nil then its a number and alter the returned text."
 	(let ((o (jea-string-get-print-format other))
@@ -90,10 +90,10 @@ VAL is the value that will be compared against.
 CASES are the values that will be compared to VAL."
 	(with-suppressed-warnings ()
 		(let* ((result (format "    if %s:\n        pass\n"
-													 (add--compare val (car cases)))))
+													 (jea-add--compare val (car cases)))))
 			(dolist (case (cdr cases))
 				(setq result (concat result (format "    elif %s:\n        pass\n"
-																						(add--compare val case)))))
+																						(jea-add--compare val case)))))
 			(setq result (concat result "    else:\n        pass\n"))
 			result)))
 

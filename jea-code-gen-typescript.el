@@ -55,7 +55,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (defun jea-variable--split(variable)
 	"Convert VARIABLE short code to long form.
 \"nsleep\" => \"sleep\" \"number\""
-	
+
 	(let* ((vtype (substring variable 0 1))
 				 (result (alist-get vtype
 														 '(("s" . "string")
@@ -75,6 +75,35 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ;; (jea-variables--split '("ssleep" "nbark" "bdig"))
 ;; ("sleep: string" "bark: number" "dig: boolean")
 
+(defun jea-expand-declaration-variables(expanded-vars)
+	"Produce text that can be used as variable declaration.
+Use EXPANDED-VARS to get the values."
+	(mapconcat (lambda (v)
+							 (format "    /**
+    *
+    */
+    %s;
+
+" v)) expanded-vars))
+
+;; (jea-expand-declaration-variables '("sleep: string" "bark: number" "dig: boolean"))
+
+(defun jea-expand-ctor-variables(expanded-vars)
+	"Produce code that is suitable for a class constructor.
+Use EXPANDED-VARS to get the vlaues. We need to behave differently on the last one."
+	(let ((count 0)
+				(max (- (length expanded-vars) 1))
+				(result ""))
+		(dolist (v expanded-vars)
+			(if (< count max)
+					(progn
+						(setq result (concat result (format "%s, " v)))
+						(setq count (1+ count)))
+				(setq result (concat result (format "%s" v)))))
+		result))
+
+(jea-expand-ctor-variables '("sleep: string" "bark: number" "dig: boolean"))
+
 (defun jea-code-gen--typescript-class(name variables)
 	"Constructor boilerplate.  NAME is the class name.
 VARIABLES will be expanded into class variables.  Also functions
@@ -85,10 +114,6 @@ will be generated even if not often used.  Its easy to delete."
  *
  */
 class %s {
-    \"\"
-
-    def __init__(self):
-        pass
 
 " (capitalize name))))
 
