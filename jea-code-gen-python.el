@@ -31,7 +31,7 @@
 (defun jea-code-gen--python-preamble()
 	"Start of file preamble text."
 	(with-suppressed-warnings ()
-		"# Copyright © 2025 James Anderson
+		(format "# Copyright © %s James Anderson
 #
 # Author: James Anderson <james@tisteltech.com>
 #
@@ -50,7 +50,7 @@
 
 \"\"\"
 \"\"\"
-"))
+" (format-time-string "%Y" (current-time)))))
 
 (defun jea-code-gen--python-ctor(name)
 	"Constructor boilerplate.  NAME is the class name."
@@ -84,9 +84,6 @@ If NUM is non nil then its a number and alter the returned text."
 				(setq result (format "%s == %d" val o))
 			(setq result (format "%s == '%s'" val o)))))
 
-;; (add--compare "x" 43)
-;; (add--compare "x" "y")
-
 (defun jea-code-gen--python-switch(val cases)
 	"Python does not have swtiches so this will make if/else.
 VAL is the value that will be compared against.
@@ -99,9 +96,6 @@ CASES are the values that will be compared to VAL."
 																						(add--compare val case)))))
 			(setq result (concat result "    else:\n        pass\n"))
 			result)))
-
-;; (jea-code-gen--python-switch "x" '("dog" "cat" "mouse"))
-;; (jea-code-gen--python-switch "x" '(22 33 44 55))
 
 (defun jea-code-gen--insert-class-python (name functions)
 	"Generate a class named NAME with the functions in the string FUNCTIONS.
@@ -130,8 +124,9 @@ CASES are the values that will be compared to VAL."
 ;; ;; (jea-code-gen--insert-swtich-python "x" '("dog" "cat" "mouse")))
 
 
-(defun jea-code-gen-python()
+(defun jea-code-gen-use-python()
 	"Turn on python code gen.  Set local funcs to the global vars."
+	(interactive)
 	(setf jea-code-gen-make-class-func 'jea-code-gen--insert-class-python)
 	(setf jea-code-gen-make-func-func 'jea-code-gen--insert-func-python)
 	(setf jea-code-gen-make-switch-func 'jea-code-gen--insert-swtich-python)

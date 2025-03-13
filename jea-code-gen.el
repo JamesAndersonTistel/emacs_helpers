@@ -61,7 +61,8 @@ called Dog with the functions: sleep, bark, dig, swim."
 		 (t
 			(message "jea-code-gen-prompt unknown command: \"%s\"." command)))))
 
-;; (jea-code-gen-python)
+;; (jea-code-gen-use-python)
+;; (jea-code-gen-use-typescript)
 
 (provide 'jea-code-gen)
 
