@@ -50,33 +50,47 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-/**
- * file docstring
- */
-
 " (format-time-string "%Y" (current-time)))))
 
-(defun jea-code-gen--typescript-ctor(name)
-	"Constructor boilerplate.  NAME is the class name."
+(defun jea-variable--split(variable)
+	"Convert VARIABLE short code to long form.
+\"nsleep\" => \"sleep\" \"number\""
+	
+	(let* ((vtype (substring variable 0 1))
+				 (result (alist-get vtype
+														 '(("s" . "string")
+															 ("n" . "number")
+															 ("b" . "boolean"))
+														 "not found" nil 'string-equal))
+				 (name (substring variable 1)))
+		(list name result)))
+
+(defun jea-variables--split(variables)
+	"Convert VARIABLES into a name data type pairing."
+	(let* ((expanded (mapcar #'jea-variable--split variables)))
+		(mapcar (lambda (x)
+							(format "%s: %s" (car x) (car (cdr x))))
+						expanded)))
+
+;; (jea-variables--split '("ssleep" "nbark" "bdig"))
+;; ("sleep: string" "bark: number" "dig: boolean")
+
+(defun jea-code-gen--typescript-class(name variables)
+	"Constructor boilerplate.  NAME is the class name.
+VARIABLES will be expanded into class variables.  Also functions
+will be generated even if not often used.  Its easy to delete."
 	(with-suppressed-warnings ()
-		(format "class %s:
+		(format "
+/**
+ *
+ */
+class %s {
     \"\"
 
     def __init__(self):
         pass
 
 " (capitalize name))))
-
-;; use this to easily test large text ouputs
-(defun jea-test-run()
-	"Hook up F5 to run."
-	(interactive)
-	(with-current-buffer (get-buffer-create "*jea-code-gen*")
-		(erase-buffer)
-		(jea-code-gen--insert-class-typescript "dog" '("sleep" "bark" "dig" "swim"))
-		))
-
-(global-set-key [(f5)] 'jea-test-run)
 
 (defun jea-code-gen--typescript-func(name &optional args)
 	"Function boilerplate set to NAME with optional ARGS."
@@ -103,22 +117,22 @@ FUNCTIONS will look like (\"bark\", \"jump\", \"skip.\")"
 AGRS will look like (\"bark\", \"jump\", \"skip.\")"
 	(insert (jea-code-gen--typescript-func name args)))
 
-;; (with-current-buffer (get-buffer-create "*jea-code-gen*")
-;;   (erase-buffer)
-;; ;;   (jea-code-gen-class "dog" '("sleep" "bark" "dig" "swim")))
-;; 	(jea-code-gen--func-typescript "dog" '("sleep" "bark" "dig" "swim")))
-
-(defun jea-code-gen-typescript()
-	"Turn on typescript code gen.  Set local funcs to the global vars."
-	(setf jea-code-gen-make-class-func 'jea-code-gen--insert-class-typescript)
-	(setf jea-code-gen-make-func-func 'jea-code-gen--insert-func-typescript)
-	t)
-
 (defun jea-code-gen-use-typescript()
 	"Turn on typescript code gen.  Set local funcs to the global vars."
 	(interactive)
 	(setf jea-code-gen-make-class-func 'jea-code-gen--insert-class-typescript)
 	t)
+
+;; use this to easily test large text ouputs
+(defun jea-test-run()
+	"Hook up F5 to run."
+	(interactive)
+	(with-current-buffer (get-buffer-create "*jea-code-gen*")
+		(erase-buffer)
+		(jea-code-gen--insert-class-typescript "dog" '("ssleep" "nbark" "bdig"))
+		))
+
+(global-set-key [(f5)] 'jea-test-run)
 
 (provide 'jea-code-gen-typescript)
 
