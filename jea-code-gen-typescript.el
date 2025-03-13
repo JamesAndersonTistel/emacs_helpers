@@ -50,9 +50,9 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-" (format-time-string "%Y" (current-time)))))
+" (format--time-string "%Y" (current-time)))))
 
-(defun jea-variable--split(variable)
+(defun jea--variable--split(variable)
 	"Convert VARIABLE short code to long form.
 \"nsleep\" => \"sleep\" \"number\""
 
@@ -65,30 +65,30 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 				 (name (substring variable 1)))
 		(list name result)))
 
-(defun jea-variables--split(variables)
+(defun jea--variables--split(variables)
 	"Convert VARIABLES into a name data type pairing."
-	(let* ((expanded (mapcar #'jea-variable--split variables)))
+	(let* ((expanded (mapcar #'jea--variable--split variables)))
 		(mapcar (lambda (x)
-							(format "%s: %s" (car x) (car (cdr x))))
+							(list (car x) (car (cdr x))))
 						expanded)))
 
-;; (jea-variables--split '("ssleep" "nbark" "bdig"))
-;; ("sleep: string" "bark: number" "dig: boolean")
+;; (jea--variables--split '("ssleep" "nbark" "bdig"))
+;; (("sleep" "string") ("bark" "number") ("dig" "boolean"))
 
-(defun jea-expand-declaration-variables(expanded-vars)
+(defun jea--expand-declaration-variables(expanded-vars)
 	"Produce text that can be used as variable declaration.
 Use EXPANDED-VARS to get the values."
 	(mapconcat (lambda (v)
 							 (format "    /**
     *
     */
-    %s;
+    %s: %s;
 
-" v)) expanded-vars))
+" (car v) (car (cdr v)))) expanded-vars))
 
-;; (jea-expand-declaration-variables '("sleep: string" "bark: number" "dig: boolean"))
+;; (jea--expand-declaration-variables '(("sleep" "string") ("bark" "number") ("dig" "boolean")))
 
-(defun jea-expand-ctor-args-variables(expanded-vars)
+(defun jea--expand-ctor-args-variables(expanded-vars)
 	"Produce code that is suitable for a class constructor.
 Use EXPANDED-VARS to get the vlaues.  We need to behave differently on the last one."
 	(let ((count 0)
@@ -102,17 +102,17 @@ Use EXPANDED-VARS to get the vlaues.  We need to behave differently on the last 
 				(setq result (concat result (format "%s" v)))))
 		result))
 
-;; (jea-expand-ctor-args-variables '("sleep: string" "bark: number" "dig: boolean"))
+;; (jea--expand-ctor-args-variables '(("sleep" "string") ("bark" "number") ("dig" "boolean")))
 ;; "sleep: string, bark: number, dig: boolean"
 
-(defun jea-expand-ctor-contents-variables(expanded-vars)
+(defun jea--expand-ctor-contents-variables(expanded-vars)
 	"Produce code that is suitable for a class constructor contents.
 Use EXPANDED-VARS to get the vlaues."
 	(mapconcat (lambda (v)
-							 (format "    this.%s = %s;\n" v v))
+							 (format "    this.%s = %s;\n" (car v) (car v)))
 						 expanded-vars))
 
-;; (jea-expand-ctor-contents-variables '("sleep: string" "bark: number" "dig: boolean"))
+;; (jea--expand-ctor-contents-variables '(("sleep" "string") ("bark" "number") ("dig" "boolean")))
 
 (defun jea-code-gen--typescript-class(name variables)
 	"Constructor boilerplate.  NAME is the class name.
@@ -127,17 +127,8 @@ class %s {
 
 " (capitalize name))))
 
-(defun jea-code-gen--typescript-func(name &optional args)
-	"Function boilerplate set to NAME with optional ARGS."
-	(with-suppressed-warnings ()
-		(let ((params (if args (concat "self, " (string-join args ", "))
-										"self")))
-			(format "    def %s(%s):
-        \"\"
-        result = None
-        return result
+;;; start above
 
-" name params))))
 
 (defun jea-code-gen--insert-class-typescript (name functions)
 	"Generate a class named NAME with the functions in the string FUNCTIONS.
