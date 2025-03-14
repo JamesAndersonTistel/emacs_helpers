@@ -50,7 +50,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-" (format--time-string "%Y" (current-time)))))
+" (format-time-string "%Y" (current-time)))))
 
 (defun jea--variable--split(variable)
 	"Convert VARIABLE short code to long form.
@@ -135,7 +135,7 @@ class %s {
 
 (defun jea-code-gen--insert-class-typescript (name variables)
 	"Generate a class named NAME with the functions in the string VARIABLES."
-	;; (insert (jea-code-gen--typescript-preamble))
+	(insert (jea-code-gen--typescript-preamble))
 	(insert (jea-code-gen--typescript-class name variables)))
 
 (defun jea-code-gen--insert-func-typescript (name args)
@@ -155,8 +155,7 @@ AGRS will look like (\"bark\", \"jump\", \"skip.\")"
 	(interactive)
 	(with-current-buffer (get-buffer-create "*jea-code-gen*")
 		(erase-buffer)
-		(jea-code-gen--insert-class-typescript "dog" '("ssleep" "nbark" "bdig"))
-		))
+		(jea-code-gen--insert-class-typescript "dog" '("ssleep" "nbark" "bdig" "sswim"))))
 
 (global-set-key [(f5)] 'jea-test-run)
 

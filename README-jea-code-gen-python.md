@@ -1,12 +1,15 @@
-# jea-code-gen generate the basic outline of common code structures
+# jea-code-gen for python
 
-This is a tool to generate boiler plate code for various languages. examples here are python but will be doing other languages later.
+This is a tool to generate boiler plate code for python.
 
 ## interactive use
+### one time
+`jea-code-gen-use-python`
 
+### use
 `jea-code-gen-prompt`
 
-### classes
+## classes
 enter: `class,dog,sleep,bark,dig,swim` will generate:
 
 ```
@@ -41,7 +44,7 @@ class Dog:
         return result
 ```
 
-### functions
+## functions
 enter `func,cat,meow,sleep` will generate:
 
 ```
@@ -51,7 +54,7 @@ enter `func,cat,meow,sleep` will generate:
         return result
 ```
 
-### switches
+## switches
 enter `switch,x,1,2,3` will generate:
 
 ```
