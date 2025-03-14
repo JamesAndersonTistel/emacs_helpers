@@ -88,7 +88,7 @@ EXP-VARS is the expanded arguments."
 		(let ((args (jea-code-gen-ctor-args-variables exp-vars 'jea-code-gen--python-variable-fmt))
 					(vars (mapconcat
 								 (lambda (v)
-									 (format "        self._%s = %s;\n" (car v) (car v)))
+									 (format "        self._%s = %s\n" (car v) (car v)))
 								 exp-vars)))
 			(format "class %s:
     \"\"
@@ -101,7 +101,7 @@ EXP-VARS is the expanded arguments."
 ;; (jea-code-gen--python-ctor "cat" '(("sleep" "str") ("bark" "int") ("dig" "bool")))
 
 ;; START here, fix the func names to have correct prefix for lang
-
+;; fix the func gen
 (defun jea-code-gen--python-func(name &optional args)
 	"Function boilerplate set to NAME with optional ARGS."
 	(with-suppressed-warnings ()
@@ -139,8 +139,9 @@ CASES are the values that will be compared to VAL."
 (defun jea-code-gen--insert-class-python (name variables)
 	"Generate a class named NAME with the functions in the string VARIABLES.
 VARIABLES will look like (\"ibark\", \"bjump\", \"sskip.\")"
-	;;(insert (jea-code-gen--python-preamble))
-	(insert (jea-code-gen--python-ctor name variables)))
+	(let ((exp-vars (jea-code-gen--python-variables-split variables)))
+		(insert (jea-code-gen--python-preamble))
+		(insert (jea-code-gen--python-ctor name exp-vars))))
 
 (defun jea-code-gen--insert-func-python (name args)
 	"Generate a function named NAME with the args from ARGS.

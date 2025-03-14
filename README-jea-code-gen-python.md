@@ -10,7 +10,10 @@ This is a tool to generate boiler plate code for python.
 `jea-code-gen-prompt`
 
 ## classes
-enter: `class,dog,sleep,bark,dig,swim` will generate:
+
+(note the prefix arg)
+
+enter: `class,dog,ssleep,ibark,bdig,sswim` will generate:
 
 ```
 ...snip license...
@@ -20,28 +23,11 @@ enter: `class,dog,sleep,bark,dig,swim` will generate:
 class Dog:
     ""
 
-    def __init__(self):
-        pass
-
-    def sleep(self):
-        ""
-        result = None
-        return result
-
-    def bark(self):
-        ""
-        result = None
-        return result
-
-    def dig(self):
-        ""
-        result = None
-        return result
-
-    def swim(self):
-        ""
-        result = None
-        return result
+    def __init__(self, sleep: str, bark: int, dig: bool, swim: str):
+        self._sleep = sleep
+        self._bark = bark
+        self._dig = dig
+        self._swim = swim
 ```
 
 ## functions
