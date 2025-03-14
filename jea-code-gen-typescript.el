@@ -97,19 +97,18 @@ Use EXPANDED-VARS to get the vlaues.  We need to behave differently on the last 
 		(dolist (v expanded-vars)
 			(if (< count max)
 					(progn
-						(setq result (concat result (format "%s, " v)))
+						(setq result (concat result (format "%s: %s, " (car v) (car (cdr v)))))
 						(setq count (1+ count)))
-				(setq result (concat result (format "%s" v)))))
+				(setq result (concat result (format "%s: %s" (car v) (car (cdr v)))))))
 		result))
 
 ;; (jea--expand-ctor-args-variables '(("sleep" "string") ("bark" "number") ("dig" "boolean")))
-;; "sleep: string, bark: number, dig: boolean"
 
 (defun jea--expand-ctor-contents-variables(expanded-vars)
 	"Produce code that is suitable for a class constructor contents.
 Use EXPANDED-VARS to get the vlaues."
 	(mapconcat (lambda (v)
-							 (format "    this.%s = %s;\n" (car v) (car v)))
+							 (format "this.%s = %s;\n" (car v) (car v)))
 						 expanded-vars))
 
 ;; (jea--expand-ctor-contents-variables '(("sleep" "string") ("bark" "number") ("dig" "boolean")))
@@ -119,24 +118,29 @@ Use EXPANDED-VARS to get the vlaues."
 VARIABLES will be expanded into class variables.  Also functions
 will be generated even if not often used.  Its easy to delete."
 	(with-suppressed-warnings ()
+		(let* ((name (capitalize name))
+					 (vars  (jea--variables--split variables)))
 		(format "
 /**
  *
  */
 class %s {
+%s
 
-" (capitalize name))))
+    constructor(%s) {
+      %s
+    }
+}
+" name (jea--expand-declaration-variables vars)
+(jea--expand-ctor-args-variables vars) (jea--expand-ctor-contents-variables vars)))))
 
 ;;; start above
 
 
-(defun jea-code-gen--insert-class-typescript (name functions)
-	"Generate a class named NAME with the functions in the string FUNCTIONS.
-FUNCTIONS will look like (\"bark\", \"jump\", \"skip.\")"
+(defun jea-code-gen--insert-class-typescript (name variables)
+	"Generate a class named NAME with the functions in the string VARIABLES."
 	;; (insert (jea-code-gen--typescript-preamble))
-	(insert (jea-code-gen--typescript-ctor name))
-	(dolist (f functions)
-		(insert (jea-code-gen--typescript-func f nil))))
+	(insert (jea-code-gen--typescript-class name variables)))
 
 (defun jea-code-gen--insert-func-typescript (name args)
 	"Generate a function named NAME with the args from ARGS.
