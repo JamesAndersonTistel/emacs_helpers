@@ -31,7 +31,7 @@
 (defun jea-code-gen--react-preamble()
 	"Start of file preamble text."
 	(with-suppressed-warnings ()
-		"# Copyright © 2025 James Anderson
+		(format "# Copyright © %s James Anderson
 #
 # Author: James Anderson <james@tisteltech.com>
 #
@@ -50,53 +50,13 @@
 
 \"\"\"
 \"\"\"
-"))
+" (format-time-string "%Y" (current-time)))))
 
-(defun jea-code-gen--react-ctor(name)
-	"Constructor boilerplate.  NAME is the class name."
-	(with-suppressed-warnings ()
-		(format "class %s:
-    \"\"
-
-    def __init__(self):
-        pass
-
-" (capitalize name))))
-
-(defun jea-code-gen--react-func(name &optional args)
-	"Function boilerplate set to NAME with optional ARGS."
-	(with-suppressed-warnings ()
-		(let ((params (if args (concat "self, " (string-join args ", "))
-										"self")))
-			(format "    def %s(%s):
-        \"\"
-        result = None
-        return result
-
-" name params))))
-
-(defun jea-code-gen--insert-class-react (name functions)
-	"Generate a class named NAME with the functions in the string FUNCTIONS.
-FUNCTIONS will look like (\"bark\", \"jump\", \"skip.\")"
-	(insert (jea-code-gen--react-preamble))
-	(insert (jea-code-gen--react-ctor name))
-	(dolist (f functions)
-		(insert (jea-code-gen--react-func f nil))))
-
-(defun jea-code-gen--insert-func-react (name args)
-	"Generate a function named NAME with the args from ARGS.
-AGRS will look like (\"bark\", \"jump\", \"skip.\")"
-	(insert (jea-code-gen--react-func name args)))
-
-;; (with-current-buffer (get-buffer-create "*jea-code-gen*")
-;;   (erase-buffer)
-;; ;;   (jea-code-gen-class "dog" '("sleep" "bark" "dig" "swim")))
-;; 	(jea-code-gen--func-react "dog" '("sleep" "bark" "dig" "swim")))
-
-(defun jea-code-gen-react()
+(defun jea-code-gen-use-react()
 	"Turn on react code gen.  Set local funcs to the global vars."
-	(setf jea-code-gen-make-class-func 'jea-code-gen--insert-class-react)
-	(setf jea-code-gen-make-func-func 'jea-code-gen--insert-func-react)
+	(interactive)
+	;;(setf jea-code-gen-make-class-func 'jea-code-gen--insert-class-react)
+	;;(setf jea-code-gen-make-func-func 'jea-code-gen--insert-func-react)
 	t)
 
 (provide 'jea-code-gen-react)
