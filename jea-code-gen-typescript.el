@@ -79,10 +79,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	"Produce text that can be used as variable declaration.
 Use EXPANDED-VARS to get the values."
 	(mapconcat (lambda (v)
-							 (format "    /**
-    *
-    */
-    %s: %s;
+							 (format "  /**
+   *
+   */
+  %s: %s;
 
 " (car v) (car (cdr v)))) expanded-vars))
 
@@ -108,7 +108,7 @@ Use EXPANDED-VARS to get the vlaues.  We need to behave differently on the last 
 	"Produce code that is suitable for a class constructor contents.
 Use EXPANDED-VARS to get the vlaues."
 	(mapconcat (lambda (v)
-							 (format "this.%s = %s;\n" (car v) (car v)))
+							 (format "this.%s = %s;\n    " (car v) (car v)))
 						 expanded-vars))
 
 ;; (jea--expand-ctor-contents-variables '(("sleep" "string") ("bark" "number") ("dig" "boolean")))
@@ -126,16 +126,12 @@ will be generated even if not often used.  Its easy to delete."
  */
 class %s {
 %s
-
-    constructor(%s) {
-      %s
-    }
+  constructor(%s) {
+    %s
+  }
 }
 " name (jea--expand-declaration-variables vars)
 (jea--expand-ctor-args-variables vars) (jea--expand-ctor-contents-variables vars)))))
-
-;;; start above
-
 
 (defun jea-code-gen--insert-class-typescript (name variables)
 	"Generate a class named NAME with the functions in the string VARIABLES."
