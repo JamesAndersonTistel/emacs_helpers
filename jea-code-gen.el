@@ -43,6 +43,31 @@
 	'(lambda (val cases) (message "not implemented yet."))
 	"Function to generate a function.")
 
+;;; shared code between all code gens
+(defun jea-code-gen-ctor-args-variable(expanded-var format-func firstp lastp)
+	"This is a warrper for formatting one variable for a class constructor.
+Take in a EXPANDED-VAR like: (sleep string) and pass it to the
+FORMAT-FUNC to be formatted for the language in question.  For typescript it
+will look like: sleep: string.  The FIRSTP signals if it is the first argument.
+The LASTP is there to signal if it is the last argument so you can ommit the
+trailing comma."
+	(funcall format-func (car expanded-var) (car (cdr expanded-var)) firstp lastp))
+
+(defun jea-code-gen-ctor-args-variables(expanded-vars format-func)
+	"Produce code that is suitable for a class constructor.
+Use EXPANDED-VARS to get the vlaues.  We need to behave differently on the
+last one.  The FORMAT-FUNC has the code formatting for whatever language."
+	(let ((count 0)
+				(max (1- (length expanded-vars)))
+				(result ""))
+		(dolist (v expanded-vars)
+			(setq result (concat result (jea-code-gen-ctor-args-variable v format-func
+																																	 (= count 0)
+																																	 (= count max))))
+			(setq count (1+ count)))
+		result))
+
+;;; interactive prompt
 (defun jea-code-gen-prompt (arg command)
 	"ARG is prefix argument.  COMMAND is the code gen command.
 For example: class,dog,sleep,bark,dig,swim.  Will insert a class

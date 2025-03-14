@@ -52,16 +52,55 @@
 \"\"\"
 " (format-time-string "%Y" (current-time)))))
 
-(defun jea-code-gen--python-ctor(name)
-	"Constructor boilerplate.  NAME is the class name."
+(defun jea-code-gen--python-variable-split(variable)
+	"Convert VARIABLE short code to long form.
+\"isleep\" => \"sleep\" \"int\""
+
+	(let* ((vtype (substring variable 0 1))
+				 (result (alist-get vtype
+														 '(("i" . "int")
+															 ("f" . "float")
+															 ("b" . "bool")
+															 ("s" . "str"))
+														 "not found" nil 'string-equal))
+				 (name (substring variable 1)))
+		(list name result)))
+
+(defun jea-code-gen--python-variables-split(variables)
+	"Convert VARIABLES into a name data type pairing."
+	(let* ((expanded (mapcar #'jea-code-gen--python-variable-split variables)))
+		(mapcar (lambda (x)
+							(list (car x) (car (cdr x))))
+						expanded)))
+
+;; (jea-code-gen--python-variables-split '("ssleep" "ibark" "bdig"))
+;; (("sleep" "str") ("bark" "int") ("dig" "bool"))
+
+(defun jea-code-gen--python-variable-fmt(name type firstp lastp)
+	"Format a variable with NAME of TYPE.
+The FIRSTP and LASTP indicate first in list or last in list."
+	(format "%s%s: %s%s" (if firstp "" " ") name type (if lastp "" ",")))
+
+(defun jea-code-gen--python-ctor(name exp-vars)
+	"Constructor boilerplate.  NAME is the class name.
+EXP-VARS is the expanded arguments."
 	(with-suppressed-warnings ()
-		(format "class %s:
+		(let ((args (jea-code-gen-ctor-args-variables exp-vars 'jea-code-gen--python-variable-fmt))
+					(vars (mapconcat
+								 (lambda (v)
+									 (format "        self._%s = %s;\n" (car v) (car v)))
+								 exp-vars)))
+			(format "class %s:
     \"\"
 
-    def __init__(self):
-        pass
+    def __init__(self, %s):
+%s
 
-" (capitalize name))))
+" (capitalize name) args vars))))
+
+;; (jea-code-gen--python-ctor "cat" '(("sleep" "str") ("bark" "int") ("dig" "bool")))
+
+;; START here, fix the func names to have correct prefix for lang
 
 (defun jea-code-gen--python-func(name &optional args)
 	"Function boilerplate set to NAME with optional ARGS."
@@ -97,13 +136,11 @@ CASES are the values that will be compared to VAL."
 			(setq result (concat result "    else:\n        pass\n"))
 			result)))
 
-(defun jea-code-gen--insert-class-python (name functions)
-	"Generate a class named NAME with the functions in the string FUNCTIONS.
-FUNCTIONS will look like (\"bark\", \"jump\", \"skip.\")"
-	(insert (jea-code-gen--python-preamble))
-	(insert (jea-code-gen--python-ctor name))
-	(dolist (f functions)
-		(insert (jea-code-gen--python-func f nil))))
+(defun jea-code-gen--insert-class-python (name variables)
+	"Generate a class named NAME with the functions in the string VARIABLES.
+VARIABLES will look like (\"ibark\", \"bjump\", \"sskip.\")"
+	;;(insert (jea-code-gen--python-preamble))
+	(insert (jea-code-gen--python-ctor name variables)))
 
 (defun jea-code-gen--insert-func-python (name args)
 	"Generate a function named NAME with the args from ARGS.
@@ -116,9 +153,15 @@ VAL is the value that will be compared against.
 CASES are the values that will be compared to VAL."
 	(insert (jea-code-gen--python-switch val cases)))
 
-;;  (with-current-buffer (get-buffer-create "*jea-code-gen*")
-;;    (erase-buffer)
-;;  ;;   (jea-code-gen-class "dog" '("sleep" "bark" "dig" "swim")))
+(defun jea-test-run()
+	"Hook up F5 to run."
+	(interactive)
+	(with-current-buffer (get-buffer-create "*jea-code-gen*")
+		(erase-buffer)
+		(jea-code-gen--insert-class-python "dog" '("ssleep" "ibark" "bdig" "sswim"))))
+
+;; (global-set-key [(f5)] 'jea-test-run)
+
 ;; 	 ;;	(jea-code-gen--func-python "dog" '("sleep" "bark" "dig" "swim")))
 ;; 	(jea-code-gen--insert-swtich-python "x" '("1" "2" "3")))
 ;; ;; (jea-code-gen--insert-swtich-python "x" '("dog" "cat" "mouse")))

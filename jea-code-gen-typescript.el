@@ -103,6 +103,7 @@ Use EXPANDED-VARS to get the vlaues.  We need to behave differently on the last 
 		result))
 
 ;; (jea--expand-ctor-args-variables '(("sleep" "string") ("bark" "number") ("dig" "boolean")))
+;; "sleep: string, bark: number, dig: boolean"
 
 (defun jea--expand-ctor-contents-variables(expanded-vars)
 	"Produce code that is suitable for a class constructor contents.
@@ -150,14 +151,14 @@ AGRS will look like (\"bark\", \"jump\", \"skip.\")"
 	t)
 
 ;; use this to easily test large text ouputs
-(defun jea-test-run()
-	"Hook up F5 to run."
-	(interactive)
-	(with-current-buffer (get-buffer-create "*jea-code-gen*")
-		(erase-buffer)
-		(jea-code-gen--insert-class-typescript "dog" '("ssleep" "nbark" "bdig" "sswim"))))
+;; (defun jea-test-run()
+;; 	"Hook up F5 to run."
+;; 	(interactive)
+;; 	(with-current-buffer (get-buffer-create "*jea-code-gen*")
+;; 		(erase-buffer)
+;; 		(jea-code-gen--insert-class-typescript "dog" '("ssleep" "nbark" "bdig" "sswim"))))
 
-(global-set-key [(f5)] 'jea-test-run)
+;; (global-set-key [(f5)] 'jea-test-run)
 
 (provide 'jea-code-gen-typescript)
 
