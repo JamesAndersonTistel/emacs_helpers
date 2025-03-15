@@ -114,7 +114,7 @@ EXP-VARS is the expanded arguments."
 
 " name params))))
 
-(defun jea-add--compare(val other)
+(defun jea-code-gen--python-add--compare(val other)
 	"Return the correct comparison text between VAL and OTHER.
 If NUM is non nil then its a number and alter the returned text."
 	(let ((o (jea-string-get-print-format other))
@@ -129,51 +129,51 @@ VAL is the value that will be compared against.
 CASES are the values that will be compared to VAL."
 	(with-suppressed-warnings ()
 		(let* ((result (format "    if %s:\n        pass\n"
-													 (jea-add--compare val (car cases)))))
+													 (jea-code-gen--python-add--compare val (car cases)))))
 			(dolist (case (cdr cases))
 				(setq result (concat result (format "    elif %s:\n        pass\n"
-																						(jea-add--compare val case)))))
+																						(jea-code-gen--python-add--compare val case)))))
 			(setq result (concat result "    else:\n        pass\n"))
 			result)))
 
-(defun jea-code-gen--insert-class-python (name variables)
+(defun jea-code-gen--python-insert-class (name variables)
 	"Generate a class named NAME with the functions in the string VARIABLES.
 VARIABLES will look like (\"ibark\", \"bjump\", \"sskip.\")"
 	(let ((exp-vars (jea-code-gen--python-variables-split variables)))
 		(insert (jea-code-gen--python-preamble))
 		(insert (jea-code-gen--python-ctor name exp-vars))))
 
-(defun jea-code-gen--insert-func-python (name args)
+(defun jea-code-gen--python-insert-func (name args)
 	"Generate a function named NAME with the args from ARGS.
 AGRS will look like (\"bark\", \"jump\", \"skip.\")"
 	(insert (jea-code-gen--python-func name args)))
 
-(defun jea-code-gen--insert-swtich-python (val cases)
+(defun jea-code-gen--python-insert-swtich (val cases)
 	"Insert a swtich statment.
 VAL is the value that will be compared against.
 CASES are the values that will be compared to VAL."
 	(insert (jea-code-gen--python-switch val cases)))
 
-(defun jea-test-run()
-	"Hook up F5 to run."
-	(interactive)
-	(with-current-buffer (get-buffer-create "*jea-code-gen*")
-		(erase-buffer)
-		(jea-code-gen--insert-class-python "dog" '("ssleep" "ibark" "bdig" "sswim"))))
+;; (defun jea-test-run()
+;; 	"Hook up F5 to run."
+;; 	(interactive)
+;; 	(with-current-buffer (get-buffer-create "*jea-code-gen*")
+;; 		(erase-buffer)
+;; 		(jea-code-gen--python-insert-class "dog" '("ssleep" "ibark" "bdig" "sswim"))))
 
 ;; (global-set-key [(f5)] 'jea-test-run)
 
 ;; 	 ;;	(jea-code-gen--func-python "dog" '("sleep" "bark" "dig" "swim")))
-;; 	(jea-code-gen--insert-swtich-python "x" '("1" "2" "3")))
-;; ;; (jea-code-gen--insert-swtich-python "x" '("dog" "cat" "mouse")))
+;; 	(jea-code-gen--python-insert-swtich "x" '("1" "2" "3")))
+;; ;; (jea-code-gen--python-insert-swtich "x" '("dog" "cat" "mouse")))
 
 
 (defun jea-code-gen-use-python()
 	"Turn on python code gen.  Set local funcs to the global vars."
 	(interactive)
-	(setf jea-code-gen-make-class-func 'jea-code-gen--insert-class-python)
-	(setf jea-code-gen-make-func-func 'jea-code-gen--insert-func-python)
-	(setf jea-code-gen-make-switch-func 'jea-code-gen--insert-swtich-python)
+	(setf jea-code-gen-make-class-func 'jea-code-gen--python-insert-class)
+	(setf jea-code-gen-make-func-func 'jea-code-gen--python-insert-func)
+	(setf jea-code-gen-make-switch-func 'jea-code-gen--python-insert-swtich)
 	t)
 
 (provide 'jea-code-gen-python)
