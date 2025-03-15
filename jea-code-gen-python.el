@@ -28,7 +28,7 @@
 (require 'jea-code-gen)
 (require 'jea-string-util)
 
-(defun jea-code-gen--python-preamble()
+(defun jea-cg--py-preamble()
 	"Start of file preamble text."
 	(with-suppressed-warnings ()
 		(format "# Copyright © %s James Anderson
@@ -52,7 +52,7 @@
 \"\"\"
 " (format-time-string "%Y" (current-time)))))
 
-(defun jea-code-gen--python-variable-split(variable)
+(defun jea-cg--py-variable-split(variable)
 	"Convert VARIABLE short code to long form.
 \"isleep\" => \"sleep\" \"int\""
 
@@ -66,26 +66,26 @@
 				 (name (substring variable 1)))
 		(list name result)))
 
-(defun jea-code-gen--python-variables-split(variables)
+(defun jea-cg--py-variables-split(variables)
 	"Convert VARIABLES into a name data type pairing."
-	(let* ((expanded (mapcar #'jea-code-gen--python-variable-split variables)))
+	(let* ((expanded (mapcar #'jea-cg--py-variable-split variables)))
 		(mapcar (lambda (x)
 							(list (car x) (car (cdr x))))
 						expanded)))
 
-;; (jea-code-gen--python-variables-split '("ssleep" "ibark" "bdig"))
+;; (jea-cg--py-variables-split '("ssleep" "ibark" "bdig"))
 ;; (("sleep" "str") ("bark" "int") ("dig" "bool"))
 
-(defun jea-code-gen--python-variable-fmt(name type firstp lastp)
+(defun jea-cg--py-variable-fmt(name type firstp lastp)
 	"Format a variable with NAME of TYPE.
 The FIRSTP and LASTP indicate first in list or last in list."
 	(format "%s%s: %s%s" (if firstp "" " ") name type (if lastp "" ",")))
 
-(defun jea-code-gen--python-ctor(name exp-vars)
+(defun jea-cg--py-ctor(name exp-vars)
 	"Constructor boilerplate.  NAME is the class name.
 EXP-VARS is the expanded arguments."
 	(with-suppressed-warnings ()
-		(let ((args (jea-code-gen-ctor-args-variables exp-vars 'jea-code-gen--python-variable-fmt))
+		(let ((args (jea-code-gen-ctor-args-variables exp-vars 'jea-cg--py-variable-fmt))
 					(vars (mapconcat
 								 (lambda (v)
 									 (format "        self._%s = %s\n" (car v) (car v)))
@@ -98,11 +98,11 @@ EXP-VARS is the expanded arguments."
 
 " (capitalize name) args vars))))
 
-;; (jea-code-gen--python-ctor "cat" '(("sleep" "str") ("bark" "int") ("dig" "bool")))
+;; (jea-cg--py-ctor "cat" '(("sleep" "str") ("bark" "int") ("dig" "bool")))
 
 ;; START here, fix the func names to have correct prefix for lang
 ;; fix the func gen
-(defun jea-code-gen--python-func(name &optional args)
+(defun jea-cg--py-func(name &optional args)
 	"Function boilerplate set to NAME with optional ARGS."
 	(with-suppressed-warnings ()
 		(let ((params (if args (concat "self, " (string-join args ", "))
@@ -114,7 +114,7 @@ EXP-VARS is the expanded arguments."
 
 " name params))))
 
-(defun jea-code-gen--python-add--compare(val other)
+(defun jea-cg--py-add--compare(val other)
 	"Return the correct comparison text between VAL and OTHER.
 If NUM is non nil then its a number and alter the returned text."
 	(let ((o (jea-string-get-print-format other))
@@ -123,57 +123,57 @@ If NUM is non nil then its a number and alter the returned text."
 				(setq result (format "%s == %d" val o))
 			(setq result (format "%s == '%s'" val o)))))
 
-(defun jea-code-gen--python-switch(val cases)
+(defun jea-cg--py-switch(val cases)
 	"Python does not have swtiches so this will make if/else.
 VAL is the value that will be compared against.
 CASES are the values that will be compared to VAL."
 	(with-suppressed-warnings ()
 		(let* ((result (format "    if %s:\n        pass\n"
-													 (jea-code-gen--python-add--compare val (car cases)))))
+													 (jea-cg--py-add--compare val (car cases)))))
 			(dolist (case (cdr cases))
 				(setq result (concat result (format "    elif %s:\n        pass\n"
-																						(jea-code-gen--python-add--compare val case)))))
+																						(jea-cg--py-add--compare val case)))))
 			(setq result (concat result "    else:\n        pass\n"))
 			result)))
 
-(defun jea-code-gen--python-insert-class (name variables)
+(defun jea-cg--py-insert-class (name variables)
 	"Generate a class named NAME with the functions in the string VARIABLES.
 VARIABLES will look like (\"ibark\", \"bjump\", \"sskip.\")"
-	(let ((exp-vars (jea-code-gen--python-variables-split variables)))
-		(insert (jea-code-gen--python-preamble))
-		(insert (jea-code-gen--python-ctor name exp-vars))))
+	(let ((exp-vars (jea-cg--py-variables-split variables)))
+		(insert (jea-cg--py-preamble))
+		(insert (jea-cg--py-ctor name exp-vars))))
 
-(defun jea-code-gen--python-insert-func (name args)
+(defun jea-cg--py-insert-func (name args)
 	"Generate a function named NAME with the args from ARGS.
 AGRS will look like (\"bark\", \"jump\", \"skip.\")"
-	(insert (jea-code-gen--python-func name args)))
+	(insert (jea-cg--py-func name args)))
 
-(defun jea-code-gen--python-insert-swtich (val cases)
+(defun jea-cg--py-insert-swtich (val cases)
 	"Insert a swtich statment.
 VAL is the value that will be compared against.
 CASES are the values that will be compared to VAL."
-	(insert (jea-code-gen--python-switch val cases)))
+	(insert (jea-cg--py-switch val cases)))
 
 ;; (defun jea-test-run()
 ;; 	"Hook up F5 to run."
 ;; 	(interactive)
 ;; 	(with-current-buffer (get-buffer-create "*jea-code-gen*")
 ;; 		(erase-buffer)
-;; 		(jea-code-gen--python-insert-class "dog" '("ssleep" "ibark" "bdig" "sswim"))))
+;; 		(jea-cg--py-insert-class "dog" '("ssleep" "ibark" "bdig" "sswim"))))
 
 ;; (global-set-key [(f5)] 'jea-test-run)
 
 ;; 	 ;;	(jea-code-gen--func-python "dog" '("sleep" "bark" "dig" "swim")))
-;; 	(jea-code-gen--python-insert-swtich "x" '("1" "2" "3")))
-;; ;; (jea-code-gen--python-insert-swtich "x" '("dog" "cat" "mouse")))
+;; 	(jea-cg--py-insert-swtich "x" '("1" "2" "3")))
+;; ;; (jea-cg--py-insert-swtich "x" '("dog" "cat" "mouse")))
 
 
 (defun jea-code-gen-use-python()
 	"Turn on python code gen.  Set local funcs to the global vars."
 	(interactive)
-	(setf jea-code-gen-make-class-func 'jea-code-gen--python-insert-class)
-	(setf jea-code-gen-make-func-func 'jea-code-gen--python-insert-func)
-	(setf jea-code-gen-make-switch-func 'jea-code-gen--python-insert-swtich)
+	(setf jea-code-gen-make-class-func 'jea-cg--py-insert-class)
+	(setf jea-code-gen-make-func-func 'jea-cg--py-insert-func)
+	(setf jea-code-gen-make-switch-func 'jea-cg--py-insert-swtich)
 	t)
 
 (provide 'jea-code-gen-python)
