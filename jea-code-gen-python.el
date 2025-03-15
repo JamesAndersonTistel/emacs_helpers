@@ -58,11 +58,11 @@
 
 	(let* ((vtype (substring variable 0 1))
 				 (result (alist-get vtype
-														 '(("i" . "int")
-															 ("f" . "float")
-															 ("b" . "bool")
-															 ("s" . "str"))
-														 "not found" nil 'string-equal))
+														'(("i" . "int")
+															("f" . "float")
+															("b" . "bool")
+															("s" . "str"))
+														"not found" nil 'string-equal))
 				 (name (substring variable 1)))
 		(list name result)))
 
