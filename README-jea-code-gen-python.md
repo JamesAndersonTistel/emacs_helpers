@@ -31,13 +31,13 @@ class Dog:
 ```
 
 ## functions
-enter `func,cat,meow,sleep` will generate:
+enter `func,get_car,smake,smodel` will generate:
 
 ```
-    def cat(self, meow, sleep):
-        ""
-        result = None
-        return result
+def get_car(self, make: str, model: str):
+    ""
+    result = None
+    return result
 ```
 
 ## switches
