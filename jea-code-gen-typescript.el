@@ -164,6 +164,7 @@ AGRS will look like (\"bark\", \"jump\", \"skip.\")"
 	"Turn on typescript code gen.  Set local funcs to the global vars."
 	(interactive)
 	(setf jea-code-gen-make-class-func 'jea-cg--ts-insert-class)
+	(setf jea-code-gen-make-func-func 'jea-cg--ts-insert-func)
 	t)
 
  (defun jea-test-run()
