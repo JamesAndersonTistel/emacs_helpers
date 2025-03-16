@@ -55,3 +55,12 @@ class Dog {
   }
 }
 ```
+
+## functions
+enter `func,getCar,smake,smodel` will generate:
+
+```
+getCar(make: str, model: str): void {
+}
+```
+
