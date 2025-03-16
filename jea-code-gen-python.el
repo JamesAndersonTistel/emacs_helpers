@@ -62,7 +62,7 @@
 															("f" . "float")
 															("b" . "bool")
 															("s" . "str"))
-														"not found" nil 'string-equal))
+														"str" nil 'string-equal))
 				 (name (substring variable 1)))
 		(list name result)))
 
@@ -100,12 +100,11 @@ EXP-VARS is the expanded arguments."
 
 ;; (jea-cg--py-ctor "cat" '(("sleep" "str") ("bark" "int") ("dig" "bool")))
 
-;; START here, fix the func names to have correct prefix for lang
-;; fix the func gen
-(defun jea-cg--py-func(name &optional args)
-	"Function boilerplate set to NAME with optional ARGS."
+(defun jea-cg--py-func(name &optional exp-args)
+	"Function boilerplate set to NAME with optional EXP-ARGS."
 	(with-suppressed-warnings ()
-		(let ((params (if args (concat "self, " (string-join args ", "))
+		(let* ((arg-line (jea-code-gen-ctor-args-variables exp-args 'jea-cg--py-variable-fmt))
+					 (params (if args (concat "self, " arg-line)
 										"self")))
 			(format "    def %s(%s):
         \"\"
@@ -146,7 +145,8 @@ VARIABLES will look like (\"ibark\", \"bjump\", \"sskip.\")"
 (defun jea-cg--py-insert-func (name args)
 	"Generate a function named NAME with the args from ARGS.
 AGRS will look like (\"bark\", \"jump\", \"skip.\")"
-	(insert (jea-cg--py-func name args)))
+	(let ((exp-args (jea-cg--py-variables-split args)))
+		(insert (jea-cg--py-func name exp-args))))
 
 (defun jea-cg--py-insert-swtich (val cases)
 	"Insert a swtich statment.
@@ -154,14 +154,15 @@ VAL is the value that will be compared against.
 CASES are the values that will be compared to VAL."
 	(insert (jea-cg--py-switch val cases)))
 
-;; (defun jea-test-run()
-;; 	"Hook up F5 to run."
-;; 	(interactive)
-;; 	(with-current-buffer (get-buffer-create "*jea-code-gen*")
-;; 		(erase-buffer)
-;; 		(jea-cg--py-insert-class "dog" '("ssleep" "ibark" "bdig" "sswim"))))
+(defun jea-test-run()
+ 	"Hook up F5 to run."
+ 	(interactive)
+ 	(with-current-buffer (get-buffer-create "*jea-code-gen*")
+ 		(erase-buffer)
+ 		;;(jea-cg--py-insert-class "dog" '("ssleepd" "ibark" "bdig" "sswim"))))
+		(jea-cg--py-insert-func "get_dog" '("ssleep" "ibark" "bdig" "sswim" "fscratch"))))
 
-;; (global-set-key [(f5)] 'jea-test-run)
+;;  (global-set-key [(f5)] 'jea-test-run)
 
 ;; 	 ;;	(jea-code-gen--func-python "dog" '("sleep" "bark" "dig" "swim")))
 ;; 	(jea-cg--py-insert-swtich "x" '("1" "2" "3")))
