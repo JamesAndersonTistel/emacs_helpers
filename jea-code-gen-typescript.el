@@ -65,7 +65,12 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 				 (name (substring variable 1)))
 		(list name result)))
 
-(defun jea-cg--ts-variables-split(variables)
+(defun jea-cg--ts-variable-fmt(name type firstp lastp)
+	"Format a variable with NAME of TYPE.
+The FIRSTP and LASTP indicate first in list or last in list."
+	(format "%s%s: %s%s" (if firstp "" " ") name type (if lastp "" ",")))
+
+(defun jea-cg--ts-variables-split(variables) ;
 	"Convert VARIABLES into a name data type pairing."
 	(let* ((expanded (mapcar #'jea-cg--ts-variable-split variables)))
 		(mapcar (lambda (x)
@@ -134,6 +139,16 @@ class %s {
 " name (jea-cg--ts-expand-declaration-variables vars)
 (jea-cg--ts-expand-ctor-args-variables vars) (jea-cg--ts-expand-ctor-contents-variables vars)))))
 
+(defun jea-cg--ts-func(name &optional exp-args)
+	"Function boilerplate set to NAME with optional EXP-ARGS."
+	(with-suppressed-warnings ()
+		(let* ((arg-line (jea-code-gen-ctor-args-variables exp-args 'jea-cg--ts-variable-fmt)))
+			(format "    %s(%s): void {
+    }
+" name arg-line))))
+
+;; (jea-cg--ts-func "getPrice" '(("sleep" "string") ("bark" "number") ("dig" "boolean")))
+
 (defun jea-cg--ts-insert-class (name variables)
 	"Generate a class named NAME with the functions in the string VARIABLES."
 	(insert (jea-cg--ts-preamble))
@@ -142,7 +157,8 @@ class %s {
 (defun jea-cg--ts-insert-func (name args)
 	"Generate a function named NAME with the args from ARGS.
 AGRS will look like (\"bark\", \"jump\", \"skip.\")"
-	(insert (jea-cg--ts-func name args)))
+	(let ((exp-args (jea-cg--ts-variables-split args)))
+		(insert (jea-cg--ts-func name exp-args))))
 
 (defun jea-code-gen-use-typescript()
 	"Turn on typescript code gen.  Set local funcs to the global vars."
@@ -150,15 +166,15 @@ AGRS will look like (\"bark\", \"jump\", \"skip.\")"
 	(setf jea-code-gen-make-class-func 'jea-cg--ts-insert-class)
 	t)
 
-;; use this to easily test large text ouputs
-;; (defun jea-test-run()
-;; 	"Hook up F5 to run."
-;; 	(interactive)
-;; 	(with-current-buffer (get-buffer-create "*jea-code-gen*")
-;; 		(erase-buffer)
-;; 		(jea-cg--ts-insert-class "dog" '("ssleep" "nbark" "bdig" "sswim"))))
+ (defun jea-test-run()
+ 	"Hook up F5 to run."
+ 	(interactive)
+ 	(with-current-buffer (get-buffer-create "*jea-code-gen*")
+ 		(erase-buffer)
+ 		;;(jea-cg--ts-insert-class "dog" '("ssleep" "nbark" "bdig" "sswim"))))
+		(jea-cg--ts-insert-func "dog" '("ssleep" "nbark" "bdig" "sswim"))))
 
-;; (global-set-key [(f5)] 'jea-test-run)
+ (global-set-key [(f5)] 'jea-test-run)
 
 (provide 'jea-code-gen-typescript)
 
