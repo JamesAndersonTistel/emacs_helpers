@@ -149,6 +149,28 @@ class %s {
 
 ;; (jea-cg--ts-func "getPrice" '(("sleep" "string") ("bark" "number") ("dig" "boolean")))
 
+(defun jea-cg--ts-add--compare(val other)
+	"Return the correct comparison text between VAL and OTHER.
+If NUM is non nil then its a number and alter the returned text."
+	(let ((o (jea-string-get-print-format other))
+				(result))
+		(if (numberp o)
+				(setq result (format "case %d:" o))
+			(setq result (format "case '%s':" o)))
+	result))
+
+(defun jea-cg--ts-switch(val cases)
+	"Python does not have swtiches so this will make if/else.
+VAL is the value that will be compared against.
+CASES are the values that will be compared to VAL."
+	(with-suppressed-warnings ()
+		(let* ((result (format "    switch(%s) {\n" val)))
+			(dolist (case cases)
+				(setq result (concat result (format "    %s\n        break;\n"
+																						(jea-cg--ts-add--compare val case)))))
+			(setq result (concat result "    default:\n        break;\n    }"))
+			result)))
+
 (defun jea-cg--ts-insert-class (name variables)
 	"Generate a class named NAME with the functions in the string VARIABLES."
 	(insert (jea-cg--ts-preamble))
@@ -160,22 +182,33 @@ AGRS will look like (\"bark\", \"jump\", \"skip.\")"
 	(let ((exp-args (jea-cg--ts-variables-split args)))
 		(insert (jea-cg--ts-func name exp-args))))
 
+(defun jea-cg--ts-insert-swtich (val cases)
+	"Insert a swtich statment.
+VAL is the value that will be compared against.
+CASES are the values that will be compared to VAL."
+	(insert (jea-cg--ts-switch val cases)))
+
 (defun jea-code-gen-use-typescript()
 	"Turn on typescript code gen.  Set local funcs to the global vars."
 	(interactive)
 	(setf jea-code-gen-make-class-func 'jea-cg--ts-insert-class)
 	(setf jea-code-gen-make-func-func 'jea-cg--ts-insert-func)
+	(setf jea-code-gen-make-switch-func 'jea-cg--ts-insert-swtich)
 	t)
 
- (defun jea-test-run()
+(defun jea-test-run()
  	"Hook up F5 to run."
  	(interactive)
  	(with-current-buffer (get-buffer-create "*jea-code-gen*")
  		(erase-buffer)
  		;;(jea-cg--ts-insert-class "dog" '("ssleep" "nbark" "bdig" "sswim"))))
-		(jea-cg--ts-insert-func "dog" '("ssleep" "nbark" "bdig" "sswim"))))
+		;;(jea-cg--ts-insert-func "dog" '("ssleep" "nbark" "bdig" "sswim"))))
+		;;(jea-cg--ts-insert-swtich "x" '("1" "2" "3"))))
+		(jea-cg--ts-insert-swtich "x" '("dog" "cat" "mouse"))))
 
- (global-set-key [(f5)] 'jea-test-run)
+(global-set-key [(f5)] 'jea-test-run)
+
+;; (jea-code-gen-use-typescript)
 
 (provide 'jea-code-gen-typescript)
 
