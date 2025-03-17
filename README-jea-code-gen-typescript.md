@@ -64,3 +64,33 @@ getCar(make: str, model: str): void {
 }
 ```
 
+## switches
+enter `switch,x,1,2,3` will generate:
+
+```
+    switch(x) {
+    case 1:
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+    default:
+        break;
+    }
+```
+
+enter `switch,pet,dog,cat,mouse` will generate:
+
+```
+    switch(pet) {
+    case 'dog':
+        break;
+    case 'cat':
+        break;
+    case 'mouse':
+        break;
+    default:
+        break;
+    }
+```

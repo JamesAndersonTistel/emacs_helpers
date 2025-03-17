@@ -196,17 +196,17 @@ CASES are the values that will be compared to VAL."
 	(setf jea-code-gen-make-switch-func 'jea-cg--ts-insert-swtich)
 	t)
 
-(defun jea-test-run()
- 	"Hook up F5 to run."
- 	(interactive)
- 	(with-current-buffer (get-buffer-create "*jea-code-gen*")
- 		(erase-buffer)
- 		;;(jea-cg--ts-insert-class "dog" '("ssleep" "nbark" "bdig" "sswim"))))
-		;;(jea-cg--ts-insert-func "dog" '("ssleep" "nbark" "bdig" "sswim"))))
-		;;(jea-cg--ts-insert-swtich "x" '("1" "2" "3"))))
-		(jea-cg--ts-insert-swtich "x" '("dog" "cat" "mouse"))))
+;; (defun jea-test-run()
+;;  	"Hook up F5 to run."
+;;  	(interactive)
+;;  	(with-current-buffer (get-buffer-create "*jea-code-gen*")
+;;  		(erase-buffer)
+;;  		;;(jea-cg--ts-insert-class "dog" '("ssleep" "nbark" "bdig" "sswim"))))
+;; 		;;(jea-cg--ts-insert-func "dog" '("ssleep" "nbark" "bdig" "sswim"))))
+;; 		;;(jea-cg--ts-insert-swtich "x" '("1" "2" "3"))))
+;; 		(jea-cg--ts-insert-swtich "x" '("dog" "cat" "mouse"))))
 
-(global-set-key [(f5)] 'jea-test-run)
+;; (global-set-key [(f5)] 'jea-test-run)
 
 ;; (jea-code-gen-use-typescript)
 
