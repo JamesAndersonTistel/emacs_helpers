@@ -90,6 +90,12 @@ called Dog with the functions: sleep, bark, dig, swim."
 ;; (jea-code-gen-use-typescript)
 ;; (jea-code-gen-use-react)
 
+;; start by bringing TS in line with py
+;; do the react one. the args are the useState
+;; think about a generic system: start, multi len (1 or many) middle, and end.
+;; I think that pattern will be pretty universal. then new snippipts are just three
+;; functions
+
 (provide 'jea-code-gen)
 
 ;;; jea-code-gen.el ends here
