@@ -1,6 +1,6 @@
 # jea-code-gen for typescript
 
-This is a tool to generate boiler plate code for various languages. examples here are python but will be doing other languages later.
+This is a tool to generate boiler plate code for typescript.
 
 ## interactive use
 ### one time
