@@ -53,6 +53,13 @@
 ;; (jea-string-get-print-format "14")
 ;; (jea-string-get-print-format "hello")
 
+(defun jea-capitalize-first(in-str)
+	"Capitalize only the first character of IN-STR."
+	(concat (capitalize (substring in-str 0 1)) (substring in-str 1)))
+
+;; (jea-capitalize-first "currentSquares")
+;; "CurrentSquares"
+
 ;; ------------------------------ regex helpers ----------------------
 
 (defun jea-find-string-all-indexes(in-str regex)

@@ -52,11 +52,103 @@
 \"\"\"
 " (format-time-string "%Y" (current-time)))))
 
+(defun jea-cg--react-variable-split(variable)
+	"Convert VARIABLE short code to long form.
+\"isleep\" => \"sleep\" \"int\""
+
+	(let* ((vtype (substring variable 0 1))
+				 (result (alist-get vtype
+														'(("i" . "int")
+															("f" . "float")
+															("b" . "bool")
+															("s" . "str"))
+														"str" nil 'string-equal))
+				 (name (substring variable 1)))
+		(list name result)))
+
+(defun jea-cg--react-variables-split(variables)
+	"Convert VARIABLES into a name data type pairing."
+	(let* ((expanded (mapcar #'jea-cg--react-variable-split variables)))
+		(mapcar (lambda (x)
+							(list (car x) (car (cdr x))))
+						expanded)))
+
+(defun jea-cg--react-class-start(name)
+	"Put in the opening text for a react class/function.
+NAME is the function name."
+	(format "import { useState } from \"react\";
+
+export default function %s() {\n" (capitalize name)))
+
+;; (jea-cg--react-class-start "game")
+
+(defun jea-cg--react-default-val-use-state(vtype)
+	"Get the default useState value for variables of type VTYPE."
+
+	(let* ((result (alist-get vtype
+														'(("int" . 0)
+															("float" . 0.0)
+															("bool" . "false")
+															("str" . "\"\"")
+															("string" . "\"\""))
+														"null" nil 'string-equal)))
+		result))
+
+;; (jea-cg--react-default-val-use-state "int")
+
+(defun jea-cg--react-build-use-state(name type)
+	"Produce the right useState for the variable named NAME with type TYPE."
+	(format "    const [%s, set%s] = useState(%s);\n" name
+					(jea-capitalize-first name) (jea-cg--react-default-val-use-state type)))
+
+;; (jea-cg--react-build-use-state "sleep" "bool")
+
+(defun jea-cg--react-class-middle(exp-args)
+	"Put in the middle text for a react class/function.
+The middle text might have a variable number of elements for the
+useState.  It might also have none.
+EXP-ARGS is the expanded argument items to be put into useState."
+	(let ((result ""))
+		(dolist (ea exp-args)
+			(setq result (concat result (jea-cg--react-build-use-state
+																	 (car ea) (car (cdr ea))))))
+		result))
+
+;; (jea-cg--react-class-middle '(("sleep" "str") ("bark" "int") ("dig" "bool")))
+
+(defun jea-cg--react-class-end()
+	"Put in the closing text for a react class/function."
+	(format "\n    return (<></>);\n}"))
+
+(defun jea-cg--react-class(name exp-args)
+	"Put in the text for a react class/function.
+NAME is the class/function name.
+EXP-ARGS is the expanded argument items to be put into useState."
+	(concat (jea-cg--react-class-start name)
+					(jea-cg--react-class-middle exp-args)
+					(jea-cg--react-class-end)))
+
+;; (jea-cg--react-class "Game" '(("sleep" "str") ("bark" "int") ("dig" "bool")))
+
+(defun jea-cg--react-insert-class(name args)
+	"Insert at poinr the react class/function named NAME with useState set to ARGS."
+	(let ((exp-args (jea-cg--react-variables-split args)))
+		(insert (jea-cg--react-class name exp-args))))
+
+;; (defun jea-test-run()
+;;  	"Hook up F5 to run."
+;;  	(interactive)
+;;  	(with-current-buffer (get-buffer-create "*jea-code-gen*")
+;;  		(erase-buffer)
+;; 		(jea-cg--react-insert-class "game" '("ibark" "bdigDown" "sswim" "fscratch"))))
+
+;;  (global-set-key [(f5)] 'jea-test-run)
+
+	
 (defun jea-code-gen-use-react()
 	"Turn on react code gen.  Set local funcs to the global vars."
 	(interactive)
-	;;(setf jea-code-gen-make-class-func 'jea-code-gen--insert-class-react)
-	;;(setf jea-code-gen-make-func-func 'jea-code-gen--insert-func-react)
+	(setf jea-code-gen-make-class-func 'jea-cg--react-insert-class)
 	t)
 
 (provide 'jea-code-gen-react)

@@ -154,14 +154,14 @@ VAL is the value that will be compared against.
 CASES are the values that will be compared to VAL."
 	(insert (jea-cg--py-switch val cases)))
 
-(defun jea-test-run()
- 	"Hook up F5 to run."
- 	(interactive)
- 	(with-current-buffer (get-buffer-create "*jea-code-gen*")
- 		(erase-buffer)
- 		;;(jea-cg--py-insert-class "dog" '("ssleepd" "ibark" "bdig" "sswim"))))
-		(jea-cg--py-insert-func "get_dog" '("ssleep" "ibark" "bdig" "sswim" "fscratch"))))
-
+;; (defun jea-test-run()
+;;  	"Hook up F5 to run."
+;;  	(interactive)
+;;  	(with-current-buffer (get-buffer-create "*jea-code-gen*")
+;;  		(erase-buffer)
+;;  		;;(jea-cg--py-insert-class "dog" '("ssleepd" "ibark" "bdig" "sswim"))))
+;; 		(jea-cg--py-insert-func "get_dog" '("ssleep" "ibark" "bdig" "sswim" "fscratch"))))
+;; 
 ;;  (global-set-key [(f5)] 'jea-test-run)
 
 ;; 	 ;;	(jea-code-gen--func-python "dog" '("sleep" "bark" "dig" "swim")))
