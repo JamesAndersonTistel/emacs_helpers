@@ -52,6 +52,14 @@
 \"\"\"
 "))
 
+(defun jea-code-gen-use-elixir()
+	"Turn on python code gen.  Set local funcs to the global vars."
+	(interactive)
+	;; (setf jea-code-gen-make-class-func 'jea-cg--elixir-insert-class)
+	;; (setf jea-code-gen-make-func-func 'jea-cg--elixir-insert-func)
+	;; (setf jea-code-gen-make-switch-func 'jea-cg--elixir-insert-swtich)
+	t)
+
 
 (provide 'jea-code-gen-elixir)
 
