@@ -92,6 +92,7 @@ called Dog with the functions: sleep, bark, dig, swim."
 ;; (jea-code-gen-use-nestjs)
 ;; (jea-code-gen-use-elixir)
 ;; (jea-code-gen-use-rust)
+;; (jea-code-gen-use-django)
 
 ;; start by bringing TS in line with py
 ;; do the react one. the args are the useState
