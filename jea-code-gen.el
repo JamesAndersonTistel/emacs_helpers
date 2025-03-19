@@ -88,6 +88,7 @@ called Dog with the functions: sleep, bark, dig, swim."
 
 ;; (jea-code-gen-use-python)
 ;; (jea-code-gen-use-typescript)
+;; (jea-code-gen-use-javascript)
 ;; (jea-code-gen-use-react)
 ;; (jea-code-gen-use-nestjs)
 ;; (jea-code-gen-use-elixir)
