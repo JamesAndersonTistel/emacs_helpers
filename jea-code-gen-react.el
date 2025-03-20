@@ -147,7 +147,12 @@ EXP-ARGS is the expanded argument items to be put into useState."
 (defun jea-code-gen-use-react()
 	"Turn on react code gen.  Set local funcs to the global vars."
 	(interactive)
-	(setf jea-code-gen-make-class-func 'jea-cg--react-insert-class)
+	(setf jea-code-gen-make-class-func
+				'jea-cg--react-insert-class)
+	(setf jea-code-gen-make-func-func
+				'(lambda (name functions) (message "not implemented yet.")))
+	(setf jea-code-gen-make-switch-func
+				'(lambda (name functions) (message "not implemented yet.")))
 	t)
 
 (provide 'jea-code-gen-react)
