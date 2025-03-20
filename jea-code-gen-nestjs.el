@@ -53,10 +53,13 @@
 (defun jea-code-gen-use-nestjs()
 	"Turn on python code gen.  Set local funcs to the global vars."
 	(interactive)
-	;; (setf jea-code-gen-make-class-func 'jea-cg--nestjs-insert-class)
-	;; (setf jea-code-gen-make-func-func 'jea-cg--nestjs-insert-func)
-	;; (setf jea-code-gen-make-switch-func 'jea-cg--nestjs-insert-swtich)
+	(setf jea-code-gen-make-class-func '(lambda (name functions) (message "not implemented yet.")))
+	(setf jea-code-gen-make-func-func '(lambda (name functions) (message "not implemented yet.")))
+	(setf jea-code-gen-make-switch-func '(lambda (name functions) (message "not implemented yet.")))
 	t)
+
+
+
 
 (provide 'jea-code-gen-nestjs)
 
