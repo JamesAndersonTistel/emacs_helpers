@@ -55,9 +55,12 @@
 (defun jea-code-gen-use-rust()
 	"Turn on python code gen.  Set local funcs to the global vars."
 	(interactive)
-	;; (setf jea-code-gen-make-class-func 'jea-cg--rust-insert-class)
-	;; (setf jea-code-gen-make-func-func 'jea-cg--rust-insert-func)
-	;; (setf jea-code-gen-make-switch-func 'jea-cg--rust-insert-swtich)
+	(setf jea-code-gen-make-class-func
+				'(lambda (name functions) (message "not implemented yet.")))
+	(setf jea-code-gen-make-func-func
+				'(lambda (name functions) (message "not implemented yet.")))
+	(setf jea-code-gen-make-switch-func
+				'(lambda (name functions) (message "not implemented yet.")))
 	t)
 
 
