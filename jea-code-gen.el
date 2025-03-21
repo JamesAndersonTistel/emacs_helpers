@@ -43,7 +43,12 @@
 ;;; Switches
 (defvar jea-code-gen-make-switch-func
 	'(lambda (val cases) (message "not implemented yet."))
-	"Function to generate a function.")
+	"Function to generate a switch.")
+
+;;; Dictionaries
+(defvar jea-code-gen-make-dict-func
+	'(lambda (val cases) (message "not implemented yet."))
+	"Function to generate a dictionary.")
 
 ;; --------------------------------------------------------------------------------
 ;; --------------------------------------------------------------------------------
@@ -118,6 +123,8 @@ called Dog with the functions: sleep, bark, dig, swim."
 			(funcall jea-code-gen-make-func-func (car rest) (cdr rest))) ;; name args
 		 ((equal "switch" command)
 			(funcall jea-code-gen-make-switch-func (car rest) (cdr rest))) ;; val cases
+		 ((equal "dict" command)
+			(funcall jea-code-gen-make-dict-func (car rest) (cdr rest))) ;; name kvs
 		 (t
 			(message "jea-code-gen-prompt unknown command: \"%s\"." command)))))
 

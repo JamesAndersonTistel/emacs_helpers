@@ -157,14 +157,14 @@ LASTP will be true if it is the last item."
 	"Provided the end of a dict."
 	(format "}\n"))
 
-(defun jea-cg--py-switch(name kvs)
+(defun jea-cg--py-dict(name kvs)
 	"Produce a dict named NAME with key value pairs KVS."
 	(jea-code-gen--build-dict name kvs
 														'jea-cg--py-dict-start-fmt
 														'jea-cg--py-dict-kv-fmt
 														'jea-cg--py-dict-end-fmt))
 
-;; (jea-cg--py-switch "d1" '("one" "2" "three" "four" "five" "6"))
+;; (jea-cg--py-dict "d1" '("one" "2" "three" "four" "five" "6"))
 
 ;; --------------------------------------------------------------------------------
 ;; --------------------------------------------------------------------------------
@@ -187,6 +187,12 @@ AGRS will look like (\"bark\", \"jump\", \"skip.\")"
 VAL is the value that will be compared against.
 CASES are the values that will be compared to VAL."
 	(insert (jea-cg--py-switch val cases)))
+
+(defun jea-cg--py-insert-dict (val kvs)
+	"Insert a dictionary statment.
+VAL is the value that will be compared against.
+KVS are the key value pairs."
+	(insert (jea-cg--py-dict val cases)))
 
 ;; --------------------------------------------------------------------------------
 ;; --------------------------------------------------------------------------------
@@ -212,6 +218,7 @@ CASES are the values that will be compared to VAL."
 	(setf jea-code-gen-make-class-func 'jea-cg--py-insert-class)
 	(setf jea-code-gen-make-func-func 'jea-cg--py-insert-func)
 	(setf jea-code-gen-make-switch-func 'jea-cg--py-insert-swtich)
+	(setf jea-code-gen-make-dict-func 'jea-cg--py-insert-swtich)
 	t)
 
 (provide 'jea-code-gen-python)
