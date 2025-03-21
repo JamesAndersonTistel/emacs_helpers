@@ -66,3 +66,14 @@ enter `switch,pet,dog,cat,hamster` will generate:
     else:
         pass
 ```
+
+## dictionaries
+enter `dict,d1,a,1,bee,42.33,see,far` will generate:
+
+```
+d1 = {
+    'a': 1,
+    'bee': 42.33,
+    'see': 'far'
+}
+```
