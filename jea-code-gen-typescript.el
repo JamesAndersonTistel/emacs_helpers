@@ -194,6 +194,8 @@ CASES are the values that will be compared to VAL."
 	(setf jea-code-gen-make-class-func 'jea-cg--ts-insert-class)
 	(setf jea-code-gen-make-func-func 'jea-cg--ts-insert-func)
 	(setf jea-code-gen-make-switch-func 'jea-cg--ts-insert-swtich)
+	(setf jea-code-gen-make-dict-func
+				'(lambda (name functions) (message "not implemented yet.")))
 	t)
 
 ;; (defun jea-test-run()

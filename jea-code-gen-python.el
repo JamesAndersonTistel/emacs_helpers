@@ -192,7 +192,7 @@ CASES are the values that will be compared to VAL."
 	"Insert a dictionary statment.
 VAL is the value that will be compared against.
 KVS are the key value pairs."
-	(insert (jea-cg--py-dict val cases)))
+	(insert (jea-cg--py-dict val kvs)))
 
 ;; --------------------------------------------------------------------------------
 ;; --------------------------------------------------------------------------------
@@ -218,7 +218,7 @@ KVS are the key value pairs."
 	(setf jea-code-gen-make-class-func 'jea-cg--py-insert-class)
 	(setf jea-code-gen-make-func-func 'jea-cg--py-insert-func)
 	(setf jea-code-gen-make-switch-func 'jea-cg--py-insert-swtich)
-	(setf jea-code-gen-make-dict-func 'jea-cg--py-insert-swtich)
+	(setf jea-code-gen-make-dict-func 'jea-cg--py-insert-dict)
 	t)
 
 (provide 'jea-code-gen-python)
