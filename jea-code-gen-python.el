@@ -135,6 +135,40 @@ CASES are the values that will be compared to VAL."
 			(setq result (concat result "    else:\n        pass\n"))
 			result)))
 
+(defun jea-cg--py-dict-start-fmt(name)
+	"Provided the start of a dict named NAME."
+	(format "%s = {\n" name))
+
+(defun jea-cg--py-dict-kv-fmt(key value firstp lastp)
+	"Produce a key value pair appropriate to the language.
+Based on KEY and VALUE.  FIRSTP will be true if its the first item.
+LASTP will be true if it is the last item."
+	(let ((v (jea-string-get-print-format value))) ; convert str "3.5" to 3.5 if number
+		(if (numberp v)
+				(format "    '%s': %s%s\n" key v (if lastp "" ","))
+			(format "    '%s': '%s'%s\n" key v (if lastp "" ",")))))
+
+;; (jea-cg--py-dict-kv-fmt "foo" "bar" nil nil)
+;; (jea-cg--py-dict-kv-fmt "foo" 14 nil nil)
+;; (jea-cg--py-dict-kv-fmt "bar" 14 nil t)
+;; (jea-cg--py-dict-kv-fmt "foo" 15.4 nil t)
+
+(defun jea-cg--py-dict-end-fmt()
+	"Provided the end of a dict."
+	(format "}\n"))
+
+(defun jea-cg--py-switch(name kvs)
+	"Produce a dict named NAME with key value pairs KVS."
+	(jea-code-gen--build-dict name kvs
+														'jea-cg--py-dict-start-fmt
+														'jea-cg--py-dict-kv-fmt
+														'jea-cg--py-dict-end-fmt))
+
+;; (jea-cg--py-switch "d1" '("one" "2" "three" "four" "five" "6"))
+
+;; --------------------------------------------------------------------------------
+;; --------------------------------------------------------------------------------
+
 (defun jea-cg--py-insert-class (name variables)
 	"Generate a class named NAME with the functions in the string VARIABLES.
 VARIABLES will look like (\"ibark\", \"bjump\", \"sskip.\")"
@@ -154,6 +188,9 @@ VAL is the value that will be compared against.
 CASES are the values that will be compared to VAL."
 	(insert (jea-cg--py-switch val cases)))
 
+;; --------------------------------------------------------------------------------
+;; --------------------------------------------------------------------------------
+
 ;; (defun jea-test-run()
 ;;  	"Hook up F5 to run."
 ;;  	(interactive)
@@ -161,7 +198,7 @@ CASES are the values that will be compared to VAL."
 ;;  		(erase-buffer)
 ;;  		;;(jea-cg--py-insert-class "dog" '("ssleepd" "ibark" "bdig" "sswim"))))
 ;; 		(jea-cg--py-insert-func "get_dog" '("ssleep" "ibark" "bdig" "sswim" "fscratch"))))
-;; 
+;;
 ;;  (global-set-key [(f5)] 'jea-test-run)
 
 ;; 	 ;;	(jea-code-gen--func-python "dog" '("sleep" "bark" "dig" "swim")))

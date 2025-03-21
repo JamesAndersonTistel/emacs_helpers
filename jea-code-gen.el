@@ -28,6 +28,8 @@
 
 ;;; Code:
 
+(require 'jea-string-util)
+
 ;;; Classes
 (defvar jea-code-gen-make-class-func
 	'(lambda (name functions) (message "not implemented yet."))
@@ -42,6 +44,9 @@
 (defvar jea-code-gen-make-switch-func
 	'(lambda (val cases) (message "not implemented yet."))
 	"Function to generate a function.")
+
+;; --------------------------------------------------------------------------------
+;; --------------------------------------------------------------------------------
 
 ;;; shared code between all code gens
 (defun jea-code-gen-ctor-args-variable(expanded-var format-func firstp lastp)
@@ -66,6 +71,36 @@ last one.  The FORMAT-FUNC has the code formatting for whatever language."
 																																	 (= count max))))
 			(setq count (1+ count)))
 		result))
+
+(defun jea-code-gen--build-dict(name kvs start-fmt-func mid-fmt-func end-fmt-func)
+	"Build a dictionary named NAME appropriate to the current language.
+START-FMT-FUNC does the start of the dict.
+MID-FMT-FUNC does the key value pairs.
+END-FMT-FUNC does the ending.
+via FMT-FUNC a list of key value pairs from KVS into a dictionary."
+	(let ((result (funcall start-fmt-func name))
+				(key "")
+				(value "")
+				(cnt 0)
+				(max (- (length kvs) 1)))
+		(dolist (kv kvs)
+			(cond
+			 ((eq (length key) 0)
+				(setq key kv))
+			 ((eq (length value) 0)
+				(progn
+					(setq value kv)
+					(setq result (concat result (funcall mid-fmt-func key value
+																							 (eq cnt 0) (eq cnt max))))
+					(setq key "")
+					(setq value ""))))
+			(setq cnt (1+ cnt)))
+		(concat result (funcall end-fmt-func))))
+
+;; (jea-code-gen--build-dict "d1" '("one" "2" "three" "four" "five" "6") 'jea-cg--py-dict-start-fmt 'jea-cg--py-dict-kv-fmt 'jea-cg--py-dict-end-fmt)
+
+;; --------------------------------------------------------------------------------
+;; --------------------------------------------------------------------------------
 
 ;;; interactive prompt
 (defun jea-code-gen-prompt (arg command)

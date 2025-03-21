@@ -41,16 +41,18 @@
 
 (defun jea-string-get-print-format(in-str)
 	"If IN-STR is a string number convert to string.  Other wise just return."
-	(if (integerp in-str)
+	(if (numberp in-str)
 			in-str
-		(let* ((start (string-match	"^[0-9]+$" in-str))
+		(let* ((start (string-match	"^[0-9.]+$" in-str))
 					 (end (match-end 0))
 					 (result (if start (string-to-number (substring in-str start end))
 										 in-str)))
 			result)))
 
 ;; (jea-string-get-print-format 13)
+;; (jea-string-get-print-format 13.3)
 ;; (jea-string-get-print-format "14")
+;; (jea-string-get-print-format "14.5")
 ;; (jea-string-get-print-format "hello")
 
 (defun jea-capitalize-first(in-str)
