@@ -94,3 +94,17 @@ enter `switch,pet,dog,cat,mouse` will generate:
         break;
     }
 ```
+
+## dictionaries
+
+enter: `dict,d1,a,1,bee,42.33,see,far`
+
+and it will expand to:
+
+```
+let d1 = {
+    'a': 1,
+    'bee': 42.33,
+    'see': 'far'
+};
+```

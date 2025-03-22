@@ -27,6 +27,7 @@
 
 (require 'jea-code-gen)
 (require 'jea-string-util)
+(require 'jea-code-gen-javascript)
 
 (defun jea-cg--ts-preamble()
 	"Start of file preamble text."
@@ -194,8 +195,7 @@ CASES are the values that will be compared to VAL."
 	(setf jea-code-gen-make-class-func 'jea-cg--ts-insert-class)
 	(setf jea-code-gen-make-func-func 'jea-cg--ts-insert-func)
 	(setf jea-code-gen-make-switch-func 'jea-cg--ts-insert-swtich)
-	(setf jea-code-gen-make-dict-func
-				'(lambda (name functions) (message "not implemented yet.")))
+	(setf jea-code-gen-make-dict-func 'jea-cg--js-insert-dict) ;; reuse JS
 	t)
 
 ;; (defun jea-test-run()
