@@ -13,6 +13,11 @@ This is a tool to generate boiler plate code for various languages.
 
 [docs](./README-jea-code-gen-typescript.md)
 
+### javascript
+`jea-code-gen-use-javascript`
+
+[docs](./README-jea-code-gen-javascript.md)
+
 ### react
 `jea-code-gen-use-react`
 
