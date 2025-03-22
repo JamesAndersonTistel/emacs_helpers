@@ -104,7 +104,7 @@ EXP-VARS is the expanded arguments."
 	"Function boilerplate set to NAME with optional EXP-ARGS."
 	(with-suppressed-warnings ()
 		(let* ((arg-line (jea-code-gen-ctor-args-variables exp-args 'jea-cg--py-variable-fmt))
-					 (params (if args (concat "self, " arg-line)
+					 (params (if exp-args (concat "self, " arg-line)
 										"self")))
 			(format "    def %s(%s):
         \"\"
