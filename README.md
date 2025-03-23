@@ -19,10 +19,17 @@ add this to your `.emacs` file:
 
 ```
 (dolist (fpath '("~/public_github/emacs_helpers/jea-string-util.el"
-                 "~/public_github/emacs_helpers/jea-code-gen.el"
-                 "~/public_github/emacs_helpers/jea-code-gen-python.el"
-                 "~/public_github/emacs_helpers/jea-password-generate.el"
-                 "~/public_github/emacs_helpers/jea-tweet-assist.el"))
-  (if (file-exists-p fpath)
-    (load (expand-file-name fpath))))
+								 "~/public_github/emacs_helpers/jea-code-gen.el"
+								 "~/public_github/emacs_helpers/jea-code-gen-python.el"
+								 "~/public_github/emacs_helpers/jea-code-gen-typescript.el"
+								 "~/public_github/emacs_helpers/jea-code-gen-javascript.el"
+								 "~/public_github/emacs_helpers/jea-code-gen-rust.el"
+								 "~/public_github/emacs_helpers/jea-code-gen-django.el"
+								 "~/public_github/emacs_helpers/jea-code-gen-nestjs.el"
+								 "~/public_github/emacs_helpers/jea-code-gen-elixir.el"
+								 "~/public_github/emacs_helpers/jea-password-generate.el"
+								 "~/public_github/emacs_helpers/jea-code-gen-react.el"
+								 "~/public_github/emacs_helpers/jea-tweet-assist.el"))
+	(if (file-exists-p fpath)
+			(load (expand-file-name fpath))))
 ```
