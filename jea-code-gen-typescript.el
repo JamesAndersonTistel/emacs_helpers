@@ -96,7 +96,8 @@ Use EXPANDED-VARS to get the values."
 
 (defun jea-cg--ts-expand-ctor-args-variables(expanded-vars)
 	"Produce code that is suitable for a class constructor.
-Use EXPANDED-VARS to get the vlaues.  We need to behave differently on the last one."
+Use EXPANDED-VARS to get the vlaues.  We need to behave differently
+on the last one."
 	(let ((count 0)
 				(max (- (length expanded-vars) 1))
 				(result ""))
@@ -150,28 +151,6 @@ class %s {
 
 ;; (jea-cg--ts-func "getPrice" '(("sleep" "string") ("bark" "number") ("dig" "boolean")))
 
-(defun jea-cg--ts-add--compare(val other)
-	"Return the correct comparison text between VAL and OTHER.
-If NUM is non nil then its a number and alter the returned text."
-	(let ((o (jea-string-get-print-format other))
-				(result))
-		(if (numberp o)
-				(setq result (format "case %d:" o))
-			(setq result (format "case '%s':" o)))
-	result))
-
-(defun jea-cg--ts-switch(val cases)
-	"Python does not have swtiches so this will make if/else.
-VAL is the value that will be compared against.
-CASES are the values that will be compared to VAL."
-	(with-suppressed-warnings ()
-		(let* ((result (format "    switch(%s) {\n" val)))
-			(dolist (case cases)
-				(setq result (concat result (format "    %s\n        break;\n"
-																						(jea-cg--ts-add--compare val case)))))
-			(setq result (concat result "    default:\n        break;\n    }"))
-			result)))
-
 (defun jea-cg--ts-insert-class (name variables)
 	"Generate a class named NAME with the functions in the string VARIABLES."
 	(insert (jea-cg--ts-preamble))
@@ -183,18 +162,13 @@ AGRS will look like (\"bark\", \"jump\", \"skip.\")"
 	(let ((exp-args (jea-cg--ts-variables-split args)))
 		(insert (jea-cg--ts-func name exp-args))))
 
-(defun jea-cg--ts-insert-swtich (val cases)
-	"Insert a swtich statment.
-VAL is the value that will be compared against.
-CASES are the values that will be compared to VAL."
-	(insert (jea-cg--ts-switch val cases)))
 
 (defun jea-code-gen-use-typescript()
 	"Turn on typescript code gen.  Set local funcs to the global vars."
 	(interactive)
 	(setf jea-code-gen-make-class-func 'jea-cg--ts-insert-class)
 	(setf jea-code-gen-make-func-func 'jea-cg--ts-insert-func)
-	(setf jea-code-gen-make-switch-func 'jea-cg--ts-insert-swtich)
+	(setf jea-code-gen-make-switch-func 'jea-cg--js-insert-swtich) ;; reuse JS
 	(setf jea-code-gen-make-dict-func 'jea-cg--js-insert-dict) ;; reuse JS
 	t)
 

@@ -81,6 +81,28 @@ LASTP will be true if it is the last item."
 
 ;; (jea-cg--js-dict "d1" '("one" "2" "three" "four" "five" "6"))
 
+(defun jea-cg--js-add--compare(val other)
+	"Return the correct comparison text between VAL and OTHER.
+If NUM is non nil then its a number and alter the returned text."
+	(let ((o (jea-string-get-print-format other))
+				(result))
+		(if (numberp o)
+				(setq result (format "case %d:" o))
+			(setq result (format "case '%s':" o)))
+	result))
+
+(defun jea-cg--js-switch(val cases)
+	"Python does not have swtiches so this will make if/else.
+VAL is the value that will be compared against.
+CASES are the values that will be compared to VAL."
+	(with-suppressed-warnings ()
+		(let* ((result (format "    switch(%s) {\n" val)))
+			(dolist (case cases)
+				(setq result (concat result (format "    %s\n        break;\n"
+																						(jea-cg--js-add--compare val case)))))
+			(setq result (concat result "    default:\n        break;\n    }"))
+			result)))
+
 ;; --------------------------------------------------------------------------------
 ;; --------------------------------------------------------------------------------
 
@@ -89,6 +111,12 @@ LASTP will be true if it is the last item."
 VAL is the value that will be compared against.
 KVS are the key value pairs."
 	(insert (jea-cg--js-dict val kvs)))
+
+(defun jea-cg--js-insert-swtich (val cases)
+	"Insert a swtich statment.
+VAL is the value that will be compared against.
+CASES are the values that will be compared to VAL."
+	(insert (jea-cg--js-switch val cases)))
 
 ;; --------------------------------------------------------------------------------
 ;; --------------------------------------------------------------------------------
@@ -100,8 +128,7 @@ KVS are the key value pairs."
 				'(lambda (name functions) (message "not implemented yet.")))
 	(setf jea-code-gen-make-func-func
 				'(lambda (name functions) (message "not implemented yet.")))
-	(setf jea-code-gen-make-switch-func
-				'(lambda (name functions) (message "not implemented yet.")))
+	(setf jea-code-gen-make-switch-func 'jea-cg--js-insert-swtich)
 	(setf jea-code-gen-make-dict-func 'jea-cg--js-insert-dict)
 	t)
 
