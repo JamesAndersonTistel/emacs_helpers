@@ -60,8 +60,8 @@ Based on KEY and VALUE.  FIRSTP will be true if its the first item.
 LASTP will be true if it is the last item."
 	(let ((v (jea-string-get-print-format value))) ; convert str "3.5" to 3.5 if number
 		(if (numberp v)
-				(format "    '%s': %s%s\n" key v (if lastp "" ","))
-			(format "    '%s': '%s'%s\n" key v (if lastp "" ",")))))
+				(format "    %s: %s%s\n" key v (if lastp "" ","))
+			(format "    %s: '%s'%s\n" key v (if lastp "" ",")))))
 
 ;; (jea-cg--js-dict-kv-fmt "foo" "bar" nil nil)
 ;; (jea-cg--js-dict-kv-fmt "foo" 14 nil nil)
