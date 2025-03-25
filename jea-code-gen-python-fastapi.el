@@ -52,6 +52,8 @@
 \"\"\"
 " (format-time-string "%Y" (current-time)))))
 
+;; TODO GET SET POST
+
 (defun jea-code-gen-use-python-fastapi()
 	"Turn on python code gen.  Set local funcs to the global vars."
 	(interactive)
