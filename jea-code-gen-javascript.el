@@ -31,7 +31,7 @@
 (defun jea-code-gen--javascript-preamble()
 	"Start of file preamble text."
 	(with-suppressed-warnings ()
-		"// Copyright © 2025 James Anderson
+		(format "// Copyright © %s James Anderson
 //
 // Author: James Anderson <james@tisteltech.com>
 //
@@ -48,7 +48,7 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-"))
+" (format-time-string "%Y" (current-time)))))
 
 (defun jea-cg--js-dict-start-fmt(name)
 	"Provided the start of a dict named NAME."

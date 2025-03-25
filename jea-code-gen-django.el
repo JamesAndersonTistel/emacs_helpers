@@ -31,7 +31,7 @@
 (defun jea-code-gen--django-preamble()
 	"Start of file preamble text."
 	(with-suppressed-warnings ()
-		"# Copyright © 2025 James Anderson
+		(format "# Copyright © %s James Anderson
 #
 # Author: James Anderson <james@tisteltech.com>
 #
@@ -50,7 +50,7 @@
 
 \"\"\"
 \"\"\"
-"))
+" (format-time-string "%Y" (current-time)))))
 
 (defun jea-code-gen-use-django()
 	"Turn on python code gen.  Set local funcs to the global vars."
