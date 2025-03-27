@@ -170,6 +170,8 @@ AGRS will look like (\"bark\", \"jump\", \"skip.\")"
 	(setf jea-code-gen-make-func-func 'jea-cg--ts-insert-func)
 	(setf jea-code-gen-make-switch-func 'jea-cg--js-insert-swtich) ;; reuse JS
 	(setf jea-code-gen-make-dict-func 'jea-cg--js-insert-dict) ;; reuse JS
+	(setf jea-code-gen-make-api-get-func
+				'(lambda (name functions) (message "not implemented yet.")))
 	t)
 
 ;; (defun jea-test-run()

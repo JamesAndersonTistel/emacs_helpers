@@ -50,6 +50,12 @@
 	'(lambda (val cases) (message "not implemented yet."))
 	"Function to generate a dictionary.")
 
+;;; REST API
+;;; GET
+(defvar jea-code-gen-make-api-get-func
+	'(lambda (val cases) (message "not implemented yet."))
+	"Function to generate a dictionary.")
+
 ;; --------------------------------------------------------------------------------
 ;; --------------------------------------------------------------------------------
 
@@ -136,6 +142,7 @@ called Dog with the functions: sleep, bark, dig, swim."
 ;; (jea-code-gen-use-elixir)
 ;; (jea-code-gen-use-rust)
 ;; (jea-code-gen-use-django)
+;; (jea-code-gen-use-python-fastapi)
 
 ;; start by bringing TS in line with py
 ;; do the react one. the args are the useState

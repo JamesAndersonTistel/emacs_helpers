@@ -219,6 +219,8 @@ KVS are the key value pairs."
 	(setf jea-code-gen-make-func-func 'jea-cg--py-insert-func)
 	(setf jea-code-gen-make-switch-func 'jea-cg--py-insert-swtich)
 	(setf jea-code-gen-make-dict-func 'jea-cg--py-insert-dict)
+	(setf jea-code-gen-make-api-get-func
+				'(lambda (name functions) (message "not implemented yet.")))
 	t)
 
 (provide 'jea-code-gen-python)

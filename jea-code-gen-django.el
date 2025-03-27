@@ -65,6 +65,8 @@
 				'(lambda (name functions) (message "not implemented yet.")))
 	(setf jea-code-gen-make-dict-func
 				'(lambda (name functions) (message "not implemented yet.")))
+	(setf jea-code-gen-make-api-get-func
+				'(lambda (name functions) (message "not implemented yet.")))
 	t)
 
 

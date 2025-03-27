@@ -130,6 +130,8 @@ CASES are the values that will be compared to VAL."
 				'(lambda (name functions) (message "not implemented yet.")))
 	(setf jea-code-gen-make-switch-func 'jea-cg--js-insert-swtich)
 	(setf jea-code-gen-make-dict-func 'jea-cg--js-insert-dict)
+	(setf jea-code-gen-make-api-get-func
+				'(lambda (name functions) (message "not implemented yet.")))
 	t)
 
 (provide 'jea-code-gen-javascript)
