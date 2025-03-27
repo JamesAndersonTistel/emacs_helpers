@@ -27,6 +27,7 @@
 
 (require 'jea-code-gen)
 (require 'jea-string-util)
+(require 'jea-code-gen-python)
 
 (defun jea-code-gen--python-fastapi-preamble()
 	"Start of file preamble text."
@@ -54,6 +55,12 @@
 
 ;; TODO GET SET POST
 
+(defun jea-cg--pyfapi-api-get(name args)
+	"Create a REST API function named NAME with ARGS."
+	(format "@app.get(\"\")"))
+
+;; (jea-cg--pyfapi-api-get "get_price" '(("sleep" "string") ("bark" "number") ("dig" "boolean")))
+					
 (defun jea-code-gen-use-python-fastapi()
 	"Turn on python code gen.  Set local funcs to the global vars."
 	(interactive)
