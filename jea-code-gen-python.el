@@ -74,9 +74,6 @@
 							(list (car x) (car (cdr x))))
 						expanded)))
 
-;; (jea-cg--py-variables-split '("ssleep" "ibark" "bdig"))
-;; (("sleep" "str") ("bark" "int") ("dig" "bool"))
-
 (defun jea-cg--py-variable-fmt(name type firstp lastp)
 	"Format a variable with NAME of TYPE.
 The FIRSTP and LASTP indicate first in list or last in list."
@@ -99,7 +96,7 @@ EXP-VARS is the expanded arguments."
 
 " (capitalize name) args vars))))
 
-;; (jea-cg--py-ctor "cat" '(("sleep" "str") ("bark" "int") ("dig" "bool")))
+
 
 (defun jea-cg--py-func(name &optional exp-args)
 	"Function boilerplate set to NAME with optional EXP-ARGS."
@@ -149,11 +146,6 @@ LASTP will be true if it is the last item."
 				(format "    '%s': %s%s\n" key v (if lastp "" ","))
 			(format "    '%s': '%s'%s\n" key v (if lastp "" ",")))))
 
-;; (jea-cg--py-dict-kv-fmt "foo" "bar" nil nil)
-;; (jea-cg--py-dict-kv-fmt "foo" 14 nil nil)
-;; (jea-cg--py-dict-kv-fmt "bar" 14 nil t)
-;; (jea-cg--py-dict-kv-fmt "foo" 15.4 nil t)
-
 (defun jea-cg--py-dict-end-fmt()
 	"Provided the end of a dict."
 	(format "}\n"))
@@ -164,8 +156,6 @@ LASTP will be true if it is the last item."
 														'jea-cg--py-dict-start-fmt
 														'jea-cg--py-dict-kv-fmt
 														'jea-cg--py-dict-end-fmt))
-
-;; (jea-cg--py-dict "d1" '("one" "2" "three" "four" "five" "6"))
 
 ;; --------------------------------------------------------------------------------
 ;; --------------------------------------------------------------------------------
