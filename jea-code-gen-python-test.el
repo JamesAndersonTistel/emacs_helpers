@@ -10,10 +10,9 @@
 ;; START here need to be more systematic and bring over each func.
 ;; pass in debug as a arg with default off
 
-;; (defun jea-code-gen-test-python()
-;; 	(let (
-
-(jea-test-text '(lambda () (jea-cg--py-ctor "cat" '(("sleep" "str") ("bark" "int") ("dig" "bool"))))
+(defun jea-code-gen-test-python()
+	"Test all python functions."
+	(let ((t1 (jea-test-text '(lambda () (jea-cg--py-ctor "cat" '(("sleep" "str") ("bark" "int") ("dig" "bool"))))
 "class Cat:
     \"\"
 
@@ -23,11 +22,12 @@
         self._dig = dig
 
 
-")
+"))
+				(t2 (jea-test-list '(lambda () (jea-cg--py-variables-split '("ssleep" "ibark" "bdig")))
+													 '(("sleep" "str") ("bark" "int") ("dig" "bool")))))
+		(and t1 t2)))
 
-(jea-test-list '(lambda () (jea-cg--py-variables-split '("ssleep" "ibark" "bdig")))
-							 '(("sleep" "str") ("bark" "int") ("dig" "bool")))
-
+;; (jea-code-gen-test-python)
 
 ;; (jea-cg--py-dict-kv-fmt "foo" "bar" nil nil)
 ;; (jea-cg--py-dict-kv-fmt "foo" 14 nil nil)
