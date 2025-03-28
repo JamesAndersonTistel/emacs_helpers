@@ -7,21 +7,60 @@
 ;; need to setup a proper unit test system soon
 ;; just moving the test code out
 
+;; TODO write a string diff thay high lights the difference! char by char.
+
+(defmacro jea-test-text (func expected-text-output)
+	"Run the function FUNC and double check the text output is EXPECTED-TEXT-OUTPUT."
+	`(let* ((debug t) ;; turn on prints
+					(output (funcall ,func))
+					(success (string-equal output ,expected-text-output)))
+		 (if success
+				 (progn
+					 (if debug
+							 (message "success %s" ,func))
+					 t)
+			 (progn
+				 (if debug
+						 (message "failed because %s: '%s' does not equal '%s'." ,func output ,expected-text-output))
+				 nil))))
+
+(jea-test-text '(lambda () (jea-cg--py-ctor "cat" '(("sleep" "str") ("bark" "int") ("dig" "bool"))))
+"class Cat:
+    \"\"
+
+    def __init__(self, sleep: str, bark: int, dig: bool):
+        self._sleep = sleep
+        self._bark = bark
+        self._dig = dig
+
+
+")
+
 
 (jea-cg--py-variables-split '("ssleep" "ibark" "bdig"))
 ;; (("sleep" "str") ("bark" "int") ("dig" "bool"))
 
 (jea-cg--py-ctor "cat" '(("sleep" "str") ("bark" "int") ("dig" "bool")))
+"class Cat:
+    \"\"
+
+    def __init__(self, sleep: str, bark: int, dig: bool):
+        self._sleep = sleep
+        self._bark = bark
+        self._dig = dig
+
+
+")
 
 ;; "class Cat:
 ;;     \"\"
-;; 
+;;
 ;;     def __init__(self, sleep: str, bark: int, dig: bool):
 ;;         self._sleep = sleep
 ;;         self._bark = bark
 ;;         self._dig = dig
-;; 
-;; 
+;;
+;;
 ;; "
 
 
