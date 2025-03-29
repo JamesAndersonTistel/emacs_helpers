@@ -103,6 +103,18 @@
 
 (jea-code-gen-test-typescript)
 
+;; right now this is just a copy of the python one.
+;; TODO hook up real functions:
+
+;; defun jea-cg--ts-variable-split(variable)
+;; defun jea-cg--ts-variable-fmt(name type firstp lastp)
+;; defun jea-cg--ts-variables-split(variables) ;
+;; defun jea-cg--ts-expand-declaration-variables(expanded-vars)
+;; defun jea-cg--ts-expand-ctor-args-variables(expanded-vars)
+;; defun jea-cg--ts-expand-ctor-contents-variables(expanded-vars)
+;; defun jea-cg--ts-class(name variables)
+;; defun jea-cg--ts-func(name &optional exp-args)
+
 (provide 'jea-code-gen-typescript-test)
 
 ;;; jea-code-gen-typescript-test.el ends here
