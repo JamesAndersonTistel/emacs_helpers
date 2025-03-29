@@ -77,3 +77,9 @@ d1 = {
     'see': 'far'
 }
 ```
+
+## unit tests
+evaluate function `(jea-code-gen-test-python)` 
+
+or evaluate file: [code](./jea-code-gen-python-test.el)
+
