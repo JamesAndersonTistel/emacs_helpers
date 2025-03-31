@@ -78,9 +78,6 @@ The FIRSTP and LASTP indicate first in list or last in list."
 							(list (car x) (car (cdr x))))
 						expanded)))
 
-;; (jea-cg--ts-variables-split '("ssleep" "nbark" "bdig"))
-;; (("sleep" "string") ("bark" "number") ("dig" "boolean"))
-
 (defun jea-cg--ts-expand-declaration-variables(expanded-vars)
 	"Produce text that can be used as variable declaration.
 Use EXPANDED-VARS to get the values."
@@ -91,8 +88,6 @@ Use EXPANDED-VARS to get the values."
   %s: %s;
 
 " (car v) (car (cdr v)))) expanded-vars))
-
-;; (jea-cg--ts-expand-declaration-variables '(("sleep" "string") ("bark" "number") ("dig" "boolean")))
 
 (defun jea-cg--ts-expand-ctor-args-variables(expanded-vars)
 	"Produce code that is suitable for a class constructor.
@@ -109,17 +104,12 @@ on the last one."
 				(setq result (concat result (format "%s: %s" (car v) (car (cdr v)))))))
 		result))
 
-;; (jea-cg--ts-expand-ctor-args-variables '(("sleep" "string") ("bark" "number") ("dig" "boolean")))
-;; "sleep: string, bark: number, dig: boolean"
-
 (defun jea-cg--ts-expand-ctor-contents-variables(expanded-vars)
 	"Produce code that is suitable for a class constructor contents.
 Use EXPANDED-VARS to get the vlaues."
 	(mapconcat (lambda (v)
 							 (format "this.%s = %s;\n    " (car v) (car v)))
 						 expanded-vars))
-
-;; (jea-cg--ts-expand-ctor-contents-variables '(("sleep" "string") ("bark" "number") ("dig" "boolean")))
 
 (defun jea-cg--ts-class(name variables)
 	"Constructor boilerplate.  NAME is the class name.
@@ -148,8 +138,6 @@ class %s {
 			(format "    %s(%s): void {
     }
 " name arg-line))))
-
-;; (jea-cg--ts-func "getPrice" '(("sleep" "string") ("bark" "number") ("dig" "boolean")))
 
 (defun jea-cg--ts-insert-class (name variables)
 	"Generate a class named NAME with the functions in the string VARIABLES."
