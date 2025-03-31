@@ -29,22 +29,84 @@
 													 "name: string,"))
 				(t6 (jea-test-text '(lambda ()
 															(jea-cg--ts-variable-fmt "salt" "boolean" nil t))
-															" salt: boolean"))
-				)	
-		(and t1 t2 t3 t4 t5 t6)))
+													 " salt: boolean"))
+				(t7 (jea-test-list '(lambda ()
+															(jea-cg--ts-variables-split '("ssleep" "nbark" "bdig")))
+													 '(("sleep" "string") ("bark" "number") ("dig" "boolean"))))
+				(t8 (jea-test-text '(lambda ()
+															(jea-cg--ts-expand-declaration-variables
+															 '(("sleep" "string") ("bark" "number") ("dig" "boolean"))))
+"  /**
+   *
+   */
+  sleep: string;
+
+  /**
+   *
+   */
+  bark: number;
+
+  /**
+   *
+   */
+  dig: boolean;
+
+"))
+				(t9 (jea-test-text '(lambda ()
+															(jea-cg--ts-expand-ctor-args-variables '(("sleep" "string") ("bark" "number") ("dig" "boolean"))))
+													 "sleep: string, bark: number, dig: boolean"))
+				(t10 (jea-test-text '(lambda ()
+															 (jea-cg--ts-expand-ctor-args-variables '(("sleep" "string") ("bark" "number") ("dig" "boolean"))))
+														"sleep: string, bark: number, dig: boolean"))
+				(t11 (jea-test-text '(lambda ()
+															 (jea-cg--ts-expand-ctor-contents-variables '(("sleep" "string") ("bark" "number") ("dig" "boolean"))))
+"this.sleep = sleep;
+    this.bark = bark;
+    this.dig = dig;
+    "))
+				(t12 (jea-test-text '(lambda ()
+															 (jea-cg--ts-class "dog" '("ssleep" "nbark" "bdig")))
+															 "
+/**
+ *
+ */
+class Dog {
+  /**
+   *
+   */
+  sleep: string;
+
+  /**
+   *
+   */
+  bark: number;
+
+  /**
+   *
+   */
+  dig: boolean;
+
+
+  constructor(sleep: string, bark: number, dig: boolean) {
+    this.sleep = sleep;
+    this.bark = bark;
+    this.dig = dig;
+    
+  }
+}
+"))
+				(t13 (jea-test-text '(lambda ()
+															 (jea-cg--ts-func "getPrice" '(("sleep" "string") ("bark" "number") ("dig" "boolean"))))
+															 "    getPrice(sleep: string, bark: number, dig: boolean): void {
+    }
+"))
+
+				)
+		(and t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13)))
 
 (jea-code-gen-test-typescript)
 
 ;; right now this is just a copy of the python one.
-;; TODO hook up real functions:
-
-;; 
-;; jea-cg--ts-variables-split(variables) ;
-;; jea-cg--ts-expand-declaration-variables(expanded-vars)
-;; jea-cg--ts-expand-ctor-args-variables(expanded-vars)
-;; jea-cg--ts-expand-ctor-contents-variables(expanded-vars)
-;; jea-cg--ts-class(name variables)
-;; jea-cg--ts-func(name &optional exp-args)
 
 (provide 'jea-code-gen-typescript-test)
 
