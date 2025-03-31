@@ -63,11 +63,6 @@ LASTP will be true if it is the last item."
 				(format "    %s: %s%s\n" key v (if lastp "" ","))
 			(format "    %s: '%s'%s\n" key v (if lastp "" ",")))))
 
-;; (jea-cg--js-dict-kv-fmt "foo" "bar" nil nil)
-;; (jea-cg--js-dict-kv-fmt "foo" 14 nil nil)
-;; (jea-cg--js-dict-kv-fmt "bar" 14 nil t)
-;; (jea-cg--js-dict-kv-fmt "foo" 15.4 nil t)
-
 (defun jea-cg--js-dict-end-fmt()
 	"Provided the end of a dict."
 	(format "};\n"))
@@ -78,8 +73,6 @@ LASTP will be true if it is the last item."
 														'jea-cg--js-dict-start-fmt
 														'jea-cg--js-dict-kv-fmt
 														'jea-cg--js-dict-end-fmt))
-
-;; (jea-cg--js-dict "d1" '("one" "2" "three" "four" "five" "6"))
 
 (defun jea-cg--js-add--compare(val other)
 	"Return the correct comparison text between VAL and OTHER.
