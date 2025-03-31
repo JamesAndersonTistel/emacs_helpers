@@ -26,61 +26,28 @@
 ;;; Code:
 
 (require 'jea-string-util)
+(require 'jea-code-gen-test)
 
-(defun jea-string-ltrim--test1-data-in()
-	"Data for testing the remove of leading spaces."
-	"  	   	The quick fox jumped quickly.")
+(defun jea-string-util--test()
+	"Test all react functions."
+	(let ((t1 (jea-test-text '(lambda ()
+															(jea-string-ltrim "  	   	The quick fox jumped quickly."))
+													 "The quick fox jumped quickly."))
+				(t2 (jea-test-text '(lambda ()
+															(jea-string-rtrim "The quick fox jumped quickly.  	  	"))
+													 "The quick fox jumped quickly."))
+				(t3 (jea-test-text '(lambda ()
+															(jea-string-trim "	  	  	The quick fox jumped quickly.  	  	"))
+													 "The quick fox jumped quickly."))
+				(t4 (jea-test-text '(lambda ()
+															(jea-string-util-camel-case-to-snake "HelloBraveNewWorld"))
+													 "hello_brave_new_world"))
+				(t5 (jea-test-text '(lambda ()
+															(jea-string-upcase-snake-case-to-camel "james_anderson__was_here"))
+													 "JamesAndersonWasHere")))
+		(and t1 t2 t3 t4 t5)))
 
-(defun jea-string-ltrim--test1-data-out()
-	"Desired result for testing the remove of leading spaces."
-	"The quick fox jumped quickly.")
-
-(defun jea-string-ltrim--test1()
-	"The first test of striping the left side of a string."
-	(equal (jea-string-ltrim (jea-string-ltrim--test1-data-in))
-				 (jea-string-ltrim--test1-data-out)))
-
-;; (jea-string-ltrim (jea-string-ltrim--test1-data-in))
-;; (jea-string-ltrim--test1)
-
-(defun jea-string-rtrim--test1-data-in()
-	"Data for testing the remove of leading spaces."
-	"The quick fox jumped quickly.  	  	")
-
-(defun jea-string-rtrim--test1-data-out()
-	"Desired result for testing the remove of leading spaces."
-	"The quick fox jumped quickly.")
-
-(defun jea-string-rtrim--test1()
-	"The first test of striping the left side of a string."
-	(equal (jea-string-rtrim (jea-string-rtrim--test1-data-in))
-				 (jea-string-rtrim--test1-data-out)))
-
-;; (jea-string-rtrim (jea-string-rtrim--test1-data-in))
-;; (jea-string-rtrim--test1)
-
-
-(defun jea-string-trim--test1-data-in()
-	"Data for testing the remove of leading spaces."
-	"	  	  	The quick fox jumped quickly.  	  	")
-
-(defun jea-string-trim--test1-data-out()
-	"Desired result for testing the remove of leading spaces."
-	"The quick fox jumped quickly.")
-
-(defun jea-string-trim--test1()
-	"The first test of striping the left side of a string."
-	(equal (jea-string-trim (jea-string-trim--test1-data-in))
-				 (jea-string-trim--test1-data-out)))
-
-;; (jea-string-trim (jea-string-trim--test1-data-in))
-;; (jea-string-trim--test1)
-
-;; TODO clean up and make automatic call all
-;; (jea-string-util-camel-case-to-snake "HelloBraveNewWorld")
-
-;; TODO do moret tests and add region grabber? or maybe string under cursor?
-;; (jea-string-upcase-snake-case-to-camel "james_anderson__was_here")
+(jea-string-util--test)
 
 (provide 'jea-string-util-test)
 
