@@ -20,16 +20,25 @@
 													 '("alive" "boolean")))
 				(t3 (jea-test-list '(lambda ()
 															(jea-cg--ts-variable-split "sname"))
-													 '("name" "string"))))	
-		(and t1 t2 t3 )))
+													 '("name" "string")))
+				(t4 (jea-test-text '(lambda ()
+															(jea-cg--ts-variable-fmt "height" "number" nil nil))
+													 " height: number,"))
+				(t5 (jea-test-text '(lambda ()
+															(jea-cg--ts-variable-fmt "name" "string" t nil))
+													 "name: string,"))
+				(t6 (jea-test-text '(lambda ()
+															(jea-cg--ts-variable-fmt "salt" "boolean" nil t))
+															" salt: boolean"))
+				)	
+		(and t1 t2 t3 t4 t5 t6)))
 
 (jea-code-gen-test-typescript)
 
 ;; right now this is just a copy of the python one.
 ;; TODO hook up real functions:
 
-;; jea-cg--ts-variable-split(variable)
-;; jea-cg--ts-variable-fmt(name type firstp lastp)
+;; 
 ;; jea-cg--ts-variables-split(variables) ;
 ;; jea-cg--ts-expand-declaration-variables(expanded-vars)
 ;; jea-cg--ts-expand-ctor-args-variables(expanded-vars)
@@ -40,4 +49,3 @@
 (provide 'jea-code-gen-typescript-test)
 
 ;;; jea-code-gen-typescript-test.el ends here
-
