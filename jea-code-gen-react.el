@@ -78,8 +78,6 @@ NAME is the function name."
 
 export default function %s() {\n" (capitalize name)))
 
-;; (jea-cg--react-class-start "game")
-
 (defun jea-cg--react-default-val-use-state(vtype)
 	"Get the default useState value for variables of type VTYPE."
 
@@ -92,14 +90,10 @@ export default function %s() {\n" (capitalize name)))
 														"null" nil 'string-equal)))
 		result))
 
-;; (jea-cg--react-default-val-use-state "int")
-
 (defun jea-cg--react-build-use-state(name type)
 	"Produce the right useState for the variable named NAME with type TYPE."
 	(format "    const [%s, set%s] = useState(%s);\n" name
 					(jea-capitalize-first name) (jea-cg--react-default-val-use-state type)))
-
-;; (jea-cg--react-build-use-state "sleep" "bool")
 
 (defun jea-cg--react-class-middle(exp-args)
 	"Put in the middle text for a react class/function.
@@ -111,8 +105,6 @@ EXP-ARGS is the expanded argument items to be put into useState."
 			(setq result (concat result (jea-cg--react-build-use-state
 																	 (car ea) (car (cdr ea))))))
 		result))
-
-;; (jea-cg--react-class-middle '(("sleep" "str") ("bark" "int") ("dig" "bool")))
 
 (defun jea-cg--react-class-end()
 	"Put in the closing text for a react class/function."
@@ -126,8 +118,6 @@ EXP-ARGS is the expanded argument items to be put into useState."
 					(jea-cg--react-class-start name)
 					(jea-cg--react-class-middle exp-args)
 					(jea-cg--react-class-end)))
-
-;; (jea-cg--react-class "Game" '(("sleep" "str") ("bark" "int") ("dig" "bool")))
 
 (defun jea-cg--react-insert-class(name args)
 	"Insert at poinr the react class/function named NAME with useState set to ARGS."
