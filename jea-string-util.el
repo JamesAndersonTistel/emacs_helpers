@@ -49,18 +49,9 @@
 										 in-str)))
 			result)))
 
-;; (jea-string-get-print-format 13)
-;; (jea-string-get-print-format 13.3)
-;; (jea-string-get-print-format "14")
-;; (jea-string-get-print-format "14.5")
-;; (jea-string-get-print-format "hello")
-
 (defun jea-capitalize-first(in-str)
 	"Capitalize only the first character of IN-STR."
 	(concat (capitalize (substring in-str 0 1)) (substring in-str 1)))
-
-;; (jea-capitalize-first "currentSquares")
-;; "CurrentSquares"
 
 ;; ------------------------------ regex helpers ----------------------
 
