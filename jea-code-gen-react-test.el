@@ -13,6 +13,58 @@
 (defun jea-code-gen-test-react()
 	"Test all react functions."
 	(let ((t1 (jea-test-text '(lambda ()
+															(jea-cg--react-class-start "game"))
+"import { useState } from \"react\";
+
+export default function Game() {
+"))
+				(t2 (jea-test-number '(lambda ()
+															(jea-cg--react-default-val-use-state "int"))
+														 0))
+				(t3 (jea-test-number '(lambda ()
+															(jea-cg--react-default-val-use-state "float"))
+														 0.0))
+				(t4 (jea-test-text '(lambda ()
+															(jea-cg--react-default-val-use-state "bool"))
+													 "false"))
+				(t5 (jea-test-text '(lambda ()
+															(jea-cg--react-default-val-use-state "str"))
+													 "\"\""))
+				(t6 (jea-test-text '(lambda ()
+															(jea-cg--react-build-use-state "sleep" "bool"))
+"    const [sleep, setSleep] = useState(false);
+"))
+				(t7 (jea-test-text '(lambda ()
+															(jea-cg--react-build-use-state "count" "int"))
+"    const [count, setCount] = useState(0);
+"))
+				(t8 (jea-test-text '(lambda ()
+															(jea-cg--react-build-use-state "sleep" "float"))
+"    const [sleep, setSleep] = useState(0.0);
+"))
+				(t9 (jea-test-text '(lambda ()
+															(jea-cg--react-build-use-state "name" "str"))
+"    const [name, setName] = useState(\"\");
+"))
+				(t10 (jea-test-text '(lambda ()
+															 (jea-cg--react-class-start "gAmE"))
+"import { useState } from \"react\";
+
+export default function Game() {
+"))
+				(t11 (jea-test-text '(lambda ()
+															 (jea-cg--react-class-middle
+																'(("sleep" "str") ("bark" "int") ("dig" "bool"))))
+"    const [sleep, setSleep] = useState(\"\");
+    const [bark, setBark] = useState(0);
+    const [dig, setDig] = useState(false);
+"))
+				(t12 (jea-test-text '(lambda ()
+															 (jea-cg--react-class-end))
+"
+    return (<></>);
+}"))
+				(t13 (jea-test-text '(lambda ()
 															(jea-cg--react-class "Game"
 																									 '(("sleep" "str") ("bark" "int") ("dig" "bool"))))
 "// Copyright © 2025 James Anderson
@@ -41,7 +93,7 @@ export default function Game() {
 
     return (<></>);
 }")))
-		(and t1)))
+		(and t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13)))
 
 (jea-code-gen-test-react)
 
