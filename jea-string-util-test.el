@@ -47,9 +47,16 @@
 													 "JamesAndersonWasHere")))
 		(and t1 t2 t3 t4 t5)))
 
+;; TODO
+;; (defun jea-string-get-print-format(in-str)
+;; (defun jea-capitalize-first(in-str)
+;; (defun jea-find-string-all-indexes(in-str regex)
+;; (defun jea-find-string-all(in-str regex)
+;; (defun jea-string-upcase-p (in-str)
+;; (defun jea-string-downcase-p (in-str)
+
 (jea-string-util--test)
 
 (provide 'jea-string-util-test)
 
 ;;; jea-string-util-test.el ends here
-
