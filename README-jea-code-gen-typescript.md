@@ -4,7 +4,7 @@ This is a tool to generate boiler plate code for typescript.
 
 ## interactive use
 ### one time
-`jea-code-gen-use-python`
+`jea-code-gen-use-typescript`
 
 ### use
 `jea-code-gen-prompt`
