@@ -50,6 +50,9 @@
         self._dig = dig
 
 
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
 "))
 				(t11 (jea-test-text '(lambda ()
 															 (jea-cg--py-func "hello"

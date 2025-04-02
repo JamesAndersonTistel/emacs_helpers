@@ -15,13 +15,12 @@
 							 (message "success %s" ,func))
 					 t)
 			 (progn
-				 (if debug
-						 (message "failed because %s: '%s' does not equal '%s'." ,func output ,expected-text-output))
+				 (message "failed because %s: '%s' does not equal '%s'." ,func output ,expected-text-output)
 				 nil))))
 
 (defmacro jea-test-list (func expected-list-output)
 	"Run the function FUNC and double check the text output is EXPECTED-LIST-OUTPUT."
-	`(let* ((debug t) ;; turn on prints
+	`(let* ((debug nil) ;; turn on prints
 					(output (funcall ,func))
 					(success (equal output ,expected-list-output)))
 		 (if success
@@ -36,7 +35,7 @@
 
 (defmacro jea-test-number (func expected-value)
 	"Run the function FUNC and double check the text output is EXPECTED-VALUE."
-	`(let* ((debug t) ;; turn on prints
+	`(let* ((debug nil) ;; turn on prints
 					(output (funcall ,func))
 					(success (= output ,expected-value)))
 		 (if success

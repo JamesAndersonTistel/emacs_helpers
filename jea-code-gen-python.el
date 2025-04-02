@@ -94,9 +94,10 @@ EXP-VARS is the expanded arguments."
     def __init__(self, %s):
 %s
 
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
 " (capitalize name) args vars))))
-
-
 
 (defun jea-cg--py-func(name &optional exp-args)
 	"Function boilerplate set to NAME with optional EXP-ARGS."
@@ -188,20 +189,25 @@ KVS are the key value pairs."
 ;; --------------------------------------------------------------------------------
 ;; --------------------------------------------------------------------------------
 
-;; (defun jea-test-run()
-;;  	"Hook up F5 to run."
-;;  	(interactive)
-;;  	(with-current-buffer (get-buffer-create "*jea-code-gen*")
-;;  		(erase-buffer)
-;;  		;;(jea-cg--py-insert-class "dog" '("ssleepd" "ibark" "bdig" "sswim"))))
-;; 		(jea-cg--py-insert-func "get_dog" '("ssleep" "ibark" "bdig" "sswim" "fscratch"))))
-;;
-;;  (global-set-key [(f5)] 'jea-test-run)
+(defun jea-test-run()
+  "Hook up F5 to run."
+  (interactive)
+  (with-current-buffer (get-buffer-create "*jea-code-gen*")
+  	(erase-buffer)
+  	(jea-cg--py-insert-class "dog" '("ssleepd" "ibark" "bdig" "sswim"))))
+ 		;;(jea-cg--py-insert-func "get_dog" '("ssleep" "ibark" "bdig" "sswim" "fscratch"))))
+
+(global-set-key [(f5)] 'jea-test-run)
 
 ;; 	 ;;	(jea-code-gen--func-python "dog" '("sleep" "bark" "dig" "swim")))
 ;; 	(jea-cg--py-insert-swtich "x" '("1" "2" "3")))
 ;; ;; (jea-cg--py-insert-swtich "x" '("dog" "cat" "mouse")))
 
+
+;; maybe add a code gen helper that prints available commands? Maybe
+;; instead of saying "not implemented yet" list the avails?
+;; 
+;; add a doc test to the python class creation.
 
 (defun jea-code-gen-use-python()
 	"Turn on python code gen.  Set local funcs to the global vars."
