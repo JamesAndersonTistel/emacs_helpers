@@ -28,6 +28,11 @@ class Dog:
         self._bark = bark
         self._dig = dig
         self._swim = swim
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
 ```
 
 ## functions

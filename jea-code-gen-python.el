@@ -189,25 +189,23 @@ KVS are the key value pairs."
 ;; --------------------------------------------------------------------------------
 ;; --------------------------------------------------------------------------------
 
-(defun jea-test-run()
-  "Hook up F5 to run."
-  (interactive)
-  (with-current-buffer (get-buffer-create "*jea-code-gen*")
-  	(erase-buffer)
-  	(jea-cg--py-insert-class "dog" '("ssleepd" "ibark" "bdig" "sswim"))))
- 		;;(jea-cg--py-insert-func "get_dog" '("ssleep" "ibark" "bdig" "sswim" "fscratch"))))
+;; (defun jea-test-run()
+;;   "Hook up F5 to run."
+;;   (interactive)
+;;   (with-current-buffer (get-buffer-create "*jea-code-gen*")
+;;   	(erase-buffer)
+;;   	(jea-cg--py-insert-class "dog" '("ssleepd" "ibark" "bdig" "sswim"))))
+;;  		
+;; (global-set-key [(f5)] 'jea-test-run)
 
-(global-set-key [(f5)] 'jea-test-run)
-
-;; 	 ;;	(jea-code-gen--func-python "dog" '("sleep" "bark" "dig" "swim")))
-;; 	(jea-cg--py-insert-swtich "x" '("1" "2" "3")))
-;; ;; (jea-cg--py-insert-swtich "x" '("dog" "cat" "mouse")))
-
+;; (jea-code-gen--func-python "dog" '("sleep" "bark" "dig" "swim")))
+;; (jea-cg--py-insert-swtich "x" '("1" "2" "3")))
+;; (jea-cg--py-insert-swtich "x" '("dog" "cat" "mouse")))
+;; (jea-cg--py-insert-class "dog" '("ssleepd" "ibark" "bdig" "sswim"))))
+;; (jea-cg--py-insert-func "get_dog" '("ssleep" "ibark" "bdig" "sswim" "fscratch"))))
 
 ;; maybe add a code gen helper that prints available commands? Maybe
 ;; instead of saying "not implemented yet" list the avails?
-;; 
-;; add a doc test to the python class creation.
 
 (defun jea-code-gen-use-python()
 	"Turn on python code gen.  Set local funcs to the global vars."
