@@ -134,6 +134,10 @@ called Dog with the functions: sleep, bark, dig, swim."
 		 (t
 			(message "jea-code-gen-prompt unknown command: \"%s\"." command)))))
 
+;; TODO maybe need to rethink the prompt to be more gen specific. so
+;; we can have for helm,k8s etc. Also, maybe add a list avaiable
+;; commands?
+
 ;; (jea-code-gen-use-python)
 ;; (jea-code-gen-use-typescript)
 ;; (jea-code-gen-use-javascript)
