@@ -1,6 +1,6 @@
 # jea-code-gen generate the basic outline of common code structures
 
-This is a tool to generate boiler plate code for various languages.
+This is a tool to generate boiler plate code snippets for various languages.
 
 ## turn on language
 ### python
