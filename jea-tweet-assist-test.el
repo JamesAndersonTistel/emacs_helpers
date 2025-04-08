@@ -53,7 +53,7 @@ B the second argument to process"
 					(jea-tweet--make-error-msg-build a)
 					"' does not match: '"
 					(jea-tweet--make-error-msg-build b) "'."))
-	
+
 (defun jea-tweet--test1-in-data()
 	"Lorem ipsum odor amet, consectetuer adipiscing elit.")
 
@@ -64,7 +64,7 @@ B the second argument to process"
 	"Test small string that should not be modified."
 	(interactive)
 	(let* ((in-data (jea-tweet--test1-in-data))
-				 (result (jea-tweet-split-long in-data))
+				 (result (jea-tweet--split-long in-data))
 				 (out-data (jea-tweet--test1-out-data))
 				 (success (jea-tweet--test-match out-data result)))
 		(if success
@@ -72,12 +72,12 @@ B the second argument to process"
 			(message (jea-tweet--make-error-msg out-data result)))))
 
 ;; (jea-tweet--test1)
-		
-	
+
+
 (defun jea-tweet--test2-in-data()
 	"Long string test."
 	(with-suppressed-warnings ()
-	"Lorem ipsum odor amet, consectetuer adipiscing elit. Dolor nec magnis aliquet risus dapibus mi tempus lorem. Maximus ultrices faucibus varius lectus fames dictum sodales per. Eget nisi ridiculus eu fusce ornare nisl. Dui pellentesque aptent efficitur vulputate feugiat luctus enim. Inceptos dictum ultricies, mollis venenatis finibus donec habitasse. Vehicula malesuada tellus nec dis phasellus; sit varius felis diam. Lobortis rutrum faucibus lacus dapibus cubilia volutpat faucibus congue.
+		"Lorem ipsum odor amet, consectetuer adipiscing elit. Dolor nec magnis aliquet risus dapibus mi tempus lorem. Maximus ultrices faucibus varius lectus fames dictum sodales per. Eget nisi ridiculus eu fusce ornare nisl. Dui pellentesque aptent efficitur vulputate feugiat luctus enim. Inceptos dictum ultricies, mollis venenatis finibus donec habitasse. Vehicula malesuada tellus nec dis phasellus; sit varius felis diam. Lobortis rutrum faucibus lacus dapibus cubilia volutpat faucibus congue.
 
 Sed orci fermentum nisl ipsum leo blandit. Nascetur eros hac bibendum orci laoreet etiam laoreet est tristique. Litora magnis dictum mi penatibus venenatis tincidunt eu etiam mattis. Eu potenti iaculis pulvinar venenatis tristique gravida placerat ad aenean. Dolor duis cursus malesuada praesent varius dis. Rutrum habitasse ligula curae vitae proin feugiat auctor mauris dolor. Malesuada rutrum morbi netus cursus natoque a cubilia condimentum non. Platea ante ipsum sociosqu curabitur pretium.
 
@@ -95,7 +95,7 @@ Tempor purus nisl nisl feugiat hendrerit eros convallis sit. Ac luctus eu penati
 	"Test basic text split into three tweets."
 	(interactive)
 	(let* ((in-data (jea-tweet--test2-in-data))
-				 (result (jea-tweet-split-long in-data))
+				 (result (jea-tweet--split-long in-data))
 				 (out-data (jea-tweet--test2-out-data))
 				 (success (jea-tweet--test-match out-data result)))
 		(if success

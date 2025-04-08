@@ -34,12 +34,13 @@ TODO converrt to defvar"
 	280)
 
 (defun jea-tweet--one-of-length()
-	"How much space do we need to say length(' XX/XX') is 6 to mark the continuation."
+	"How much space do we need to say length('🧵XX/XX') is 6 to mark the continuation."
 	6)
 
 (defun jea-tweet--split(sentence)
 	"Return parts if the SENTENCE is splittable.
-Otherwise, just return the sentence as is.  Right now urls only thing unsplittable."
+Otherwise, just return the sentence as is.  Right now urls only thing
+unsplittable."
 	(cond ((string-match "http" (downcase sentence))
 				 (seq-filter (lambda (s) (> (length s) 0)) (jea-find-string-all sentence "\\(.*\\)\\(http[^ ]+\\)\\(.*\\)")))
 				(t (list sentence)))) ;; so all processing is the same
@@ -126,7 +127,8 @@ IN-STR is the raw full string that we might need to break up into sub tweets.
 ;; (jea-tweet-split-long (jea-tweet--test2-in-data))
 
 (defun jea-tweet-split-long-buffer(beginning end)
-	"Dump the region from BEGINNING to END and put output into a buffer to cut and paste."
+	"Dump the region from BEGINNING to END and put output into a buffer to cut
+and paste."
 	(interactive "r")
 	(save-excursion
 		(let ((buffer-text (buffer-substring beginning end)))
