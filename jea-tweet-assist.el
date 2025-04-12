@@ -35,7 +35,7 @@ TODO converrt to defvar"
 
 (defun jea-tweet--one-of-length()
 	"How much space do we need to say length('🧵XX/XX') is 6 to mark the continuation."
-	6)
+	7)
 
 (defun jea-tweet--split(sentence)
 	"Return parts if the SENTENCE is splittable.
@@ -99,7 +99,7 @@ back.  Then we finally trim the leading and trailing spaces."
 				(denominator (length paragraphs))
 				results '())
 		(dolist (p paragraphs)
-			(setq results (cons (concat (format "%s%d/%d" p numerator denominator)) results))
+			(setq results (cons (concat (format "%s🧵%d/%d" p numerator denominator)) results))
 			(setq numerator (1+ numerator)))
 		(reverse results)))
 
@@ -136,7 +136,7 @@ and paste."
  				(progn
 					(erase-buffer)
  					(goto-char (point-max))
-					(insert (jea-tweet-split-long buffer-text)))))))
+					(insert (jea-tweet--split-long buffer-text)))))))
 
 (provide 'jea-tweet-assist)
 

@@ -108,3 +108,45 @@ Tempor purus nisl nisl feugiat hendrerit eros convallis sit. Ac luctus eu penati
 ;; (global-set-key [(f5)] 'jea-tweet--test2)
 
 ;;; jea-tweet-assist-test.el ends here
+
+
+new test to write:
+
+
+LLMs (all current styles of AI in general are just pattern recognition
+systems) don't understand anything. It produces statistically
+plausible sentences based on the human created training data. If the
+biased human created information is used (CS idiom: garbage in,
+garbage out), the generated text will parrot the bias. What do I mean
+when I say "it doesn't understand anything." Humans understand that
+the concept of danger is associated with cars. They also understand
+that the danger goes up exponentially when car paths intersect. We
+mitigate the danger by having stop signs. You can train AI image
+categorizers to recognize the stop signs of North America and they
+will be really good and matching the pattern and stopping. Now imagine
+you go to another country that has stop signs of different shape and
+colour. A human pull up and see they same sign facing all directions
+with some rotations and conclude that "oh, this must be their locally
+stop sign, and stop to prevent a collision because they understand the
+concept of danger. The AI having not trained on the shape/colour/text
+will drive right through. Imagine a human on a construction site that
+has intersections that don't have any signs installed, they will see
+the danger and stop anyway. The AI will drive right through. This
+example is vision based, but the principal is the same for
+text/code. You can see the errors leak out in LLM generated scientific
+papers and legal documents. For sci papers, it will see the pattern
+that at the bottom, the training data always says: "References"
+followed by a bunch of strings that always start with "https://www."
+then some text, then often there is a ".edu" chunk, then slashes and
+text and the whole thing often ends with ".pdf" or whatever. So when
+asked to generate a sci paper, it will create one with a plausible
+references section with a made up URL that is not real, but, looks
+real so long as you don't drop it into a browser to test. ie:
+https://www.yale.edu/climate/fake-researcher/fake-file-name.pdf The
+current push is to put in RAGs to try to filter the fiction. Who
+creates the RAGs? Humans. So its just a big plagiarism system with
+some human filters on the end. It is not intelligent at all. AGI is
+possible (unless you think we are made of magic), but, current
+approach is mostly smoke, mirrors and bias.
+
+don't split in quotes.
