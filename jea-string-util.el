@@ -140,9 +140,6 @@
 		(setq result (concat result (downcase (substring in-str (1- (length in-str)) (length in-str))))) ;; don't forget last one
 		result))
 
-;; char-or-string-p
-;; char-to-string
-;; (upcase "X")
 
 (defun jea-char-to-nato-phonetic-alphabet(in-str)
 	"Convert a IN-STR to use the NATO phoneticalphabet.
@@ -174,8 +171,47 @@
 														("X" . "X-Ray")
 														("Y" . "Yankee")
 														("Z" . "Zulu"))
-													"str" nil 'string-equal)))
+													"???" nil 'string-equal)))
 		result))
+
+
+(defun jea-char-to-morse-code(in-str)
+	"Convert a IN-STR to use the morse code.
+'ABC' will become: '._ _... _._.' etc."
+	(let ((result (alist-get (upcase in-str)
+													'(("A" . "._")
+														("B" . "_...")
+														("C" . "_._.")
+														("D" . "_..")
+														("E" . ".")
+														("F" . ".._.")
+														("G" . "__.")
+														("H" . "....")
+														("I" . "..")
+														("J" . ".___")
+														("K" . "_._")
+														("L" . "._..")
+														("M" . "__")
+														("N" . "_.")
+														("O" . "___")
+														("P" . ".__.")
+														("Q" . "__._")
+														("R" . "._.")
+														("S" . "...")
+														("T" . "_")
+														("U" . ".._")
+														("V" . "..._")
+														("W" . ".__")
+														("X" . "_.._")
+														("Y" . "_.__")
+														("Z" . "__.."))
+													"???" nil 'string-equal)))
+		result))
+
+;; char-or-string-p
+;; char-to-string
+;; (upcase "X")
+
 
 (provide 'jea-string-util)
 
