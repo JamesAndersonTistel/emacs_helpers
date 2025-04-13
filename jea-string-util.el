@@ -142,7 +142,7 @@
 
 
 (defun jea-char-to-nato-phonetic-alphabet(in-str)
-	"Convert a IN-STR to use the NATO phoneticalphabet.
+	"Convert a IN-STR to use the NATO phonetic alphabet.
 'ABC' will become: Alpha Bravo Charlie etc."
 	(let ((result (alist-get (upcase in-str)
 													'(("A" . "Alpha")
@@ -174,6 +174,11 @@
 													"???" nil 'string-equal)))
 		result))
 
+(defun jea-string-to-nato-phonetic-alphabet(in-str)
+	"Convert a IN-STR to a NATO phonetic alphabet representation."
+	(mapconcat (lambda (ch)
+							 (jea-char-to-nato-phonetic-alphabet (char-to-string ch)))
+						 in-str " "))
 
 (defun jea-char-to-morse-code(in-str)
 	"Convert a IN-STR to use the morse code.
