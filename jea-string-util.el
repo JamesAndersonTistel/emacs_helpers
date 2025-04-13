@@ -140,6 +140,43 @@
 		(setq result (concat result (downcase (substring in-str (1- (length in-str)) (length in-str))))) ;; don't forget last one
 		result))
 
+;; char-or-string-p
+;; char-to-string
+;; (upcase "X")
+
+(defun jea-char-to-nato-phonetic-alphabet(in-str)
+	"Convert a IN-STR to use the NATO phoneticalphabet.
+'ABC' will become: Alpha Bravo Charlie etc."
+	(let ((result (alist-get (upcase in-str)
+													'(("A" . "Alpha")
+														("B" . "Bravo")
+														("C" . "Charlie")
+														("D" . "Delta")
+														("E" . "Echo")
+														("F" . "Foxtrot")
+														("G" . "Golf")
+														("H" . "Hotel")
+														("I" . "India")
+														("J" . "Juliet")
+														("K" . "Kilo")
+														("L" . "Lima")
+														("M" . "Mike")
+														("N" . "November")
+														("O" . "Oscar")
+														("P" . "Papa")
+														("Q" . "Quebec")
+														("R" . "Romeo")
+														("S" . "Sierra")
+														("T" . "Tango")
+														("U" . "Uniform")
+														("V" . "Victor")
+														("W" . "Whiskey")
+														("X" . "X-Ray")
+														("Y" . "Yankee")
+														("Z" . "Zulu"))
+													"str" nil 'string-equal)))
+		result))
+
 (provide 'jea-string-util)
 
 ;;; jea-string-util.el ends here

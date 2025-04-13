@@ -76,8 +76,14 @@
 														t))
 				(t15 (jea-test-list '(lambda ()
 															 (jea-string-downcase-p "lowercase"))
-														t)))
-		(and t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13 t14 t15)))
+														t))
+				(t16 (jea-test-text '(lambda ()
+															 (jea-char-to-nato-phonetic-alphabet "a"))
+														"Alpha"))
+				(t17 (jea-test-text '(lambda ()
+															 (jea-char-to-nato-phonetic-alphabet "Z"))
+														"Zulu")))
+		(and t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13 t14 t15 t16 t17)))
 
 (jea-string-util--test)
 
