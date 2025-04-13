@@ -213,10 +213,11 @@
 													"???" nil 'string-equal)))
 		result))
 
-;; char-or-string-p
-;; char-to-string
-;; (upcase "X")
-
+(defun jea-string-to-morse-code(in-str)
+	"Convert a IN-STR to a morse code representation."
+	(mapconcat (lambda (ch)
+							 (jea-char-to-morse-code (char-to-string ch)))
+						 in-str " "))
 
 (provide 'jea-string-util)
 

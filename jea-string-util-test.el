@@ -91,8 +91,11 @@
 														"_.._"))
 				(t20 (jea-test-text '(lambda ()
 															 (jea-string-to-nato-phonetic-alphabet "test"))
-															 "Tango Echo Sierra Tango")))
-		(and t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13 t14 t15 t16 t17 t18 t19 t20)))
+														"Tango Echo Sierra Tango"))
+				(t21 (jea-test-text '(lambda ()
+															 (jea-string-to-morse-code "test"))
+															 "_ . ... _")))
+		(and t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13 t14 t15 t16 t17 t18 t19 t20 t21)))
 
 (jea-string-util--test)
 
