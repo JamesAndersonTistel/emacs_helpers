@@ -180,6 +180,12 @@
 							 (jea-char-to-nato-phonetic-alphabet (char-to-string ch)))
 						 in-str " "))
 
+(defun jea-nato-phonetic-alphabet-to-string(in-str)
+	"Convert a IN-STR to a NATO phonetic alphabet representation."
+	(mapconcat (lambda (str)
+							 (capitalize (char-to-string (elt str 0))))
+						 (split-string in-str) ""))
+
 (defun jea-char-to-morse-code(in-str)
 	"Convert a IN-STR to use the morse code.
 'ABC' will become: '._ _... _._.' etc."
@@ -219,6 +225,45 @@
 							 (jea-char-to-morse-code (char-to-string ch)))
 						 in-str " "))
 
+(defun jea-morse-code-to-char(in-str)
+	"Convert a IN-STR to use the morse code.
+'ABC' will become: '._ _... _._.' etc."
+	(let ((result (alist-get (upcase in-str)
+													'(("._" . "A")
+														("_..." . "B")
+														("_._." . "C")
+														("_.." . "D")
+														("." . "E")
+														(".._." . "F")
+														("__." . "G")
+														("...." . "H")
+														(".." . "I")
+														(".___" . "J")
+														("_._" . "K")
+														("._.." . "L")
+														("__" . "M")
+														("_." . "N")
+														("___" . "O")
+														(".__." . "P")
+														("__._" . "Q")
+														("._." . "R")
+														("..." . "S")
+														("_" . "T")
+														(".._" . "U")
+														("..._" . "V")
+														(".__" . "W")
+														("_.._" . "X")
+														("_.__" . "Y")
+														("__.." . "Z"))
+													"???" nil 'string-equal)))
+		result))
+
+(defun jea-morse-code-to-string(in-str)
+	"Convert IN-STR filled with morse code and convert to a simple string."
+	(mapconcat (lambda (mc-word)
+							 (capitalize (jea-morse-code-to-char mc-word)))
+						 (split-string in-str) ""))
+				 
 (provide 'jea-string-util)
 
 ;;; jea-string-util.el ends here
