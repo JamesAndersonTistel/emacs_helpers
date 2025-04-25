@@ -45,11 +45,6 @@ unsplittable."
 				 (seq-filter (lambda (s) (> (length s) 0)) (jea-find-string-all sentence "\\(.*\\)\\(http[^ ]+\\)\\(.*\\)")))
 				(t (list sentence)))) ;; so all processing is the same
 
-;; (jea-tweet--split "foo https://www.instagram.com/stories/usnavy/3573171440662206849/ bar")
-;; (jea-tweet--split "https://www.instagram.com/stories/usnavy/3573171440662206849/")
-;; (jea-tweet--split "https://www.instagram.com/stories/usnavy/3573171440662206849/ bar")
-;; (jea-tweet--split "foo bar")
-
 ;;; ----------------------------------------------------------------------
 ;;; 1) break up into sentences
 

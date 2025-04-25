@@ -67,6 +67,9 @@ Phasellus nec elit, nullam dolor porta netus vulputate laoreet. Eu congue ultric
 
 Tempor purus nisl nisl feugiat hendrerit eros convallis sit. Ac luctus eu penatibus ante porta rutrum diam fusce conubia. Conubia blandit convallis elementum rutrum ultricies vehicula. Fames congue vitae neque molestie vitae montes porttitor. Mauris facilisi urna quisque nostra dui; sociosqu duis ridiculus. Ornare felis ullamcorper praesent eu elementum phasellus suscipit dignissim sapien. Phasellus elit libero elementum venenatis blandit pellentesque amet. Congue habitant primis tempus leo congue fusce sagittis himenaeos feugiat."))
 
+(defun jea-test-get-short-random-text1()
+	"Lorem ipsum odor amet, consectetuer adipiscing elit.")
+
 (provide 'jea-code-gen-test)
 
 ;;; jea-code-gen-test.el ends here
