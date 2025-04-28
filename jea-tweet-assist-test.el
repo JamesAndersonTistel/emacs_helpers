@@ -125,6 +125,8 @@
 
 (jea--tweet-assist-test)
 
+;; (jea-find-string-all "This string contains \"quotes are tricky\" that are fun to with." "\"\\([a-z A-Z]+\\)\"")
+
 ;;; jea-tweet-assist-test.el ends here
 
 
