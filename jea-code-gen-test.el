@@ -67,7 +67,7 @@ Todo refactor the other to use this one."
 
 
 (defun jea-test-get-long-random-text1 ()
-		"Long string test."
+	"Long string test."
 	(with-suppressed-warnings ()
 		"Lorem ipsum odor amet, consectetuer adipiscing elit. Dolor nec magnis aliquet risus dapibus mi tempus lorem. Maximus ultrices faucibus varius lectus fames dictum sodales per. Eget nisi ridiculus eu fusce ornare nisl. Dui pellentesque aptent efficitur vulputate feugiat luctus enim. Inceptos dictum ultricies, mollis venenatis finibus donec habitasse. Vehicula malesuada tellus nec dis phasellus; sit varius felis diam. Lobortis rutrum faucibus lacus dapibus cubilia volutpat faucibus congue.
 
