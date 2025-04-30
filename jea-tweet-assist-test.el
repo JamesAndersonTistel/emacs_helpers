@@ -29,79 +29,6 @@
 (require 'jea-tweet-assist)
 (require 'jea-code-gen-test)
 
-;; (defun jea-tweet--test-match(a b)
-;; 	"Make sure they are the same thing and equal.
-;; A the first argument to compare
-;; B the second argument to compare"
-;; 	(cond ((and (stringp a) (stringp b)) (equal a b))
-;; 				((and (listp a) (listp b)) (equal a b))
-;; 				(t nil)))
-
-;; (defun jea-tweet--make-error-msg-build(a)
-;; 	"Build for individual argument.
-
-;; A is the argument"
-;; 	(if (listp a)
-;; 			(mapconcat 'identity a " ")
-;; 		a))
-
-;; (defun jea-tweet--make-error-msg(a b)
-;; 	"Make an easy to read error message.
-
-;; A the first argument to process
-;; B the second argument to process"
-;; 	(concat "'"
-;; 					(jea-tweet--make-error-msg-build a)
-;; 					"' does not match: '"
-;; 					(jea-tweet--make-error-msg-build b) "'."))
-
-
-;; (defun jea-tweet--test1()
-;; 	"Test small string that should not be modified."
-;; 	(interactive)
-;; 	(let* ((in-data (jea-tweet--test1-in-data))
-;; 				 (result (jea-tweet--split-long in-data))
-;; 				 (out-data (jea-tweet--test1-out-data))
-;; 				 (success (jea-tweet--test-match out-data result)))
-;; 		(if success
-;; 				t
-;; 			(message (jea-tweet--make-error-msg out-data result)))))
-
-;; ;; (jea-tweet--test1)
-
-;; (defun jea-tweet--test2-out-data()
-;; 	"Test basic text split into three tweets."
-;; 	'("foo" "bar"))
-
-;; (defun jea-tweet--test2()
-;; 	"Test basic text split into three tweets."
-;; 	(interactive)
-;; 	(let* ((in-data (jea-tweet--test2-in-data))
-;; 				 (result (jea-tweet--split-long in-data))
-;; 				 (out-data (jea-tweet--test2-out-data))
-;; 				 (success (jea-tweet--test-match out-data result)))
-;; 		(if success
-;; 				t
-;; 			(message (jea-tweet--make-error-msg out-data result)))))
-
-;; (jea-tweet--test2)
-
-;; makes it easy to hit F5 in another buffer to run current test
-;; (global-set-key [(f5)] 'jea-tweet--test2)
-
-;; (defun jea--tweet-assist-test-set1()
-;; 	"Test all tweet assit functions."
-;; 	(let ((t1 (jea-test-list '(lambda ()
-;; 															(jea-cg--py-variable-split "icount"))
-;; 													 '("count" "int")))
-;; 				(t9 (jea-test-text '(lambda ()
-;; 															(jea-cg--py-variable-fmt "height" "float" nil t))
-;; 													 " height: float")) ;; note the trailing comma is gone
-				
-;; 		(and t1 t2 t3 t4 t5 t6 t7 t8 t9))))
-
-
-
 (defun jea--tweet-assist-test-set1()
 	"We need to make sure when we split a long social media post that we try to preserve un-split-able things."
 	(let ((t1 (jea-test-list '(lambda ()
@@ -118,15 +45,35 @@
 													 '("foo bar")))
 				)
 		(and t1 t2 t3 t4)))
-													 
+
+(defun jea--tweet-assist-test-set2()
+	"Text split into sentences."
+	(let ((t1 (jea-test-lambda '(lambda ()
+										(nth 1 (jea-tweet--split-into-sentences (jea-test-get-long-random-text1))))
+								 '(lambda (data)
+										(stringp data)))))
+		(and t1)))
+
 (defun jea--tweet-assist-test()
 	"Run the test."
-	(and (jea--tweet-assist-test-set1)))
+	(and (jea--tweet-assist-test-set1)
+			 (jea--tweet-assist-test-set2)))
 
 (jea--tweet-assist-test)
 
+;; ugh, not splitting quote might be tricky, there could be several
 ;; (jea-find-string-all "This string contains \"quotes are tricky\" that are fun to with." "\"\\([a-z A-Z]+\\)\"")
+;; (jea-find-string-all "This string contains \"quotes are tricky\" that are fun to \"with\"." "\"\\([a-z A-Z]+\\)\"")
+
+;; (defun jea-test-run()
+;;   "Hook up F5 to run."
+;;   (interactive)
+;;   (with-current-buffer (get-buffer-create "*jea-code-gen*")
+;;   	(erase-buffer)
+;;   	(jea-cg--py-insert-class "dog" '("ssleepd" "ibark" "bdig" "sswim"))))
+;;
+;; (global-set-key [(f5)] 'jea-test-run)
+
+
 
 ;;; jea-tweet-assist-test.el ends here
-
-

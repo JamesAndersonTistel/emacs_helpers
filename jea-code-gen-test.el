@@ -48,6 +48,24 @@
 						 (message "failed because %s: '%s' does not equal '%s'." ,func output ,expected-value))
 				 nil))))
 
+(defmacro jea-test-lambda (test-func verify-func)
+	"Run the function TEST-FUNC and pass the output to VERIFY-FUNC.
+VERIFY-FUNC.  should return t on success.
+Todo refactor the other to use this one."
+	`(let* ((debug nil) ;; turn on prints
+					(output (funcall ,test-func))
+					(success (funcall ,verify-func output)))
+		 (if success
+				 (progn
+					 (if debug
+							 (message "success %s" ,test-func))
+					 t)
+			 (progn
+				 (if debug
+						 (message "failed because %s: '%s' did not return t." ,test-func output))
+				 nil))))
+
+
 (defun jea-test-get-long-random-text1 ()
 		"Long string test."
 	(with-suppressed-warnings ()
