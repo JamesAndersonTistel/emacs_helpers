@@ -49,10 +49,14 @@
 (defun jea--tweet-assist-test-set2()
 	"Text split into sentences."
 	(let ((t1 (jea-test-lambda '(lambda ()
-										(nth 1 (jea-tweet--split-into-sentences (jea-test-get-long-random-text1))))
-								 '(lambda (data)
-										(stringp data)))))
-		(and t1)))
+																(nth 1 (jea-tweet--split-into-sentences (jea-test-get-long-random-text1))))
+														 '(lambda (data)
+																(stringp data))))
+				(t2 (jea-test-lambda '(lambda ()
+																(jea-tweet--split-into-sentences (jea-test-get-long-random-text1)))
+														 '(lambda (data)
+																(> (length data) 1)))))
+		(and t1 t2)))
 
 (defun jea--tweet-assist-test()
 	"Run the test."
@@ -65,15 +69,13 @@
 ;; (jea-find-string-all "This string contains \"quotes are tricky\" that are fun to with." "\"\\([a-z A-Z]+\\)\"")
 ;; (jea-find-string-all "This string contains \"quotes are tricky\" that are fun to \"with\"." "\"\\([a-z A-Z]+\\)\"")
 
-;; (defun jea-test-run()
-;;   "Hook up F5 to run."
-;;   (interactive)
-;;   (with-current-buffer (get-buffer-create "*jea-code-gen*")
-;;   	(erase-buffer)
-;;   	(jea-cg--py-insert-class "dog" '("ssleepd" "ibark" "bdig" "sswim"))))
-;;
-;; (global-set-key [(f5)] 'jea-test-run)
+(defun jea-test-run()
+  "Hook up F5 to run."
+  (interactive)
+  (with-current-buffer (get-buffer-create "*jea-code-gen*")
+  	(erase-buffer)
+  	(message "tweet test: %s." (jea--tweet-assist-test))))
 
-
+(global-set-key [(f5)] 'jea-test-run)
 
 ;;; jea-tweet-assist-test.el ends here
