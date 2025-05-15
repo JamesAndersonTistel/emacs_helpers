@@ -103,7 +103,8 @@ back.  Then we finally trim the leading and trailing spaces."
 
 (defun jea-tweet--main(in-str)
 	"IN-STR raw long string to be processed."
-	(let* ((step1 (jea-tweet--split-into-sentences in-str))
+	(let* ((step0 (replace-regexp-in-string "\n" " " in-str)) ;; remove newlines
+				 (step1 (jea-tweet--split-into-sentences step0))
 				 (step2 (mapcar #'jea-tweet--remove-extra-whitespace step1))
 				 (step3 (jea-tweet--merge-sentences-into-paragraphs step2))
 				 (step4 (jea-tweet--decorate-paragraphs step3)))
