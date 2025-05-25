@@ -118,7 +118,6 @@
 			(let* ((plain-char (substring plaintext pos-plain (1+ pos-plain)))
 						 (key-char (substring key-str pos-key (1+ pos-key)))
 						 (shift-char (funcall func plain-char key-char)))
-				(message "JEA: %s %s %s %d %d" plain-char key-char shift-char pos-plain pos-key)
 				(setq result (concat result shift-char))
 				(setq pos-plain (1+ pos-plain))
 				(setq pos-key (1+ pos-key))
