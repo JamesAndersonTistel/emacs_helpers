@@ -26,17 +26,22 @@
 ;;; Code:
 
 (require 'jea-vigenere-cipher)
+(require 'jea-code-gen-test)
 
 (defun jea--vc-test1 ()
 	"The first test of Vigenère ciper."
 	(let ((t1 (= (jea--vc-get-char-code "r") 17))
-				(t2 (string-equal (jea--vc-get-code-char 2) "C")))
-		(and t1 t2)))
-
-;; (mod 29 27) 2
+				(t2 (string-equal (jea--vc-get-code-char 2) "C"))
+				(t3 (jea-test-text '(lambda ()
+															(jea-vigenere-encrypt "attackingtonight" "oculorhinolaryngology"))
+													 "OVNLQBPVTHZNZEUZ"))
+				(t4 (jea-test-text '(lambda ()
+															(jea-vigenere-decrypt "ovnlqbpvthznzeuz" "oculorhinolaryngology"))
+													 "ATTACKINGTONIGHT")))
+		(and t1 t2 t3 t4)))
 
 (jea--vc-test1)
-				
+
 (provide 'jea-vigenere-cipher-test)
 
 ;;; jea-vigenere-cipher-test.el ends here

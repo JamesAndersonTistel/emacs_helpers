@@ -57,9 +57,9 @@
 													 "???" nil 'string-equal)))
 		result))
 
-(defun jea--vc-get-code-char (in-char)
-	"Convert IN-CHAR to a number."
-	(let ((result (alist-get (upcase in-char)
+(defun jea--vc-get-code-char (in-code)
+	"Convert IN-CODE to a number."
+	(let ((result (alist-get (upcase in-code)
 													 '((0 . "A")
 														 (1 . "B")
 														 (2 . "C")
@@ -88,6 +88,50 @@
 														 (25 . "Z"))
 													 -1 nil 'eq)))
 		result))
+
+(defun jea--vc-get-shifted-char (plain-char key-char)
+	"Get the vigenere shift for PLAIN-CHAR given KEY-CHAR."
+	(if (string-equal plain-char " ")
+			" "
+		(let* ((key-shift (jea--vc-get-char-code key-char))
+					 (plain-shift (jea--vc-get-char-code plain-char))
+					 (result (mod (+ key-shift plain-shift) 26))) ; 26 letters in alphabet wrap
+		(jea--vc-get-code-char result))))
+
+(defun jea--vc-get-unshifted-char (plain-char key-char)
+	"Get the vigenere shift for PLAIN-CHAR given KEY-CHAR."
+	(if (string-equal plain-char " ")
+			" "
+		(let* ((key-shift (jea--vc-get-char-code key-char))
+					 (plain-shift (jea--vc-get-char-code plain-char))
+					 (result (mod (- plain-shift key-shift) 26))) ; 26 letters in alphabet wrap
+		(jea--vc-get-code-char result))))
+
+(defun jea--vigenere-run (plaintext key-str func)
+	"Apply FUNC to do a vigenere cyper to PLAINTEXT with KEY-STR."
+	(let* ((len-plain (length plaintext))
+				 (pos-plain 0)
+				 (len-key (length key-str))
+				 (pos-key 0)
+				 (result ""))
+		(while (< pos-plain len-plain)
+			(let* ((plain-char (substring plaintext pos-plain (1+ pos-plain)))
+						 (key-char (substring key-str pos-key (1+ pos-key)))
+						 (shift-char (funcall func plain-char key-char)))
+				(message "JEA: %s %s %s %d %d" plain-char key-char shift-char pos-plain pos-key)
+				(setq result (concat result shift-char))
+				(setq pos-plain (1+ pos-plain))
+				(setq pos-key (1+ pos-key))
+				(setq pos-key (mod pos-key len-key))))
+		result))
+
+(defun jea-vigenere-encrypt (plaintext key-str)
+	"Encrypt PLAINTEXT with KEY-STR."
+	(jea--vigenere-run plaintext key-str 'jea--vc-get-shifted-char))
+
+(defun jea-vigenere-decrypt (encrypted key-str)
+	"Decrypt ENCRYPTED using KEY-STR."
+	(jea--vigenere-run encrypted key-str 'jea--vc-get-unshifted-char))
 
 (provide 'jea-vigenere-cipher)
 
