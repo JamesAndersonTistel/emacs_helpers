@@ -33,12 +33,22 @@
 	(let ((t1 (= (jea--vc-get-char-code "r") 17))
 				(t2 (string-equal (jea--vc-get-code-char 2) "C"))
 				(t3 (jea-test-text '(lambda ()
-															(jea-vigenere-encrypt "attackingtonight" "oculorhinolaryngology"))
+															(jea-vigenere-encrypt "attackingtonight"
+																										"oculorhinolaryngology"))
 													 "OVNLQBPVTHZNZEUZ"))
 				(t4 (jea-test-text '(lambda ()
-															(jea-vigenere-decrypt "ovnlqbpvthznzeuz" "oculorhinolaryngology"))
-													 "ATTACKINGTONIGHT")))
-		(and t1 t2 t3 t4)))
+															(jea-vigenere-decrypt "ovnlqbpvthznzeuz"
+																										"oculorhinolaryngology"))
+													 "ATTACKINGTONIGHT"))
+				(t5 (jea-test-text '(lambda ()
+															(jea-vigenere-encrypt "I am the very model of a modern Major General"
+																										"boopthesnoot"))
+													 "J OB ALW JSKZ ADWLP BT T ACSXYR ZOXHS UTGLVSY"))
+				(t6 (jea-test-text '(lambda ()
+															(jea-vigenere-decrypt "J OB ALW JSKZ ADWLP BT T ACSXYR ZOXHS UTGLVSY"
+																										"boopthesnoot"))
+													 "I AM THE VERY MODEL OF A MODERN MAJOR GENERAL")))
+		(and t1 t2 t3 t4 t5 t6)))
 
 (jea--vc-test1)
 
