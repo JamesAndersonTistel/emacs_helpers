@@ -25,6 +25,19 @@
 
 ;;; Code:
 
+(defvar-local jea-vc-current-key-str
+	(or (getenv "DEFAULT_VIGENERE_KEY_STR") "SomethingIsMissingTroubleBrewing")
+	"So they don't get prompted for both the plain text and the key.")
+
+(defun jea-vc-current-key-str-get()
+	"Fetch the current value being used to act as key."
+	jea-vc-current-key-str)
+
+(defun jea-vc-current-key-str-set(new-value)
+	"Change the value being used to act as key to NEW-VALUE."
+	(setq jea-vc-current-key-str new-value))
+
+
 (defun jea--vc-get-char-code (in-char)
 	"Convert IN-CHAR to a number."
 	(let ((result (alist-get (upcase in-char)
@@ -124,13 +137,19 @@
 				(setq pos-key (mod pos-key len-key))))
 		result))
 
-(defun jea-vigenere-encrypt (plaintext key-str)
-	"Encrypt PLAINTEXT with KEY-STR."
-	(jea--vigenere-run plaintext key-str 'jea--vc-get-shifted-char))
+(defun jea-vigenere-encrypt (beginning end)
+	"Encrypt the text in the region between BEGINNING and END."
+	(interactive "r")
+	(save-excursion
+		(let ((plaintext (buffer-substring beginning end)))
+			(insert "\n\n" (jea--vigenere-run plaintext jea-vc-current-key-str 'jea--vc-get-shifted-char)) "\n")))
 
-(defun jea-vigenere-decrypt (encrypted key-str)
-	"Decrypt ENCRYPTED using KEY-STR."
-	(jea--vigenere-run encrypted key-str 'jea--vc-get-unshifted-char))
+(defun jea-vigenere-decrypt (beginning end)
+	"Decrypt the text in the region between BEGINNING and END."
+	(interactive "r")
+		(save-excursion
+		(let ((encrypted (buffer-substring beginning end)))
+			(insert "\n\n" (jea--vigenere-run encrypted jea-vc-current-key-str 'jea--vc-get-unshifted-char)) "\n")))
 
 (provide 'jea-vigenere-cipher)
 
