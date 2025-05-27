@@ -117,14 +117,12 @@ back.  Then we finally trim the leading and trailing spaces."
 	"Split long string into 280 character chunks.
 IN-STR is the raw full string that we might need to break up into sub tweets.
  Try to keep sentences intact.  Things like URLs should not be split up."
-  (interactive)
 	(jea-tweet--main in-str))
 
 ;; (jea-tweet-split-long (jea-tweet--test2-in-data))
 
 (defun jea-tweet-split-long-buffer(beginning end)
-	"Dump the region from BEGINNING to END and put output into a buffer to cut
-and paste."
+	"Region from BEGINNING to END and put output into a buffer to cut and paste."
 	(interactive "r")
 	(save-excursion
 		(let ((buffer-text (buffer-substring beginning end)))
