@@ -226,7 +226,7 @@
 														("7" . "--...")
 														("8" . "---..")
 														("9" . "----.")
-														(" " . "_"))
+														(" " . " "))
 													"???" nil 'string-equal)))
 		result))
 
@@ -291,7 +291,7 @@
 This one handles spaces."
 	(mapconcat (lambda (mc-word)
 							 (jea-morse-code-word-to-string mc-word))
-						 (split-string in-str "_") " "))
+						 (split-string in-str "   ") " "))
 
 (provide 'jea-string-util)
 

@@ -102,11 +102,12 @@
 															 (jea-morse-code-to-string "- . ... -"))
 														"TEST"))
 				(t24 (jea-test-text '(lambda ()
-															 (jea-string-to-morse-code "This is the 25th  test"))
-														"- .... .. ... _ .. ... _ - .... . _ ..--- ..... - .... _ _ - . ... -"))
+															 (jea-string-to-morse-code "This is the 24th test"))
+														"- .... .. ...   .. ...   - .... .   ..--- ....- - ....   - . ... -"))
 				(t25 (jea-test-text '(lambda ()
-															 (jea-morse-code-to-string "- .... .. ... _ .. ... _ - .... . _ ..--- ..... - .... _ _ - . ... -"))
-														"THIS IS THE 25TH  TEST"))
+															 (jea-morse-code-to-string "- .... .. ...   .. ...   - .... .   ..--- ..... - ....   - . ... -"))
+
+														"THIS IS THE 25TH TEST"))
 				)
 		(and t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13 t14 t15 t16 t17 t18 t19 t20 t21 t22 t23 t24 t25)))
 
